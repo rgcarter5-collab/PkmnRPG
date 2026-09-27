@@ -6,7 +6,7 @@
 // while an `active` move request is stashed on `pendingRequest` for the HTTP
 // layer to read and answer via `submitChoice()` once the player picks moves.
 import { RandomPlayerAI } from './sim/tools/random-player-ai.ts';
-import { createSeenTracker, trackSeenLine } from './battle-tracker.mjs';
+import { createSeenTracker, trackSeenLine, parsePokeLine } from './battle-tracker.mjs';
 
 export class HumanPlayer extends RandomPlayerAI {
 	constructor(playerStream, options = {}, debug = false) {
@@ -15,6 +15,7 @@ export class HumanPlayer extends RandomPlayerAI {
 		this.pendingRequest = null; // the raw MoveRequest waiting on a human choice, or null
 		this._lastRequest = null; // most recent non-null request, kept around for error recovery
 		this._sideId = null;
+		this.previewRoster = { p1: [], p2: [] }; // side -> [{species, level}, ...] from `|poke|` lines
 	}
 
 	// Same followup-request tolerance as TieredAI: a rejected choice (e.g. a
@@ -40,6 +41,12 @@ export class HumanPlayer extends RandomPlayerAI {
 	}
 
 	receiveLine(line) {
+		if (line.startsWith('|clearpoke')) {
+			this.previewRoster = { p1: [], p2: [] };
+		} else {
+			const poke = parsePokeLine(line);
+			if (poke) this.previewRoster[poke.side]?.push({ species: poke.speciesName, level: poke.level });
+		}
 		trackSeenLine(this.seen, line);
 		return super.receiveLine(line);
 	}

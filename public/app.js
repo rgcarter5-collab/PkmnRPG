@@ -166,6 +166,19 @@ function renderPreview(state) {
 	document.getElementById('preview-hint').textContent =
 		`Tap ${state.maxChosenTeamSize} Pokemon in the order you want them - the first two lead the battle.`;
 
+	document.getElementById('foe-preview-label').textContent = `${state.opponentName}'s team`;
+	const foeGrid = document.getElementById('foe-preview-grid');
+	foeGrid.innerHTML = '';
+	for (const mon of state.foeRoster || []) {
+		const card = document.createElement('div');
+		card.className = 'foe-preview-card';
+		card.innerHTML = `
+			<img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${spriteId(mon.species)}.png" alt="${mon.species}">
+			<div class="name">${mon.species}</div>
+		`;
+		foeGrid.appendChild(card);
+	}
+
 	const grid = document.getElementById('preview-grid');
 	grid.innerHTML = '';
 	for (const mon of state.roster) {
@@ -388,7 +401,7 @@ function renderActionPanel(state) {
 	}
 
 	if (!pendingActions) {
-		pendingActions = { queue: acting.map(a => a.i), results: {}, awaiting: null };
+		pendingActions = { queue: acting.map(a => a.i), results: {}, awaiting: null, pickingSwitch: false };
 	}
 
 	if (pendingActions.queue.length === 0) {
@@ -407,24 +420,87 @@ function renderActionPanel(state) {
 		return;
 	}
 
+	if (pendingActions.pickingSwitch) {
+		renderBenchPicker(state, slotIdx);
+		return;
+	}
+
 	clearTargetHighlights();
-	panel.innerHTML = `<div class="mon-label">${mon.species}, choose a move:</div><div class="move-grid" id="move-grid"></div>`;
+	panel.innerHTML = `
+		<div class="mon-label">${mon.species}, choose a move:</div>
+		<div class="move-grid" id="move-grid"></div>
+		<button class="cancel-btn" id="switch-instead">Switch out instead</button>
+	`;
 	const grid = document.getElementById('move-grid');
 	for (const move of mon.moves) {
 		const btn = document.createElement('button');
 		btn.className = 'move-btn';
 		btn.disabled = !!move.disabled || move.pp === 0;
-		btn.innerHTML = `${move.name}<div class="pp">${move.pp}/${move.maxpp} PP</div>`;
+		let effHint = '';
+		if (move.effectiveness && !NEEDS_SINGLE_FOE_TARGET.has(move.target)) {
+			// Spread moves resolve without a separate target step, so summarize
+			// effectiveness against whichever foes are still up right on the button.
+			const labels = Object.values(move.effectiveness).map(e => EFFECTIVENESS_LABELS[e]);
+			if (labels.length) effHint = `<div class="eff-hint">${labels.join(' / ')}</div>`;
+		}
+		btn.innerHTML = `${move.name}<div class="pp">${move.pp}/${move.maxpp} PP</div>${effHint}`;
 		btn.onclick = () => chooseMove(state, slotIdx, move);
 		grid.appendChild(btn);
 	}
+	document.getElementById('switch-instead').onclick = () => {
+		pendingActions.pickingSwitch = true;
+		renderActionPanel(state);
+	};
+}
+
+function renderBenchPicker(state, slotIdx) {
+	const panel = document.getElementById('action-panel');
+	const usedSwitchTargets = new Set(
+		Object.values(pendingActions.results).filter(r => r && r.switchTo != null).map(r => r.switchTo)
+	);
+	const bench = state.you.filter(p => !p.active && !p.fainted && !usedSwitchTargets.has(p.index));
+
+	if (!bench.length) {
+		panel.innerHTML = '<div class="prompt">No other Pokemon available to switch in.</div><button class="cancel-btn" id="cancel-switch">Back</button>';
+		document.getElementById('cancel-switch').onclick = () => { pendingActions.pickingSwitch = false; renderActionPanel(state); };
+		return;
+	}
+
+	panel.innerHTML = `
+		<div class="prompt">Choose a Pokemon to switch in:</div>
+		<div class="switch-options" id="switch-options"></div>
+		<button class="cancel-btn" id="cancel-switch">Back</button>
+	`;
+	const optionsEl = document.getElementById('switch-options');
+	for (const mon of bench) {
+		const btn = document.createElement('button');
+		btn.className = 'switch-btn';
+		btn.textContent = `${mon.species} (${mon.hpText})`;
+		btn.onclick = () => {
+			pendingActions.results[slotIdx] = { switchTo: mon.index };
+			pendingActions.pickingSwitch = false;
+			pendingActions.queue.shift();
+			renderActionPanel(state);
+		};
+		optionsEl.appendChild(btn);
+	}
+	document.getElementById('cancel-switch').onclick = () => { pendingActions.pickingSwitch = false; renderActionPanel(state); };
 }
 
 const NEEDS_SINGLE_FOE_TARGET = new Set(['normal', 'any', 'adjacentFoe']);
+const EFFECTIVENESS_LABELS = {
+	noEffect: 'No effect',
+	notVeryEffective: 'Not very effective...',
+	effective: 'Effective',
+	superEffective: 'Super effective!',
+	extremelyEffective: 'Extremely effective!!',
+};
 
 function chooseMove(state, slotIdx, move) {
 	if (NEEDS_SINGLE_FOE_TARGET.has(move.target)) {
-		pendingActions.awaiting = { moveSlot: move.slot, moveName: move.name, targetType: 'foe' };
+		pendingActions.awaiting = {
+			moveSlot: move.slot, moveName: move.name, targetType: 'foe', effectiveness: move.effectiveness,
+		};
 		renderActionPanel(state);
 		return;
 	}
@@ -446,16 +522,30 @@ function chooseMove(state, slotIdx, move) {
 }
 
 function clearTargetHighlights() {
-	document.querySelectorAll('.slot').forEach(el => { el.classList.remove('targetable'); el.onclick = null; });
+	document.querySelectorAll('.slot').forEach(el => {
+		el.classList.remove('targetable');
+		el.onclick = null;
+		const tag = el.querySelector('.effectiveness-tag');
+		if (tag) tag.remove();
+	});
 }
 
 function highlightTargets(targetType, slotIdx, state) {
 	clearTargetHighlights();
+	const effectiveness = pendingActions.awaiting?.effectiveness;
 	const foeSlots = document.querySelectorAll('.slot[data-side="foe"]');
 	state.foe.forEach((mon, i) => {
 		if (!mon || mon.fainted) return;
-		foeSlots[i].classList.add('targetable');
-		foeSlots[i].onclick = () => {
+		const slotEl = foeSlots[i];
+		slotEl.classList.add('targetable');
+		const label = effectiveness && effectiveness[i + 1];
+		if (label) {
+			const tag = document.createElement('div');
+			tag.className = `effectiveness-tag eff-${label}`;
+			tag.textContent = EFFECTIVENESS_LABELS[label];
+			slotEl.appendChild(tag);
+		}
+		slotEl.onclick = () => {
 			pendingActions.results[slotIdx] = { moveSlot: pendingActions.awaiting.moveSlot, target: targetSlotFor('foe', i) };
 			pendingActions.awaiting = null;
 			pendingActions.queue.shift();

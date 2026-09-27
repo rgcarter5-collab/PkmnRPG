@@ -36,6 +36,20 @@ export function createSeenTracker() {
 	return {};
 }
 
+// Real VGC-style Team Preview reveals BOTH sides' full 6 species publicly (not
+// items/exact spreads/moves) via `|poke|<side>|<details>|` broadcast lines,
+// same protocol line to both players (see data/rulesets.ts's "Team Preview"
+// rule) - not the private per-side team list a `request` carries. Parsed
+// separately from the request-driven roster so the preview screen can show
+// what the opponent brought before either side locks in their pick of 4.
+export function parsePokeLine(line) {
+	const parts = line.split('|');
+	if (parts[1] !== 'poke') return null;
+	const side = parts[2];
+	const { speciesName, level } = parseDetails(parts[3]);
+	return { side, speciesName, level };
+}
+
 /** Feed one raw protocol line into a seen-state store, mutating it in place. */
 export function trackSeenLine(seen, line) {
 	const parts = line.split('|');

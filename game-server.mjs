@@ -11,7 +11,7 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { BattleStream, getPlayerStreams, Teams } from './sim/index.ts';
+import { BattleStream, getPlayerStreams, Teams, Dex } from './sim/index.ts';
 import { TieredAI } from './tiered-ai.mjs';
 import { HumanPlayer } from './human-player.mjs';
 import { toPokemonSet } from './pokemon-set.mjs';
@@ -70,6 +70,19 @@ function formatLogLine(line) {
 		case 'tie': return "It's a tie!";
 		default: return null;
 	}
+}
+
+// Type effectiveness against a foe's (publicly known - types are never
+// hidden info) type(s), as a display label for the move-selection UI. Real
+// games only ever say "super effective" once, but the ask here was a
+// graduated readout, so x4 gets its own "extremely effective" tier.
+function effectivenessLabel(moveType, defenderTypes) {
+	if (!Dex.getImmunity(moveType, defenderTypes)) return 'noEffect';
+	const mod = Dex.getEffectiveness(moveType, defenderTypes);
+	if (mod <= -1) return 'notVeryEffective';
+	if (mod === 0) return 'effective';
+	if (mod === 1) return 'superEffective';
+	return 'extremelyEffective';
 }
 
 async function waitForPendingOrEnd(session, timeoutMs) {
@@ -162,6 +175,7 @@ function buildState(session) {
 			status: s.status || '', hpFraction: s.hpFraction ?? 1,
 		};
 	});
+	const foeTypes = foe.map(f => (f ? Dex.species.get(f.species).types : null));
 
 	const base = {
 		battleId: session.id,
@@ -180,7 +194,18 @@ function buildState(session) {
 			const { speciesName, level } = parseDetails(p.details);
 			return { index: i + 1, species: speciesName, level, item: p.item, ability: p.ability || p.baseAbility, moves: p.moves };
 		});
-		return { ...base, phase: 'teamPreview', needsChoice: true, you: [], roster, maxChosenTeamSize: req.maxChosenTeamSize || roster.length };
+		// Real VGC Team Preview reveals both sides' full 6 species publicly -
+		// see battle-tracker.mjs's parsePokeLine / human-player.mjs's
+		// previewRoster. Falls back to an empty list if somehow never
+		// populated (e.g. a format without the Team Preview rule) rather than
+		// erroring - the picker just won't show anything for the foe then.
+		const foeRoster = (session.human.previewRoster[foePrefix] || []).map((p, i) => ({
+			index: i + 1, species: p.species, level: p.level,
+		}));
+		return {
+			...base, phase: 'teamPreview', needsChoice: true, you: [], roster, foeRoster,
+			maxChosenTeamSize: req.maxChosenTeamSize || roster.length,
+		};
 	}
 
 	if (req.forceSwitch) {
@@ -201,22 +226,41 @@ function buildState(session) {
 
 	// Move phase (req.active): same shape as before, generalized to however
 	// many mons are in the brought team (still just the active ones get moves).
+	// `index` (1-based) is the roster slot number this entry lives in in
+	// req.side.pokemon - the same number `switch N` expects, so the front end
+	// can offer a voluntary switch from any bench slot alongside move choices.
 	let activeIdx = 0;
-	const you = req.side.pokemon.map(p => {
+	const you = req.side.pokemon.map((p, i) => {
 		const fainted = p.condition.includes('fnt');
 		const [hpPart, statusPart] = p.condition.split(' ');
 		const [cur, max] = hpPart.split('/').map(Number);
 		const { speciesName, level } = parseDetails(p.details);
 		let moves = null;
 		if (p.active && req.active[activeIdx]) {
-			moves = req.active[activeIdx].moves.map((m, i) => ({
-				slot: i + 1, id: m.id, name: m.move, pp: m.pp, maxpp: m.maxpp,
-				disabled: !!m.disabled, target: m.target,
-			}));
+			moves = req.active[activeIdx].moves.map((m, mi) => {
+				const moveData = Dex.moves.get(m.id);
+				let effectiveness = null;
+				// Only meaningful for moves that actually hit a foe, and only
+				// against foes we've actually seen (fog of war still applies -
+				// types are public, but only once we know which species is
+				// even out there).
+				if (moveData.exists && moveData.category !== 'Status' &&
+					['normal', 'any', 'adjacentFoe', 'allAdjacentFoes', 'allAdjacent'].includes(m.target)) {
+					effectiveness = {};
+					foe.forEach((f, fi) => {
+						if (!f || f.fainted || !foeTypes[fi]) return;
+						effectiveness[fi + 1] = effectivenessLabel(moveData.type, foeTypes[fi]);
+					});
+				}
+				return {
+					slot: mi + 1, id: m.id, name: m.move, pp: m.pp, maxpp: m.maxpp,
+					disabled: !!m.disabled, target: m.target, effectiveness,
+				};
+			});
 		}
 		if (p.active) activeIdx++;
 		return {
-			species: speciesName, level, fainted, active: p.active,
+			index: i + 1, species: speciesName, level, fainted, active: p.active,
 			status: fainted ? '' : (statusPart || ''),
 			hpFraction: max ? cur / max : (fainted ? 0 : null),
 			hpText: fainted ? '0/0' : `${cur}/${max}`,
@@ -369,16 +413,40 @@ const server = createServer(async (req, res) => {
 				if (invalid) return sendJSON(res, 400, { error: invalid });
 				choiceString = parts.join(', ');
 			} else {
-				// Move phase.
+				// Move phase. Each acting slot's action is either a move choice
+				// ({moveSlot, target?}) or a voluntary switch ({switchTo: <1-based
+				// roster slot>}) - same duplicate/legality validation as the
+				// forceSwitch branch above, and for the same reason: an invalid
+				// combined choice can silently strand the session otherwise.
 				const actions = body.actions || [];
+				const availableBench = req_.side.pokemon
+					.map((p, idx) => ({ slot: idx + 1, p }))
+					.filter(({ p }) => !p.active && !p.condition.includes('fnt'));
+				const usedSwitchSlots = new Set();
+				let invalid = null;
 				const parts = req_.active.map((activeSlot, i) => {
 					const pokemon = req_.side.pokemon[i];
 					if (pokemon.condition.includes('fnt')) return 'pass'; // fainted active slot: always pass
 					const chosen = actions[i];
-					if (!chosen || !chosen.moveSlot) return 'pass';
+					if (!chosen) return 'pass';
+					if (chosen.switchTo != null) {
+						const slot = chosen.switchTo;
+						if (usedSwitchSlots.has(slot)) {
+							invalid = invalid || 'That Pokemon was already chosen for another switch-in this turn.';
+							return 'pass';
+						}
+						if (!availableBench.some(b => b.slot === slot)) {
+							invalid = invalid || "That Pokemon can't switch in right now.";
+							return 'pass';
+						}
+						usedSwitchSlots.add(slot);
+						return `switch ${slot}`;
+					}
+					if (!chosen.moveSlot) return 'pass';
 					return chosen.target != null && chosen.target !== 0 ?
 						`move ${chosen.moveSlot} ${chosen.target}` : `move ${chosen.moveSlot}`;
 				});
+				if (invalid) return sendJSON(res, 400, { error: invalid });
 				choiceString = parts.join(', ');
 			}
 
