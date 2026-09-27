@@ -16,7 +16,7 @@ import { TieredAI } from './tiered-ai.mjs';
 import { HumanPlayer } from './human-player.mjs';
 import { toPokemonSet } from './pokemon-set.mjs';
 import { parseDetails, parseHP } from './battle-tracker.mjs';
-import { getMovepool, validateMoveset } from './movepool.mjs';
+import { getMovepoolWithPresets, validateMoveset } from './movepool.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -94,7 +94,7 @@ function startBattle(regionId, coreIndex, customMoves) {
 	const p1roster = core.roster.map((mon, i) => {
 		const override = customMoves?.[i + 1];
 		if (!override) return mon;
-		return { ...mon, moves: validateMoveset(mon.species, override) };
+		return { ...mon, moves: validateMoveset(mon.species, override, mon.moves) };
 	});
 
 	const p1team = p1roster.map(toPokemonSet);
@@ -283,7 +283,7 @@ const server = createServer(async (req, res) => {
 			const roster = core.roster.map((mon, i) => ({
 				index: i + 1, species: mon.species, level: mon.level, item: mon.item, ability: mon.ability,
 				moves: mon.moves,
-				movepool: getMovepool(mon.species),
+				movepool: getMovepoolWithPresets(mon.species, mon.moves),
 			}));
 			return sendJSON(res, 200, { coreName: core.name, roster });
 		}

@@ -43,18 +43,44 @@ export function getMovepool(speciesName) {
 }
 
 /**
+ * A rental's starting moveset is picked from its FULL learnset (see
+ * build-regional-teams.mjs's buildMoveset), which can include an egg/tutor
+ * move that isn't level-up/TM-learnable on its own. Those still need to
+ * round-trip cleanly when the player leaves a slot untouched, so both the
+ * offered movepool and validation always fold in a mon's original presets
+ * regardless of method, on top of the real level-up/TM swap-in pool.
+ * @param {string} speciesName
+ * @param {string[]} presetMoves
+ */
+export function getMovepoolWithPresets(speciesName, presetMoves) {
+	const pool = getMovepool(speciesName);
+	const seen = new Set(pool.map(m => m.id));
+	for (const name of presetMoves || []) {
+		const moveData = Dex.moves.get(name);
+		if (moveData?.exists && !seen.has(moveData.id)) {
+			seen.add(moveData.id);
+			pool.push({ id: moveData.id, name: moveData.name });
+		}
+	}
+	pool.sort((a, b) => a.name.localeCompare(b.name));
+	return pool;
+}
+
+/**
  * Validate a proposed 4-move replacement set against a species' real
- * level-up/TM movepool. Returns the cleaned move NAME list on success, or
+ * level-up/TM movepool (plus its original preset moves - see
+ * getMovepoolWithPresets). Returns the cleaned move NAME list on success, or
  * throws with a human-readable reason on failure.
  * @param {string} speciesName
  * @param {string[]} moveNames
+ * @param {string[]} [presetMoves] the rental's original, pre-edit moveset
  * @returns {string[]}
  */
-export function validateMoveset(speciesName, moveNames) {
+export function validateMoveset(speciesName, moveNames, presetMoves) {
 	if (!Array.isArray(moveNames) || moveNames.length !== 4) {
 		throw new Error(`${speciesName}: must choose exactly 4 moves`);
 	}
-	const pool = getMovepool(speciesName);
+	const pool = getMovepoolWithPresets(speciesName, presetMoves);
 	const poolIds = new Set(pool.map(m => m.id));
 	const seen = new Set();
 	const cleaned = [];
