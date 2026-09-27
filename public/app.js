@@ -5,6 +5,7 @@
 
 const screens = {
 	picker: document.getElementById('screen-picker'),
+	preview: document.getElementById('screen-preview'),
 	battle: document.getElementById('screen-battle'),
 	end: document.getElementById('screen-end'),
 };
@@ -61,9 +62,81 @@ async function startBattle(region, coreIndex) {
 		body: JSON.stringify({ region, coreIndex }),
 	});
 	currentBattleId = state.battleId;
-	showScreen('battle');
 	render(state);
 }
+
+// --- Team preview screen (bring 6, pick 4) --------------------------------
+
+let previewPicks = []; // ordered list of 1-based roster indices tapped so far
+
+function renderPreview(state) {
+	showScreen('preview');
+	previewPicks = [];
+	document.getElementById('preview-hint').textContent =
+		`Tap ${state.maxChosenTeamSize} Pokemon in the order you want them - the first two lead the battle.`;
+
+	const grid = document.getElementById('preview-grid');
+	grid.innerHTML = '';
+	for (const mon of state.roster) {
+		const card = document.createElement('div');
+		card.className = 'preview-card';
+		card.innerHTML = `
+			<img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${spriteId(mon.species)}.png" alt="${mon.species}">
+			<div class="name">${mon.species}</div>
+			<div class="level">Lv. ${mon.level}</div>
+		`;
+		card.onclick = () => togglePreviewPick(state, mon.index, card);
+		grid.appendChild(card);
+	}
+	updatePreviewConfirmButton(state);
+}
+
+function togglePreviewPick(state, index, card) {
+	const existing = previewPicks.indexOf(index);
+	if (existing !== -1) {
+		previewPicks.splice(existing, 1);
+	} else if (previewPicks.length < state.maxChosenTeamSize) {
+		previewPicks.push(index);
+	}
+	// Re-render badges across all cards since removing one shifts the rest.
+	const cards = document.querySelectorAll('.preview-card');
+	state.roster.forEach((mon, i) => {
+		const pick = previewPicks.indexOf(mon.index);
+		cards[i].classList.toggle('picked', pick !== -1);
+		const existingBadge = cards[i].querySelector('.pick-badge');
+		if (existingBadge) existingBadge.remove();
+		if (pick !== -1) {
+			const badge = document.createElement('div');
+			badge.className = 'pick-badge';
+			badge.textContent = pick + 1;
+			cards[i].appendChild(badge);
+		}
+	});
+	updatePreviewConfirmButton(state);
+}
+
+function updatePreviewConfirmButton(state) {
+	const btn = document.getElementById('preview-confirm');
+	btn.disabled = previewPicks.length !== state.maxChosenTeamSize;
+	btn.textContent = `Confirm team (${previewPicks.length}/${state.maxChosenTeamSize})`;
+}
+
+document.getElementById('preview-confirm').onclick = async () => {
+	const btn = document.getElementById('preview-confirm');
+	btn.disabled = true;
+	btn.textContent = 'Starting battle...';
+	try {
+		const newState = await api(`/api/battle/${currentBattleId}/choose`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ order: previewPicks }),
+		});
+		render(newState);
+	} catch (err) {
+		btn.disabled = false;
+		document.getElementById('preview-hint').textContent = `Error: ${err.message}`;
+	}
+};
 
 function hpClass(frac) {
 	if (frac == null) return '';
@@ -98,6 +171,13 @@ let lastState = null;
 
 function render(state) {
 	lastState = state;
+
+	if (state.phase === 'teamPreview') {
+		renderPreview(state);
+		return;
+	}
+
+	showScreen('battle');
 	document.getElementById('opponent-name').textContent = `vs. ${state.opponentName}`;
 
 	const foeSlots = document.querySelectorAll('.slot[data-side="foe"]');
@@ -119,8 +199,77 @@ function render(state) {
 		return;
 	}
 
+	const switchPanel = document.getElementById('switch-panel');
+	if (state.phase === 'switch') {
+		switchPanel.classList.remove('hidden');
+		document.getElementById('action-panel').innerHTML = '';
+		renderSwitchPanel(state);
+		return;
+	}
+	switchPanel.classList.add('hidden');
+
 	pendingActions = null;
 	renderActionPanel(state);
+}
+
+// --- Forced-switch screen (a mon fainted and there's a bench to pick from) --
+
+// One entry per forceSwitch position still needing an answer, in order.
+let pendingSwitches = null; // { queue: [posIdx,...], results: {posIdx: rosterSlot} }
+
+function renderSwitchPanel(state) {
+	const panel = document.getElementById('switch-panel');
+	if (!pendingSwitches) {
+		const queue = state.forceSwitch.map((needs, i) => (needs ? i : -1)).filter(i => i >= 0);
+		pendingSwitches = { queue, results: {} };
+	}
+
+	if (pendingSwitches.queue.length === 0) {
+		submitSwitches(state);
+		return;
+	}
+
+	const posIdx = pendingSwitches.queue[0];
+	const fainted = state.you[posIdx];
+	const chosenSoFar = new Set(Object.values(pendingSwitches.results));
+	const available = state.you.filter((p, i) => !p.active && !p.fainted && !chosenSoFar.has(i));
+
+	panel.innerHTML = `<div class="prompt">${fainted.species} fainted - choose a replacement:</div><div class="switch-options" id="switch-options"></div>`;
+	const optionsEl = document.getElementById('switch-options');
+	for (const mon of available) {
+		const btn = document.createElement('button');
+		btn.className = 'switch-btn';
+		btn.textContent = `${mon.species} (${mon.hpText})`;
+		btn.onclick = () => {
+			pendingSwitches.results[posIdx] = mon.index;
+			pendingSwitches.queue.shift();
+			renderSwitchPanel(state);
+		};
+		optionsEl.appendChild(btn);
+	}
+	if (!available.length) {
+		// No legal switch-in for this position (shouldn't normally happen once
+		// we've already confirmed a bench exists) - just pass it.
+		pendingSwitches.queue.shift();
+		renderSwitchPanel(state);
+	}
+}
+
+async function submitSwitches(state) {
+	const switches = state.forceSwitch.map((needs, i) => (needs ? (pendingSwitches.results[i] + 1 || null) : null));
+	pendingSwitches = null;
+	const panel = document.getElementById('switch-panel');
+	panel.innerHTML = '<div class="prompt">Sending out replacement...</div>';
+	try {
+		const newState = await api(`/api/battle/${currentBattleId}/choose`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ switches }),
+		});
+		render(newState);
+	} catch (err) {
+		panel.innerHTML = `<div class="prompt">Error: ${escapeHtml(err.message)}</div>`;
+	}
 }
 
 function escapeHtml(s) {

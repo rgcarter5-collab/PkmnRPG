@@ -48,7 +48,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Fire"
           },
           {
             "species": "Jolteon",
@@ -114,7 +114,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Water"
           },
           {
             "species": "Aerodactyl",
@@ -186,7 +186,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Water"
           },
           {
             "species": "Snorlax",
@@ -274,7 +274,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ice"
           }
         ]
       },
@@ -302,7 +302,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Flying"
           },
           {
             "species": "Exeggutor",
@@ -324,7 +324,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Psychic"
           },
           {
             "species": "Venusaur",
@@ -346,7 +346,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Poison"
           },
           {
             "species": "Ninetales",
@@ -484,7 +484,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Ground"
           },
           {
             "species": "Alakazam",
@@ -550,7 +550,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fairy"
           }
         ]
       }
@@ -558,6 +558,7 @@
     "cityLeagueCores": [
       {
         "name": "Kanto Rental Core 1",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Hitmonlee",
@@ -602,12 +603,7 @@
             },
             "level": 50,
             "teraType": "Fighting"
-          }
-        ]
-      },
-      {
-        "name": "Kanto Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Jynx",
             "ability": "Oblivious",
@@ -651,12 +647,7 @@
             },
             "level": 50,
             "teraType": "Ground"
-          }
-        ]
-      },
-      {
-        "name": "Kanto Rental Core 3",
-        "roster": [
+          },
           {
             "species": "Sandslash-Alola",
             "ability": "Snow Cloak",
@@ -704,7 +695,8 @@
         ]
       },
       {
-        "name": "Kanto Rental Core 4",
+        "name": "Kanto Rental Core 2",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Seaking",
@@ -749,6 +741,370 @@
             },
             "level": 50,
             "teraType": "Poison"
+          },
+          {
+            "species": "Fearow",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Sky Attack",
+              "Drill Run",
+              "Tailwind"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Persian",
+            "ability": "Limber",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Gunk Shot",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Persian-Alola",
+            "ability": "Fur Coat",
+            "item": "Life Orb",
+            "moves": [
+              "Dark Pulse",
+              "Foul Play",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dark"
+          },
+          {
+            "species": "Wigglytuff",
+            "ability": "Cute Charm",
+            "item": "Assault Vest",
+            "moves": [
+              "Hyper Beam",
+              "Self-Destruct",
+              "Focus Blast",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          }
+        ]
+      },
+      {
+        "name": "Kanto Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Dugtrio",
+            "ability": "Sand Veil",
+            "item": "Life Orb",
+            "moves": [
+              "Earthquake",
+              "High Horsepower",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Dugtrio-Alola",
+            "ability": "Sand Veil",
+            "item": "Life Orb",
+            "moves": [
+              "Earthquake",
+              "High Horsepower",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Marowak",
+            "ability": "Rock Head",
+            "item": "Life Orb",
+            "moves": [
+              "Earthquake",
+              "Dig",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Marowak-Alola",
+            "ability": "Cursed Body",
+            "item": "Life Orb",
+            "moves": [
+              "Flare Blitz",
+              "Poltergeist",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Raticate",
+            "ability": "Run Away",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Iron Tail",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Raticate-Alola",
+            "ability": "Gluttony",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Iron Tail",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dark"
+          }
+        ]
+      },
+      {
+        "name": "Kanto Rental Core 4",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Parasect",
+            "ability": "Effect Spore",
+            "item": "Life Orb",
+            "moves": [
+              "Leech Life",
+              "Seed Bomb",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Grass"
+          },
+          {
+            "species": "Butterfree",
+            "ability": "Compound Eyes",
+            "item": "Life Orb",
+            "moves": [
+              "Hurricane",
+              "Bug Buzz",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Beedrill",
+            "ability": "Swarm",
+            "item": "Life Orb",
+            "moves": [
+              "Poison Jab",
+              "X-Scissor",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Poison"
+          },
+          {
+            "species": "Farfetch’d",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Last Resort",
+              "Sky Attack",
+              "Solar Blade",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
+          {
+            "species": "Pikachu-Alola",
+            "ability": "Static",
+            "item": "Life Orb",
+            "moves": [
+              "Volt Tackle",
+              "Wild Charge",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Pikachu-Hoenn",
+            "ability": "Static",
+            "item": "Life Orb",
+            "moves": [
+              "Volt Tackle",
+              "Wild Charge",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
           }
         ]
       }
@@ -1057,7 +1413,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Dark"
           },
           {
             "species": "Donphan",
@@ -1123,7 +1479,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Bug"
           },
           {
             "species": "Politoed",
@@ -1167,7 +1523,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fire"
           }
         ]
       },
@@ -1217,7 +1573,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Psychic"
           },
           {
             "species": "Skarmory",
@@ -1239,7 +1595,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Flying"
           },
           {
             "species": "Lanturn",
@@ -1313,7 +1669,256 @@
     "cityLeagueCores": [
       {
         "name": "Johto Rental Core 1",
+        "signatureCount": 2,
         "roster": [
+          {
+            "species": "Bellossom",
+            "ability": "Chlorophyll",
+            "item": "Life Orb",
+            "moves": [
+              "Leaf Storm",
+              "Petal Dance",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Grass"
+          },
+          {
+            "species": "Slowking",
+            "ability": "Oblivious",
+            "item": "Assault Vest",
+            "moves": [
+              "Future Sight",
+              "Hydro Pump",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Slowking-Galar",
+            "ability": "Curious Medicine",
+            "item": "Assault Vest",
+            "moves": [
+              "Future Sight",
+              "Sludge Wave",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Miltank",
+            "ability": "Thick Fat",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Double-Edge",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Mantine",
+            "ability": "Swift Swim",
+            "item": "Assault Vest",
+            "moves": [
+              "Hurricane",
+              "Hydro Pump",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
+          {
+            "species": "Octillery",
+            "ability": "Suction Cups",
+            "item": "Life Orb",
+            "moves": [
+              "Liquidation",
+              "Dive",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Water"
+          }
+        ]
+      },
+      {
+        "name": "Johto Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Xatu",
+            "ability": "Synchronize",
+            "item": "Life Orb",
+            "moves": [
+              "Future Sight",
+              "Dream Eater",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Forretress",
+            "ability": "Sturdy",
+            "item": "Life Orb",
+            "moves": [
+              "Steel Beam",
+              "Iron Head",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Steel"
+          },
+          {
+            "species": "Skarmory",
+            "ability": "Keen Eye",
+            "item": "Leftovers",
+            "moves": [
+              "Sky Attack",
+              "Brave Bird",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Steel"
+          },
+          {
+            "species": "Lanturn",
+            "ability": "Volt Absorb",
+            "item": "Assault Vest",
+            "moves": [
+              "Zap Cannon",
+              "Hydro Pump",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Jumpluff",
+            "ability": "Chlorophyll",
+            "item": "Life Orb",
+            "moves": [
+              "Bounce",
+              "Seed Bomb",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
           {
             "species": "Hitmontop",
             "ability": "Intimidate",
@@ -1335,7 +1940,13 @@
             },
             "level": 50,
             "teraType": "Fighting"
-          },
+          }
+        ]
+      },
+      {
+        "name": "Johto Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
           {
             "species": "Noctowl",
             "ability": "Insomnia",
@@ -1357,12 +1968,7 @@
             },
             "level": 50,
             "teraType": "Flying"
-          }
-        ]
-      },
-      {
-        "name": "Johto Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Granbull",
             "ability": "Intimidate",
@@ -1405,13 +2011,8 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
-          }
-        ]
-      },
-      {
-        "name": "Johto Rental Core 3",
-        "roster": [
+            "teraType": "Water"
+          },
           {
             "species": "Quagsire",
             "ability": "Damp",
@@ -1454,13 +2055,8 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
-          }
-        ]
-      },
-      {
-        "name": "Johto Rental Core 4",
-        "roster": [
+            "teraType": "Fire"
+          },
           {
             "species": "Sunflora",
             "ability": "Chlorophyll",
@@ -1482,7 +2078,13 @@
             },
             "level": 50,
             "teraType": "Grass"
-          },
+          }
+        ]
+      },
+      {
+        "name": "Johto Rental Core 4",
+        "signatureCount": 2,
+        "roster": [
           {
             "species": "Azumarill",
             "ability": "Thick Fat",
@@ -1504,6 +2106,113 @@
             },
             "level": 50,
             "teraType": "Water"
+          },
+          {
+            "species": "Furret",
+            "ability": "Run Away",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Sudowoodo",
+            "ability": "Sturdy",
+            "item": "Life Orb",
+            "moves": [
+              "Head Smash",
+              "Stone Edge",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Corsola",
+            "ability": "Hustle",
+            "item": "Life Orb",
+            "moves": [
+              "Meteor Beam",
+              "Hydro Pump",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Wobbuffet",
+            "ability": "Shadow Tag",
+            "item": "Leftovers",
+            "moves": [
+              "Amnesia"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Ariados",
+            "ability": "Swarm",
+            "item": "Life Orb",
+            "moves": [
+              "Leech Life",
+              "Lunge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Poison"
           }
         ]
       }
@@ -1558,7 +2267,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Dragon"
           },
           {
             "species": "Sceptile",
@@ -1646,7 +2355,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fairy"
           }
         ]
       },
@@ -1762,7 +2471,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Water"
           },
           {
             "species": "Wailord",
@@ -1900,7 +2609,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Rock"
           },
           {
             "species": "Armaldo",
@@ -1922,7 +2631,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Rock"
           }
         ]
       },
@@ -2060,7 +2769,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ground"
           }
         ]
       }
@@ -2068,6 +2777,7 @@
     "cityLeagueCores": [
       {
         "name": "Hoenn Rental Core 1",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Zangoose",
@@ -2112,12 +2822,7 @@
             },
             "level": 50,
             "teraType": "Poison"
-          }
-        ]
-      },
-      {
-        "name": "Hoenn Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Ninjask",
             "ability": "Speed Boost",
@@ -2138,7 +2843,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Bug"
           },
           {
             "species": "Swellow",
@@ -2160,13 +2865,8 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
-          }
-        ]
-      },
-      {
-        "name": "Hoenn Rental Core 3",
-        "roster": [
+            "teraType": "Normal"
+          },
           {
             "species": "Banette",
             "ability": "Insomnia",
@@ -2214,7 +2914,8 @@
         ]
       },
       {
-        "name": "Hoenn Rental Core 4",
+        "name": "Hoenn Rental Core 2",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Masquerain",
@@ -2236,7 +2937,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Flying"
           },
           {
             "species": "Pelipper",
@@ -2258,7 +2959,371 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Water"
+          },
+          {
+            "species": "Kecleon",
+            "ability": "Color Change",
+            "item": "Life Orb",
+            "moves": [
+              "Last Resort",
+              "Double-Edge",
+              "Focus Punch",
+              "Trick Room"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Volbeat",
+            "ability": "Illuminate",
+            "item": "Life Orb",
+            "moves": [
+              "Lunge",
+              "Skitter Smack",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Illumise",
+            "ability": "Oblivious",
+            "item": "Life Orb",
+            "moves": [
+              "Bug Buzz",
+              "Silver Wind",
+              "Solar Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Mightyena",
+            "ability": "Intimidate",
+            "item": "Life Orb",
+            "moves": [
+              "Foul Play",
+              "Crunch",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dark"
+          }
+        ]
+      },
+      {
+        "name": "Hoenn Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Linoone",
+            "ability": "Pickup",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Gunk Shot",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Castform",
+            "ability": "Forecast",
+            "item": "Life Orb",
+            "moves": [
+              "Last Resort",
+              "Double-Edge",
+              "Future Sight",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Medicham",
+            "ability": "Pure Power",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "High Jump Kick",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Plusle",
+            "ability": "Plus",
+            "item": "Life Orb",
+            "moves": [
+              "Thunder",
+              "Thunderbolt",
+              "Uproar",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Minun",
+            "ability": "Minus",
+            "item": "Life Orb",
+            "moves": [
+              "Thunder",
+              "Thunderbolt",
+              "Uproar",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Delcatty",
+            "ability": "Cute Charm",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Iron Tail",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          }
+        ]
+      },
+      {
+        "name": "Hoenn Rental Core 4",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Beautifly",
+            "ability": "Swarm",
+            "item": "Life Orb",
+            "moves": [
+              "Bug Buzz",
+              "Signal Beam",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Dustox",
+            "ability": "Shield Dust",
+            "item": "Life Orb",
+            "moves": [
+              "U-turn",
+              "Bug Bite",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Poison"
+          },
+          {
+            "species": "Sableye",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Poltergeist",
+              "Foul Play",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Mawile",
+            "ability": "Hyper Cutter",
+            "item": "Life Orb",
+            "moves": [
+              "Play Rough",
+              "Steel Beam",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Spinda",
+            "ability": "Own Tempo",
+            "item": "Life Orb",
+            "moves": [
+              "Last Resort",
+              "Double-Edge",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Luvdisc",
+            "ability": "Swift Swim",
+            "item": "Life Orb",
+            "moves": [
+              "Hydro Pump",
+              "Surf",
+              "Blizzard",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
           }
         ]
       }
@@ -2357,7 +3422,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Fighting"
           },
           {
             "species": "Mamoswine",
@@ -2379,7 +3444,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Ice"
           },
           {
             "species": "Lucario",
@@ -2429,7 +3494,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fairy"
           },
           {
             "species": "Magnezone",
@@ -2451,7 +3516,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Steel"
           },
           {
             "species": "Rhyperior",
@@ -2473,7 +3538,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Rock"
           },
           {
             "species": "Empoleon",
@@ -2517,7 +3582,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Grass"
           },
           {
             "species": "Glaceon",
@@ -2567,7 +3632,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Ground"
           },
           {
             "species": "Hippowdon",
@@ -2655,7 +3720,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ground"
           },
           {
             "species": "Gastrodon-East",
@@ -2724,7 +3789,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Electric"
           },
           {
             "species": "Rotom-Frost",
@@ -2743,7 +3808,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Ice"
           },
           {
             "species": "Rotom-Heat",
@@ -2762,7 +3827,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Electric"
           },
           {
             "species": "Rotom-Mow",
@@ -2808,7 +3873,394 @@
     "cityLeagueCores": [
       {
         "name": "Sinnoh Rental Core 1",
+        "signatureCount": 2,
         "roster": [
+          {
+            "species": "Drifblim",
+            "ability": "Aftermath",
+            "item": "Assault Vest",
+            "moves": [
+              "Shadow Ball",
+              "Air Slash",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
+          {
+            "species": "Rampardos",
+            "ability": "Mold Breaker",
+            "item": "Life Orb",
+            "moves": [
+              "Head Smash",
+              "Stone Edge",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Bastiodon",
+            "ability": "Sturdy",
+            "item": "Leftovers",
+            "moves": [
+              "Iron Tail",
+              "Stone Edge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Steel"
+          },
+          {
+            "species": "Floatzel",
+            "ability": "Swift Swim",
+            "item": "Life Orb",
+            "moves": [
+              "Wave Crash",
+              "Aqua Tail",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Mismagius",
+            "ability": "Levitate",
+            "item": "Life Orb",
+            "moves": [
+              "Shadow Ball",
+              "Poltergeist",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Abomasnow",
+            "ability": "Snow Warning",
+            "item": "Leftovers",
+            "moves": [
+              "Wood Hammer",
+              "Ice Spinner",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ice"
+          }
+        ]
+      },
+      {
+        "name": "Sinnoh Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Toxicroak",
+            "ability": "Anticipation",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Close Combat",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Staraptor",
+            "ability": "Intimidate",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Sky Attack",
+              "Close Combat",
+              "Tailwind"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Spiritomb",
+            "ability": "Pressure",
+            "item": "Life Orb",
+            "moves": [
+              "Poltergeist",
+              "Foul Play",
+              "Giga Impact",
+              "Trick Room"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dark"
+          },
+          {
+            "species": "Ambipom",
+            "ability": "Technician",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Lopunny",
+            "ability": "Cute Charm",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Froslass",
+            "ability": "Snow Cloak",
+            "item": "Life Orb",
+            "moves": [
+              "Poltergeist",
+              "Ice Spinner",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ice"
+          }
+        ]
+      },
+      {
+        "name": "Sinnoh Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Skuntank",
+            "ability": "Stench",
+            "item": "Life Orb",
+            "moves": [
+              "Gunk Shot",
+              "Foul Play",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dark"
+          },
+          {
+            "species": "Gastrodon",
+            "ability": "Sticky Hold",
+            "item": "Assault Vest",
+            "moves": [
+              "Hydro Pump",
+              "Earth Power",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Gastrodon-East",
+            "ability": "Sticky Hold",
+            "item": "Assault Vest",
+            "moves": [
+              "Hydro Pump",
+              "Earth Power",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Vespiquen",
+            "ability": "Pressure",
+            "item": "Leftovers",
+            "moves": [
+              "Attack Order",
+              "Lunge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Lumineon",
+            "ability": "Swift Swim",
+            "item": "Life Orb",
+            "moves": [
+              "Aqua Tail",
+              "Dive",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
           {
             "species": "Carnivine",
             "ability": "Levitate",
@@ -2830,7 +4282,13 @@
             },
             "level": 50,
             "teraType": "Grass"
-          },
+          }
+        ]
+      },
+      {
+        "name": "Sinnoh Rental Core 4",
+        "signatureCount": 2,
+        "roster": [
           {
             "species": "Purugly",
             "ability": "Thick Fat",
@@ -2852,12 +4310,7 @@
             },
             "level": 50,
             "teraType": "Normal"
-          }
-        ]
-      },
-      {
-        "name": "Sinnoh Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Cherrim",
             "ability": "Flower Gift",
@@ -2900,13 +4353,8 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
-          }
-        ]
-      },
-      {
-        "name": "Sinnoh Rental Core 3",
-        "roster": [
+            "teraType": "Electric"
+          },
           {
             "species": "Wormadam",
             "ability": "Anticipation",
@@ -2927,7 +4375,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Bug"
           },
           {
             "species": "Wormadam-Sandy",
@@ -2949,13 +4397,8 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
-          }
-        ]
-      },
-      {
-        "name": "Sinnoh Rental Core 4",
-        "roster": [
+            "teraType": "Ground"
+          },
           {
             "species": "Wormadam-Trash",
             "ability": "Anticipation",
@@ -2976,29 +4419,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
-          },
-          {
-            "species": "Mothim",
-            "ability": "Swarm",
-            "item": "Life Orb",
-            "moves": [
-              "Lunge",
-              "U-turn",
-              "Giga Impact",
-              "Protect"
-            ],
-            "nature": "Adamant",
-            "evs": {
-              "hp": 4,
-              "atk": 252,
-              "def": 0,
-              "spa": 0,
-              "spd": 0,
-              "spe": 252
-            },
-            "level": 50,
-            "teraType": "Bug"
+            "teraType": "Steel"
           }
         ]
       }
@@ -3031,7 +4452,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Flying"
           },
           {
             "species": "Volcarona",
@@ -3169,7 +4590,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Dragon"
           },
           {
             "species": "Klinklang",
@@ -3235,7 +4656,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Flying"
           },
           {
             "species": "Conkeldurr",
@@ -3279,7 +4700,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           }
         ]
       },
@@ -3395,7 +4816,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Ground"
           },
           {
             "species": "Gigalith",
@@ -3533,7 +4954,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           },
           {
             "species": "Braviary-Hisui",
@@ -3563,15 +4984,16 @@
     "cityLeagueCores": [
       {
         "name": "Unova Rental Core 1",
+        "signatureCount": 2,
         "roster": [
           {
-            "species": "Sawsbuck",
-            "ability": "Chlorophyll",
+            "species": "Simisage",
+            "ability": "Gluttony",
             "item": "Life Orb",
             "moves": [
-              "Giga Impact",
-              "Last Resort",
-              "Megahorn",
+              "Seed Bomb",
+              "Solar Beam",
+              "Focus Punch",
               "Protect"
             ],
             "nature": "Adamant",
@@ -3584,16 +5006,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Grass"
           },
           {
-            "species": "Garbodor",
-            "ability": "Stench",
+            "species": "Simisear",
+            "ability": "Gluttony",
             "item": "Life Orb",
             "moves": [
-              "Gunk Shot",
-              "Belch",
-              "Explosion",
+              "Overheat",
+              "Fire Punch",
+              "Focus Punch",
               "Protect"
             ],
             "nature": "Adamant",
@@ -3606,21 +5028,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
-          }
-        ]
-      },
-      {
-        "name": "Unova Rental Core 2",
-        "roster": [
+            "teraType": "Fire"
+          },
           {
-            "species": "Swanna",
-            "ability": "Keen Eye",
+            "species": "Simipour",
+            "ability": "Gluttony",
             "item": "Life Orb",
             "moves": [
-              "Sky Attack",
-              "Brave Bird",
-              "Giga Impact",
+              "Aqua Tail",
+              "Dive",
+              "Focus Punch",
               "Protect"
             ],
             "nature": "Adamant",
@@ -3636,12 +5053,84 @@
             "teraType": "Water"
           },
           {
-            "species": "Galvantula",
-            "ability": "Compound Eyes",
+            "species": "Zebstrika",
+            "ability": "Lightning Rod",
             "item": "Life Orb",
             "moves": [
-              "Thunder",
+              "Supercell Slam",
+              "Wild Charge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Carracosta",
+            "ability": "Solid Rock",
+            "item": "Life Orb",
+            "moves": [
+              "Stone Edge",
+              "Aqua Tail",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Escavalier",
+            "ability": "Swarm",
+            "item": "Life Orb",
+            "moves": [
+              "Megahorn",
+              "Steel Beam",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Bug"
+          }
+        ]
+      },
+      {
+        "name": "Unova Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Accelgor",
+            "ability": "Hydration",
+            "item": "Life Orb",
+            "moves": [
               "Bug Buzz",
+              "Signal Beam",
               "Hyper Beam",
               "Protect"
             ],
@@ -3655,21 +5144,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
-          }
-        ]
-      },
-      {
-        "name": "Unova Rental Core 3",
-        "roster": [
+            "teraType": "Bug"
+          },
           {
-            "species": "Stunfisk",
-            "ability": "Static",
-            "item": "Assault Vest",
+            "species": "Sigilyph",
+            "ability": "Wonder Skin",
+            "item": "Life Orb",
             "moves": [
-              "Thunder",
-              "Earth Power",
-              "Sludge Wave",
+              "Future Sight",
+              "Synchronoise",
+              "Hyper Beam",
               "Protect"
             ],
             "nature": "Timid",
@@ -3682,16 +5166,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Psychic"
           },
           {
-            "species": "Stunfisk-Galar",
-            "ability": "Mimicry",
+            "species": "Gothitelle",
+            "ability": "Frisk",
             "item": "Leftovers",
             "moves": [
-              "Earthquake",
-              "Steel Beam",
-              "Stone Edge",
+              "Future Sight",
+              "Dream Eater",
+              "Hyper Beam",
               "Protect"
             ],
             "nature": "Sassy",
@@ -3704,21 +5188,88 @@
               "spe": 0
             },
             "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Reuniclus",
+            "ability": "Overcoat",
+            "item": "Assault Vest",
+            "moves": [
+              "Future Sight",
+              "Dream Eater",
+              "Explosion",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Bouffalant",
+            "ability": "Reckless",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Skull Bash",
+              "Close Combat",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Ferrothorn",
+            "ability": "Iron Barbs",
+            "item": "Life Orb",
+            "moves": [
+              "Steel Roller",
+              "Power Whip",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
             "teraType": "Steel"
           }
         ]
       },
       {
-        "name": "Unova Rental Core 4",
+        "name": "Unova Rental Core 3",
+        "signatureCount": 2,
         "roster": [
           {
-            "species": "Cinccino",
-            "ability": "Cute Charm",
+            "species": "Unfezant",
+            "ability": "Big Pecks",
             "item": "Life Orb",
             "moves": [
               "Giga Impact",
-              "Last Resort",
-              "Gunk Shot",
+              "Sky Attack",
+              "Steel Wing",
               "Protect"
             ],
             "nature": "Adamant",
@@ -3731,29 +5282,255 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           },
           {
-            "species": "Alomomola",
-            "ability": "Healer",
-            "item": "Leftovers",
+            "species": "Scrafty",
+            "ability": "Shed Skin",
+            "item": "Life Orb",
             "moves": [
-              "Liquidation",
-              "Dive",
+              "Focus Punch",
+              "High Jump Kick",
               "Giga Impact",
               "Protect"
             ],
-            "nature": "Sassy",
+            "nature": "Brave",
             "evs": {
               "hp": 252,
-              "atk": 0,
-              "def": 128,
+              "atk": 252,
+              "def": 4,
               "spa": 0,
-              "spd": 128,
+              "spd": 0,
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Musharna",
+            "ability": "Forewarn",
+            "item": "Assault Vest",
+            "moves": [
+              "Future Sight",
+              "Dream Eater",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Scolipede",
+            "ability": "Poison Point",
+            "item": "Life Orb",
+            "moves": [
+              "Megahorn",
+              "Poison Jab",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Poison"
+          },
+          {
+            "species": "Crustle",
+            "ability": "Sturdy",
+            "item": "Life Orb",
+            "moves": [
+              "Rock Wrecker",
+              "Stone Edge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Beheeyem",
+            "ability": "Telepathy",
+            "item": "Life Orb",
+            "moves": [
+              "Future Sight",
+              "Synchronoise",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          }
+        ]
+      },
+      {
+        "name": "Unova Rental Core 4",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Druddigon",
+            "ability": "Rough Skin",
+            "item": "Life Orb",
+            "moves": [
+              "Outrage",
+              "Dragon Claw",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dragon"
+          },
+          {
+            "species": "Heatmor",
+            "ability": "Gluttony",
+            "item": "Life Orb",
+            "moves": [
+              "Overheat",
+              "Fire Blast",
+              "Belch",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fire"
+          },
+          {
+            "species": "Durant",
+            "ability": "Swarm",
+            "item": "Life Orb",
+            "moves": [
+              "First Impression",
+              "Steel Beam",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Steel"
+          },
+          {
+            "species": "Cofagrigus",
+            "ability": "Mummy",
+            "item": "Life Orb",
+            "moves": [
+              "Shadow Ball",
+              "Poltergeist",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Golurk",
+            "ability": "Iron Fist",
+            "item": "Life Orb",
+            "moves": [
+              "Poltergeist",
+              "Earthquake",
+              "Self-Destruct",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Whimsicott",
+            "ability": "Prankster",
+            "item": "Life Orb",
+            "moves": [
+              "Solar Beam",
+              "Moonblast",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Grass"
           }
         ]
       }
@@ -3830,7 +5607,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Water"
           },
           {
             "species": "Greninja-Bond",
@@ -3874,7 +5651,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Normal"
           },
           {
             "species": "Hawlucha",
@@ -4034,7 +5811,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Grass"
           }
         ]
       },
@@ -4200,7 +5977,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Water"
           },
           {
             "species": "Carbink",
@@ -4288,6 +6065,334 @@
               "spe": 0
             },
             "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Gourgeist-Small",
+            "ability": "Pickup",
+            "item": "Life Orb",
+            "moves": [
+              "Power Whip",
+              "Poltergeist",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          }
+        ]
+      }
+    ],
+    "cityLeagueCores": [
+      {
+        "name": "Kalos Rental Core 1",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Avalugg",
+            "ability": "Own Tempo",
+            "item": "Life Orb",
+            "moves": [
+              "Icicle Crash",
+              "Ice Spinner",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ice"
+          },
+          {
+            "species": "Avalugg-Hisui",
+            "ability": "Strong Jaw",
+            "item": "Life Orb",
+            "moves": [
+              "Mountain Gale",
+              "Stone Edge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ice"
+          },
+          {
+            "species": "Pyroar",
+            "ability": "Rivalry",
+            "item": "Life Orb",
+            "moves": [
+              "Hyper Beam",
+              "Overheat",
+              "Solar Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Aegislash",
+            "ability": "Stance Change",
+            "item": "Leftovers",
+            "moves": [
+              "Steel Beam",
+              "Iron Head",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Steel"
+          },
+          {
+            "species": "Barbaracle",
+            "ability": "Tough Claws",
+            "item": "Leftovers",
+            "moves": [
+              "Stone Edge",
+              "Liquidation",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Clawitzer",
+            "ability": "Mega Launcher",
+            "item": "Life Orb",
+            "moves": [
+              "Hydro Pump",
+              "Muddy Water",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Water"
+          }
+        ]
+      },
+      {
+        "name": "Kalos Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Hawlucha",
+            "ability": "Limber",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Sky Attack",
+              "Giga Impact",
+              "Tailwind"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Carbink",
+            "ability": "Clear Body",
+            "item": "Leftovers",
+            "moves": [
+              "Stone Edge",
+              "Rock Slide",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Talonflame",
+            "ability": "Flame Body",
+            "item": "Life Orb",
+            "moves": [
+              "Brave Bird",
+              "Flare Blitz",
+              "Giga Impact",
+              "Tailwind"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
+          {
+            "species": "Pangoro",
+            "ability": "Iron Fist",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Close Combat",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dark"
+          },
+          {
+            "species": "Dragalge",
+            "ability": "Poison Point",
+            "item": "Life Orb",
+            "moves": [
+              "Draco Meteor",
+              "Sludge Wave",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dragon"
+          },
+          {
+            "species": "Gourgeist",
+            "ability": "Pickup",
+            "item": "Leftovers",
+            "moves": [
+              "Power Whip",
+              "Poltergeist",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          }
+        ]
+      },
+      {
+        "name": "Kalos Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Gourgeist-Large",
+            "ability": "Pickup",
+            "item": "Leftovers",
+            "moves": [
+              "Power Whip",
+              "Poltergeist",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
             "teraType": "Grass"
           },
           {
@@ -4311,13 +6416,100 @@
             },
             "level": 50,
             "teraType": "Grass"
+          },
+          {
+            "species": "Gourgeist-Super",
+            "ability": "Pickup",
+            "item": "Life Orb",
+            "moves": [
+              "Power Whip",
+              "Poltergeist",
+              "Explosion",
+              "Trick Room"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Malamar",
+            "ability": "Contrary",
+            "item": "Life Orb",
+            "moves": [
+              "Foul Play",
+              "Throat Chop",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Heliolisk",
+            "ability": "Dry Skin",
+            "item": "Life Orb",
+            "moves": [
+              "Hyper Beam",
+              "Thunder",
+              "Focus Blast",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Slurpuff",
+            "ability": "Sweet Veil",
+            "item": "Life Orb",
+            "moves": [
+              "Misty Explosion",
+              "Dazzling Gleam",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fairy"
           }
         ]
-      }
-    ],
-    "cityLeagueCores": [
+      },
       {
-        "name": "Kalos Rental Core 1",
+        "name": "Kalos Rental Core 4",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Trevenant",
@@ -4339,7 +6531,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           },
           {
             "species": "Furfrou",
@@ -4362,12 +6554,7 @@
             },
             "level": 50,
             "teraType": "Normal"
-          }
-        ]
-      },
-      {
-        "name": "Kalos Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Klefki",
             "ability": "Prankster",
@@ -4388,7 +6575,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Steel"
           },
           {
             "species": "Meowstic",
@@ -4411,12 +6598,7 @@
             },
             "level": 50,
             "teraType": "Psychic"
-          }
-        ]
-      },
-      {
-        "name": "Kalos Rental Core 3",
-        "roster": [
+          },
           {
             "species": "Meowstic-F",
             "ability": "Keen Eye",
@@ -4460,55 +6642,6 @@
             },
             "level": 50,
             "teraType": "Fairy"
-          }
-        ]
-      },
-      {
-        "name": "Kalos Rental Core 4",
-        "roster": [
-          {
-            "species": "Dedenne",
-            "ability": "Cheek Pouch",
-            "item": "Life Orb",
-            "moves": [
-              "Thunder",
-              "Thunderbolt",
-              "Hyper Beam",
-              "Protect"
-            ],
-            "nature": "Timid",
-            "evs": {
-              "hp": 4,
-              "atk": 0,
-              "def": 0,
-              "spa": 252,
-              "spd": 0,
-              "spe": 252
-            },
-            "level": 50,
-            "teraType": "Fairy"
-          },
-          {
-            "species": "Diggersby",
-            "ability": "Pickup",
-            "item": "Life Orb",
-            "moves": [
-              "Giga Impact",
-              "Last Resort",
-              "Focus Punch",
-              "Protect"
-            ],
-            "nature": "Adamant",
-            "evs": {
-              "hp": 4,
-              "atk": 252,
-              "def": 0,
-              "spa": 0,
-              "spd": 0,
-              "spe": 252
-            },
-            "level": 50,
-            "teraType": "Normal"
           }
         ]
       }
@@ -4563,7 +6696,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Flying"
           },
           {
             "species": "Passimian",
@@ -4745,7 +6878,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Water"
           },
           {
             "species": "Golisopod",
@@ -4767,7 +6900,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Bug"
           },
           {
             "species": "Dhelmise",
@@ -4789,7 +6922,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           }
         ]
       },
@@ -4839,7 +6972,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Electric"
           },
           {
             "species": "Mudsdale",
@@ -4999,7 +7132,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Flying"
           },
           {
             "species": "Oricorio-Pa'u",
@@ -5043,7 +7176,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Flying"
           },
           {
             "species": "Oricorio-Sensu",
@@ -5065,7 +7198,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Flying"
           }
         ]
       }
@@ -5073,7 +7206,328 @@
     "cityLeagueCores": [
       {
         "name": "Alola Rental Core 1",
+        "signatureCount": 2,
         "roster": [
+          {
+            "species": "Toxapex",
+            "ability": "Merciless",
+            "item": "Leftovers",
+            "moves": [
+              "Gunk Shot",
+              "Liquidation",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Oranguru",
+            "ability": "Inner Focus",
+            "item": "Assault Vest",
+            "moves": [
+              "Hyper Beam",
+              "Future Sight",
+              "Focus Blast",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Passimian",
+            "ability": "Receiver",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Close Combat",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Lycanroc",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Stone Edge",
+              "Rock Slide",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Lycanroc-Dusk",
+            "ability": "Tough Claws",
+            "item": "Life Orb",
+            "moves": [
+              "Stone Edge",
+              "Rock Slide",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Lycanroc-Midnight",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Stone Edge",
+              "Rock Slide",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          }
+        ]
+      },
+      {
+        "name": "Alola Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Toucannon",
+            "ability": "Keen Eye",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Sky Attack",
+              "Gunk Shot",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Flying"
+          },
+          {
+            "species": "Comfey",
+            "ability": "Flower Veil",
+            "item": "Life Orb",
+            "moves": [
+              "Alluring Voice",
+              "Dazzling Gleam",
+              "Hyper Beam",
+              "Tailwind"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Turtonator",
+            "ability": "Shell Armor",
+            "item": "Life Orb",
+            "moves": [
+              "Shell Trap",
+              "Draco Meteor",
+              "Explosion",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fire"
+          },
+          {
+            "species": "Drampa",
+            "ability": "Berserk",
+            "item": "Life Orb",
+            "moves": [
+              "Hyper Beam",
+              "Draco Meteor",
+              "Focus Blast",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dragon"
+          },
+          {
+            "species": "Lurantis",
+            "ability": "Leaf Guard",
+            "item": "Life Orb",
+            "moves": [
+              "Solar Blade",
+              "Leaf Blade",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Grass"
+          },
+          {
+            "species": "Salazzle",
+            "ability": "Corrosion",
+            "item": "Life Orb",
+            "moves": [
+              "Overheat",
+              "Fire Blast",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fire"
+          }
+        ]
+      },
+      {
+        "name": "Alola Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Palossand",
+            "ability": "Water Compaction",
+            "item": "Life Orb",
+            "moves": [
+              "Earth Power",
+              "Shadow Ball",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Komala",
+            "ability": "Comatose",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Gunk Shot",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
           {
             "species": "Crabominable",
             "ability": "Hyper Cutter",
@@ -5094,7 +7548,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Fighting"
           },
           {
             "species": "Oricorio",
@@ -5117,12 +7571,7 @@
             },
             "level": 50,
             "teraType": "Flying"
-          }
-        ]
-      },
-      {
-        "name": "Alola Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Oricorio-Pa'u",
             "ability": "Dancer",
@@ -5170,7 +7619,8 @@
         ]
       },
       {
-        "name": "Alola Rental Core 3",
+        "name": "Alola Rental Core 4",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Oricorio-Sensu",
@@ -5214,13 +7664,8 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
-          }
-        ]
-      },
-      {
-        "name": "Alola Rental Core 4",
-        "roster": [
+            "teraType": "Fairy"
+          },
           {
             "species": "Bruxish",
             "ability": "Dazzling",
@@ -5241,7 +7686,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Psychic"
           },
           {
             "species": "Ribombee",
@@ -5264,6 +7709,50 @@
             },
             "level": 50,
             "teraType": "Fairy"
+          },
+          {
+            "species": "Araquanid",
+            "ability": "Water Bubble",
+            "item": "Leftovers",
+            "moves": [
+              "Liquidation",
+              "Dive",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Togedemaru",
+            "ability": "Iron Barbs",
+            "item": "Life Orb",
+            "moves": [
+              "Steel Roller",
+              "Iron Tail",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
           }
         ]
       }
@@ -5296,7 +7785,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Dragon"
           },
           {
             "species": "Cinderace",
@@ -5406,7 +7895,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Psychic"
           }
         ]
       },
@@ -5456,7 +7945,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Normal"
           },
           {
             "species": "Rillaboom",
@@ -5500,7 +7989,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Normal"
           },
           {
             "species": "Coalossal",
@@ -5522,7 +8011,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Rock"
           },
           {
             "species": "Hatterene",
@@ -5594,7 +8083,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Water"
           },
           {
             "species": "Sandaconda",
@@ -5638,7 +8127,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fairy"
           },
           {
             "species": "Cursola",
@@ -5682,7 +8171,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -5754,7 +8243,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Bug"
           },
           {
             "species": "Toxtricity",
@@ -5776,7 +8265,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Electric"
           },
           {
             "species": "Toxtricity-Low-Key",
@@ -5798,7 +8287,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Kleavor",
@@ -5820,7 +8309,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Rock"
           }
         ]
       }
@@ -5828,14 +8317,313 @@
     "cityLeagueCores": [
       {
         "name": "Galar Rental Core 1",
+        "signatureCount": 2,
         "roster": [
           {
-            "species": "Cramorant",
-            "ability": "Gulp Missile",
+            "species": "Coalossal",
+            "ability": "Steam Engine",
+            "item": "Leftovers",
+            "moves": [
+              "Flare Blitz",
+              "Stone Edge",
+              "Self-Destruct",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fire"
+          },
+          {
+            "species": "Sandaconda",
+            "ability": "Sand Spit",
             "item": "Life Orb",
             "moves": [
-              "Brave Bird",
-              "Fly",
+              "Earthquake",
+              "High Horsepower",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ground"
+          },
+          {
+            "species": "Hatterene",
+            "ability": "Healer",
+            "item": "Life Orb",
+            "moves": [
+              "Future Sight",
+              "Misty Explosion",
+              "Hyper Beam",
+              "Trick Room"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Grimmsnarl",
+            "ability": "Prankster",
+            "item": "Life Orb",
+            "moves": [
+              "Foul Play",
+              "Play Rough",
+              "Focus Punch",
+              "Protect"
+            ],
+            "nature": "Brave",
+            "evs": {
+              "hp": 252,
+              "atk": 252,
+              "def": 4,
+              "spa": 0,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Cursola",
+            "ability": "Weak Armor",
+            "item": "Assault Vest",
+            "moves": [
+              "Shadow Ball",
+              "Poltergeist",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Sneasler",
+            "ability": "Pressure",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Close Combat",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          }
+        ]
+      },
+      {
+        "name": "Galar Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Overqwil",
+            "ability": "Poison Point",
+            "item": "Life Orb",
+            "moves": [
+              "Gunk Shot",
+              "Crunch",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Poison"
+          },
+          {
+            "species": "Polteageist",
+            "ability": "Weak Armor",
+            "item": "Life Orb",
+            "moves": [
+              "Shadow Ball",
+              "Poltergeist",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          },
+          {
+            "species": "Sirfetch’d",
+            "ability": "Steadfast",
+            "item": "Life Orb",
+            "moves": [
+              "Meteor Assault",
+              "Close Combat",
+              "Solar Blade",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Orbeetle",
+            "ability": "Swarm",
+            "item": "Leftovers",
+            "moves": [
+              "Future Sight",
+              "Bug Buzz",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Bug"
+          },
+          {
+            "species": "Dracozolt",
+            "ability": "Volt Absorb",
+            "item": "Life Orb",
+            "moves": [
+              "Outrage",
+              "Dragon Rush",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dragon"
+          },
+          {
+            "species": "Arctozolt",
+            "ability": "Volt Absorb",
+            "item": "Life Orb",
+            "moves": [
+              "Wild Charge",
+              "Bolt Beak",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          }
+        ]
+      },
+      {
+        "name": "Galar Rental Core 3",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Dracovish",
+            "ability": "Water Absorb",
+            "item": "Life Orb",
+            "moves": [
+              "Outrage",
+              "Dragon Rush",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dragon"
+          },
+          {
+            "species": "Arctovish",
+            "ability": "Water Absorb",
+            "item": "Life Orb",
+            "moves": [
+              "Fishious Rend",
+              "Icicle Crash",
               "Giga Impact",
               "Protect"
             ],
@@ -5852,12 +8640,12 @@
             "teraType": "Water"
           },
           {
-            "species": "Frosmoth",
-            "ability": "Shield Dust",
+            "species": "Toxtricity",
+            "ability": "Punk Rock",
             "item": "Life Orb",
             "moves": [
-              "Blizzard",
-              "Bug Buzz",
+              "Belch",
+              "Thunder",
               "Hyper Beam",
               "Protect"
             ],
@@ -5871,43 +8659,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
-          }
-        ]
-      },
-      {
-        "name": "Galar Rental Core 2",
-        "roster": [
-          {
-            "species": "Indeedee",
-            "ability": "Inner Focus",
-            "item": "Life Orb",
-            "moves": [
-              "Future Sight",
-              "Hyper Voice",
-              "Energy Ball",
-              "Protect"
-            ],
-            "nature": "Timid",
-            "evs": {
-              "hp": 4,
-              "atk": 0,
-              "def": 0,
-              "spa": 252,
-              "spd": 0,
-              "spe": 252
-            },
-            "level": 50,
-            "teraType": "Normal"
+            "teraType": "Electric"
           },
           {
-            "species": "Indeedee-F",
-            "ability": "Own Tempo",
+            "species": "Toxtricity-Low-Key",
+            "ability": "Punk Rock",
             "item": "Life Orb",
             "moves": [
-              "Future Sight",
-              "Hyper Voice",
-              "Energy Ball",
+              "Belch",
+              "Thunder",
+              "Hyper Beam",
               "Protect"
             ],
             "nature": "Timid",
@@ -5920,43 +8681,38 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
-          }
-        ]
-      },
-      {
-        "name": "Galar Rental Core 3",
-        "roster": [
+            "teraType": "Poison"
+          },
           {
-            "species": "Falinks",
-            "ability": "Battle Armor",
+            "species": "Copperajah",
+            "ability": "Sheer Force",
             "item": "Life Orb",
             "moves": [
-              "Close Combat",
-              "Superpower",
+              "Steel Roller",
+              "Steel Beam",
               "Giga Impact",
               "Protect"
             ],
-            "nature": "Adamant",
+            "nature": "Brave",
             "evs": {
-              "hp": 4,
+              "hp": 252,
               "atk": 252,
-              "def": 0,
+              "def": 4,
               "spa": 0,
               "spd": 0,
-              "spe": 252
+              "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Steel"
           },
           {
-            "species": "Stonjourner",
-            "ability": "Power Spot",
+            "species": "Kleavor",
+            "ability": "Swarm",
             "item": "Life Orb",
             "moves": [
               "Stone Edge",
-              "Rock Slide",
-              "Self-Destruct",
+              "Lunge",
+              "Giga Impact",
               "Protect"
             ],
             "nature": "Adamant",
@@ -5975,14 +8731,15 @@
       },
       {
         "name": "Galar Rental Core 4",
+        "signatureCount": 2,
         "roster": [
           {
-            "species": "Eiscue",
-            "ability": "Ice Face",
+            "species": "Corviknight",
+            "ability": "Pressure",
             "item": "Leftovers",
             "moves": [
-              "Icicle Crash",
-              "Ice Spinner",
+              "Brave Bird",
+              "Fly",
               "Giga Impact",
               "Protect"
             ],
@@ -5996,29 +8753,117 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Steel"
           },
           {
-            "species": "Greedent",
-            "ability": "Cheek Pouch",
-            "item": "Life Orb",
+            "species": "Alcremie",
+            "ability": "Sweet Veil",
+            "item": "Leftovers",
             "moves": [
-              "Giga Impact",
-              "Double-Edge",
-              "Superpower",
+              "Misty Explosion",
+              "Alluring Voice",
+              "Hyper Beam",
               "Protect"
             ],
-            "nature": "Brave",
+            "nature": "Sassy",
             "evs": {
               "hp": 252,
-              "atk": 252,
-              "def": 4,
+              "atk": 0,
+              "def": 128,
               "spa": 0,
-              "spd": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Dubwool",
+            "ability": "Fluffy",
+            "item": "Leftovers",
+            "moves": [
+              "Giga Impact",
+              "Last Resort",
+              "Wild Charge",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
               "spe": 0
             },
             "level": 50,
             "teraType": "Normal"
+          },
+          {
+            "species": "Boltund",
+            "ability": "Strong Jaw",
+            "item": "Life Orb",
+            "moves": [
+              "Wild Charge",
+              "Thunder",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Barraskewda",
+            "ability": "Swift Swim",
+            "item": "Life Orb",
+            "moves": [
+              "Liquidation",
+              "Dive",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Drednaw",
+            "ability": "Strong Jaw",
+            "item": "Life Orb",
+            "moves": [
+              "Head Smash",
+              "Stone Edge",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
           }
         ]
       }
@@ -6073,7 +8918,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fighting"
           },
           {
             "species": "Ceruledge",
@@ -6095,7 +8940,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Ghost"
           },
           {
             "species": "Glimmora",
@@ -6161,7 +9006,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           }
         ]
       },
@@ -6189,7 +9034,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Dragon"
           },
           {
             "species": "Archaludon",
@@ -6211,7 +9056,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Dragon"
           },
           {
             "species": "Kingambit",
@@ -6255,7 +9100,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Steel"
           },
           {
             "species": "Hydrapple",
@@ -6299,7 +9144,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -6327,7 +9172,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Fire"
           },
           {
             "species": "Skeledirge",
@@ -6349,7 +9194,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Ghost"
           },
           {
             "species": "Dondozo",
@@ -6465,7 +9310,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           },
           {
             "species": "Tinkaton",
@@ -6487,7 +9332,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Steel"
           },
           {
             "species": "Mabosstiff",
@@ -6575,7 +9420,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Flying"
           }
         ]
       }
@@ -6583,6 +9428,283 @@
     "cityLeagueCores": [
       {
         "name": "Paldea Rental Core 1",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Bellibolt",
+            "ability": "Electromorphosis",
+            "item": "Assault Vest",
+            "moves": [
+              "Zap Cannon",
+              "Thunder",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Quiet",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 4,
+              "spa": 252,
+              "spd": 0,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Pawmot",
+            "ability": "Volt Absorb",
+            "item": "Life Orb",
+            "moves": [
+              "Focus Punch",
+              "Close Combat",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fighting"
+          },
+          {
+            "species": "Kilowattrel",
+            "ability": "Wind Power",
+            "item": "Life Orb",
+            "moves": [
+              "Hurricane",
+              "Thunder",
+              "Hyper Beam",
+              "Tailwind"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Electric"
+          },
+          {
+            "species": "Oinkologne",
+            "ability": "Lingering Aroma",
+            "item": "Leftovers",
+            "moves": [
+              "Giga Impact",
+              "Double-Edge",
+              "High Horsepower",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Oinkologne-F",
+            "ability": "Aroma Veil",
+            "item": "Leftovers",
+            "moves": [
+              "Giga Impact",
+              "Double-Edge",
+              "High Horsepower",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Houndstone",
+            "ability": "Sand Rush",
+            "item": "Life Orb",
+            "moves": [
+              "Poltergeist",
+              "Phantom Force",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Ghost"
+          }
+        ]
+      },
+      {
+        "name": "Paldea Rental Core 2",
+        "signatureCount": 2,
+        "roster": [
+          {
+            "species": "Scovillain",
+            "ability": "Chlorophyll",
+            "item": "Life Orb",
+            "moves": [
+              "Seed Bomb",
+              "Leaf Storm",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Fire"
+          },
+          {
+            "species": "Grafaiai",
+            "ability": "Unburden",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Double-Edge",
+              "Foul Play",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Normal"
+          },
+          {
+            "species": "Bombirdier",
+            "ability": "Big Pecks",
+            "item": "Life Orb",
+            "moves": [
+              "Sky Attack",
+              "Brave Bird",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Dark"
+          },
+          {
+            "species": "Espathra",
+            "ability": "Opportunist",
+            "item": "Life Orb",
+            "moves": [
+              "Psychic",
+              "Expanding Force",
+              "Hyper Beam",
+              "Protect"
+            ],
+            "nature": "Timid",
+            "evs": {
+              "hp": 4,
+              "atk": 0,
+              "def": 0,
+              "spa": 252,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Psychic"
+          },
+          {
+            "species": "Brambleghast",
+            "ability": "Wind Rider",
+            "item": "Life Orb",
+            "moves": [
+              "Power Whip",
+              "Poltergeist",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Grass"
+          },
+          {
+            "species": "Orthworm",
+            "ability": "Earth Eater",
+            "item": "Life Orb",
+            "moves": [
+              "Iron Tail",
+              "Steel Beam",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Steel"
+          }
+        ]
+      },
+      {
+        "name": "Paldea Rental Core 3",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Veluza",
@@ -6627,12 +9749,7 @@
             },
             "level": 50,
             "teraType": "Fairy"
-          }
-        ]
-      },
-      {
-        "name": "Paldea Rental Core 2",
-        "roster": [
+          },
           {
             "species": "Tatsugiri",
             "ability": "Commander",
@@ -6676,12 +9793,7 @@
             },
             "level": 50,
             "teraType": "Normal"
-          }
-        ]
-      },
-      {
-        "name": "Paldea Rental Core 3",
-        "roster": [
+          },
           {
             "species": "Maushold-Four",
             "ability": "Friend Guard",
@@ -6724,22 +9836,23 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Bug"
           }
         ]
       },
       {
         "name": "Paldea Rental Core 4",
+        "signatureCount": 2,
         "roster": [
           {
             "species": "Palafin",
             "ability": "Zero to Hero",
             "item": "Life Orb",
             "moves": [
+              "Flip Turn",
               "Wave Crash",
               "Aqua Tail",
-              "Focus Punch",
-              "Protect"
+              "Iron Head"
             ],
             "nature": "Adamant",
             "evs": {
@@ -6774,6 +9887,94 @@
             },
             "level": 50,
             "teraType": "Bug"
+          },
+          {
+            "species": "Klawf",
+            "ability": "Anger Shell",
+            "item": "Life Orb",
+            "moves": [
+              "Stone Edge",
+              "Rock Slide",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Rock"
+          },
+          {
+            "species": "Clodsire",
+            "ability": "Poison Point",
+            "item": "Leftovers",
+            "moves": [
+              "Gunk Shot",
+              "Earthquake",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Poison"
+          },
+          {
+            "species": "Wugtrio",
+            "ability": "Gooey",
+            "item": "Life Orb",
+            "moves": [
+              "Liquidation",
+              "Hydro Pump",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Water"
+          },
+          {
+            "species": "Squawkabilly",
+            "ability": "Intimidate",
+            "item": "Life Orb",
+            "moves": [
+              "Giga Impact",
+              "Brave Bird",
+              "Foul Play",
+              "Protect"
+            ],
+            "nature": "Adamant",
+            "evs": {
+              "hp": 4,
+              "atk": 252,
+              "def": 0,
+              "spa": 0,
+              "spd": 0,
+              "spe": 252
+            },
+            "level": 50,
+            "teraType": "Flying"
           }
         ]
       }

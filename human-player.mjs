@@ -13,13 +13,29 @@ export class HumanPlayer extends RandomPlayerAI {
 		super(playerStream, options, debug);
 		this.seen = createSeenTracker(); // fog-of-war view of the foe's side, position -> info
 		this.pendingRequest = null; // the raw MoveRequest waiting on a human choice, or null
+		this._lastRequest = null; // most recent non-null request, kept around for error recovery
 		this._sideId = null;
 	}
 
 	// Same followup-request tolerance as TieredAI: a rejected choice (e.g. a
 	// move that turned out disabled) gets a corrective request, not a crash.
+	// IMPORTANT: for a plain "[Invalid choice]"/"[Unavailable choice]" error,
+	// Showdown's sim does NOT always send a fresh |request| line afterward -
+	// emitChoiceError only re-emits a request when it has a specific `update`
+	// callback to patch the request with (e.g. a move found to be disabled).
+	// A rejected switch/team choice (the case this exists for: a duplicate or
+	// otherwise invalid combined choice string) just logs the error and
+	// leaves the *original* request as the one still needing an answer. Since
+	// submitChoice() optimistically nulls pendingRequest before we know the
+	// choice was accepted, a rejection with no followup request would
+	// otherwise strand the session forever (submitChoice() is now guarded by
+	// game-server.mjs validating choices before ever calling it, but this
+	// restores the request as a safety net for any case that slips through).
 	receiveError(error) {
-		if (/^\[.*choice\]/i.test(error.message)) return;
+		if (/^\[.*choice\]/i.test(error.message)) {
+			if (!this.pendingRequest && this._lastRequest) this.pendingRequest = this._lastRequest;
+			return;
+		}
 		throw error;
 	}
 
@@ -33,13 +49,31 @@ export class HumanPlayer extends RandomPlayerAI {
 			this.pendingRequest = null;
 			return;
 		}
-		if (request.active && !request.forceSwitch) {
+		if (request.teamPreview) {
+			// Bring 6, pick <maxChosenTeamSize> - a real decision now that
+			// rental cores are full 6-mon rosters, not exactly-2 forced solos.
 			this._sideId = request.side.id;
-			this.pendingRequest = request;
+			this.pendingRequest = this._lastRequest = request;
+			return;
+		}
+		if (request.forceSwitch) {
+			// Only a real decision if there's an actual bench to switch into -
+			// with no bench (or everything on it fainted) there's nothing to
+			// choose, so let RandomPlayerAI's default auto-pass it.
+			const hasBench = request.side.pokemon.some(p => !p.active && !p.condition.includes('fnt'));
+			if (hasBench) {
+				this._sideId = request.side.id;
+				this.pendingRequest = this._lastRequest = request;
+				return;
+			}
+			this.pendingRequest = null;
+			return super.receiveRequest(request);
+		}
+		if (request.active) {
+			this._sideId = request.side.id;
+			this.pendingRequest = this._lastRequest = request;
 			return; // wait for submitChoice() from the HTTP layer
 		}
-		// Team preview / forced switch with no real bench: nothing meaningful
-		// to decide, so let RandomPlayerAI's default (deterministic here) handle it.
 		this.pendingRequest = null;
 		return super.receiveRequest(request);
 	}

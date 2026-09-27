@@ -132,6 +132,21 @@ export class TieredAI extends RandomPlayerAI {
 			const moveData = Dex.moves.get(moveInfo.id);
 			if (!moveData?.exists) continue;
 
+			// The request omits `target` on a move entry when the choice is
+			// already locked in this turn - the release turn of a two-turn move
+			// like Bounce/Fly, most commonly - regardless of what the move
+			// normally targets. Submitting a target anyway (as the dex's static
+			// target type would otherwise lead us to) gets rejected with
+			// "[Invalid choice] Can't move: You can't choose a target for X",
+			// and that rejection never gets a corrective followup request -
+			// it just silently strands this side for the rest of the battle.
+			// So: no `target` on the request entry means no target argument,
+			// full stop, whatever the dex says the move's target type is.
+			if (!('target' in moveInfo)) {
+				results.push({ choice: `move ${slot}`, label: `${moveData.name} (locked)`, score: 50 });
+				continue;
+			}
+
 			const isStatus = !moveData.basePower || moveData.category === 'Status';
 
 			if (isStatus) {

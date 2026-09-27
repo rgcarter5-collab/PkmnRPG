@@ -78,6 +78,16 @@ function buildMoveset(species, role, weatherTag) {
 		learnsetData = Dex.species.getLearnsetData(Dex.toID(species.baseSpecies));
 		learnable = learnsetData?.learnset ? Object.keys(learnsetData.learnset) : [];
 	}
+	const has = id => learnable.includes(id);
+
+	// Zero to Hero only triggers when its Pokemon switches OUT - so Palafin's
+	// rental set needs a way to do that on its own turn (a self-switch move)
+	// rather than just waiting on a forced switch to ever transform.
+	if (species.id === 'palafin' && has('flipturn')) {
+		const rest = ['wavecrash', 'aquatail', 'ironhead', 'protect'].filter(has);
+		return ['Flip Turn', ...rest].slice(0, 4).map(id => Dex.moves.get(id).name);
+	}
+
 	const phys = isPhysical(species);
 	const category = phys ? 'Physical' : 'Special';
 
@@ -105,7 +115,6 @@ function buildMoveset(species, role, weatherTag) {
 
 	// 4th slot: role-specific utility if learnable, else Protect, else best remaining damaging move.
 	const statusPool = candidates.filter(m => m.category === 'Status');
-	const has = id => learnable.includes(id);
 	let utility = null;
 	if (role === 'tailwind-abuser' && has('tailwind')) utility = 'tailwind';
 	else if (role === 'trickroom-abuser' && has('trickroom')) utility = 'trickroom';
@@ -212,10 +221,18 @@ function buildRegionTeams(regionId) {
 	return teams;
 }
 
-// City League "rental cores": simple 2-mon preset squads, lower-power picks,
-// no archetype complexity - just something to hand a brand-new trainer.
+// City League "rental cores": 6-mon preset squads (bring 6, pick 4 in an
+// actual battle), lower-power picks, no archetype complexity - just
+// something to hand a brand-new trainer. The first 2 mons of each core are
+// its "signature pair" (the strongest available at intro-tier power, same
+// selection this always used); the other 4 are lower-priority support picks
+// filling out the bench so a real bring-4 choice exists.
+const CORE_SIZE = 6;
+const SIGNATURE_SIZE = 2;
+
 function buildCityLeagueCores(regionId) {
 	const region = regionalDex[regionId];
+	const numCores = 4;
 	const basePool = region.species
 		.map(s => Dex.species.get(s.id))
 		.filter(s => s.exists)
@@ -228,28 +245,29 @@ function buildCityLeagueCores(regionId) {
 
 	// Adaptive BST cutoff: start low-power for a real intro feel, but relax
 	// it if a region's generation just doesn't have enough small mons to
-	// fill at least 4 cores (8 mons) - a thin City League isn't much of an
-	// intro tournament.
+	// fill every core (numCores x CORE_SIZE mons) - a thin City League isn't
+	// much of an intro tournament.
+	const needed = numCores * CORE_SIZE;
 	let cutoff = 460;
 	let pool = basePool.filter(s => bstOf(s) < cutoff);
-	while (pool.length < 8 && cutoff < 600) {
+	while (pool.length < needed && cutoff < 600) {
 		cutoff += 20;
 		pool = basePool.filter(s => bstOf(s) < cutoff);
 	}
+	// Still short (a very small regional dex)? Fall back to the full pool
+	// rather than leaving cores incomplete.
+	if (pool.length < needed) pool = basePool;
 
 	pool.sort((a, b) => bstOf(b) - bstOf(a));
-	const picks = pool.slice(0, 8); // 4 cores x 2 mons
+	const picks = pool.slice(0, needed);
 
 	const cores = [];
-	for (let i = 0; i < picks.length - 1; i += 2) {
-		const roleA = classify(picks[i]).role;
-		const roleB = classify(picks[i + 1]).role;
+	for (let i = 0; i + CORE_SIZE <= picks.length; i += CORE_SIZE) {
+		const group = picks.slice(i, i + CORE_SIZE);
 		cores.push({
 			name: `${region.name} Rental Core ${cores.length + 1}`,
-			roster: [
-				buildSet(picks[i], roleA, null, 'mid'),
-				buildSet(picks[i + 1], roleB, null, 'mid'),
-			],
+			signatureCount: SIGNATURE_SIZE,
+			roster: group.map(s => buildSet(s, classify(s).role, null, 'mid')),
 		});
 	}
 	return cores;

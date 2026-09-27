@@ -125,6 +125,36 @@ h1 { font-size: 22px; margin: 8px 0 4px; }
 .log div { color: var(--muted); }
 .log div:last-child { color: var(--text); }
 
+.preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.preview-card {
+	background: var(--panel); border: 2px solid var(--border); border-radius: 10px;
+	padding: 10px; text-align: center; cursor: pointer; position: relative;
+}
+.preview-card.picked { border-color: var(--accent); background: var(--panel-2); }
+.preview-card .pick-badge {
+	position: absolute; top: 6px; left: 6px; background: var(--accent); color: #0c1220;
+	font-weight: 700; font-size: 12px; width: 20px; height: 20px; border-radius: 50%;
+	display: flex; align-items: center; justify-content: center;
+}
+.preview-card img.sprite { width: 72px; height: 72px; image-rendering: pixelated; }
+.preview-card .name { font-weight: 600; font-size: 13px; margin-top: 2px; }
+.preview-card .level { color: var(--muted); font-size: 11px; }
+.confirm-btn { text-align: center; background: var(--accent); color: #0c1220; font-weight: 600; }
+.confirm-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.switch-panel {
+	background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
+	padding: 10px; margin-bottom: 12px;
+}
+.switch-panel.hidden { display: none; }
+.switch-panel .prompt { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
+.switch-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.switch-btn {
+	background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+	border-radius: 8px; padding: 8px; cursor: pointer; font-size: 13px;
+}
+.switch-btn:hover { border-color: var(--accent); }
+
 #screen-end { text-align: center; padding-top: 60px; }
 #btn-again {
 	background: var(--accent); color: #0c1220; border: none; border-radius: 8px;

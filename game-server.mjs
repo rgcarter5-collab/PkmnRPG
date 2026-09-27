@@ -15,7 +15,7 @@ import { BattleStream, getPlayerStreams, Teams } from './sim/index.ts';
 import { TieredAI } from './tiered-ai.mjs';
 import { HumanPlayer } from './human-player.mjs';
 import { toPokemonSet } from './pokemon-set.mjs';
-import { parseDetails } from './battle-tracker.mjs';
+import { parseDetails, parseHP } from './battle-tracker.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -24,7 +24,10 @@ const PORT = process.env.PORT || 8090;
 // Difficulty of the City League opponent, on TieredAI's 1 (Pokeball) - 4
 // (Master) scale. Tunable later per-tier once more of the ladder exists.
 const CITY_LEAGUE_AI_TIER = 2;
-const FORMAT_ID = 'gen9doublescustomgame';
+// Real VGC-style doubles: bring a 6-mon roster, pick 4 at team preview. "Team
+// Preview" itself is already on by default for gen9doublescustomgame; only
+// the picked-team-size cap needs adding as a custom rule.
+const FORMAT_ID = 'gen9doublescustomgame@@@Picked Team Size = 4';
 const REQUEST_TIMEOUT_MS = 5000;
 const REQUEST_POLL_MS = 15;
 
@@ -92,8 +95,8 @@ function startBattle(regionId, coreIndex) {
 	const p2spec = { name: opponentTeamDef.name, team: Teams.pack(p2team) };
 
 	const id = randomUUID();
-	const human = new HumanPlayer(streams.p1);
-	const ai = new TieredAI(streams.p2, CITY_LEAGUE_AI_TIER, {}, false);
+	const human = new HumanPlayer(streams.p1, {}, !!process.env.DEBUG_CHOICES);
+	const ai = new TieredAI(streams.p2, CITY_LEAGUE_AI_TIER, {}, !!process.env.DEBUG_CHOICES);
 
 	const session = {
 		id, human, ai,
@@ -139,32 +142,6 @@ function buildState(session) {
 	const sideId = session.human._sideId || 'p1';
 	const foePrefix = sideId === 'p1' ? 'p2' : 'p1';
 
-	let you = [];
-	if (req) {
-		let activeIdx = 0;
-		you = req.side.pokemon.map(p => {
-			const fainted = p.condition.includes('fnt');
-			const [hpPart, statusPart] = p.condition.split(' ');
-			const [cur, max] = hpPart.split('/').map(Number);
-			const { speciesName, level } = parseDetails(p.details);
-			let moves = null;
-			if (p.active && req.active[activeIdx]) {
-				moves = req.active[activeIdx].moves.map((m, i) => ({
-					slot: i + 1, id: m.id, name: m.move, pp: m.pp, maxpp: m.maxpp,
-					disabled: !!m.disabled, target: m.target,
-				}));
-			}
-			if (p.active) activeIdx++;
-			return {
-				species: speciesName, level, fainted, active: p.active,
-				status: fainted ? '' : (statusPart || ''),
-				hpFraction: max ? cur / max : (fainted ? 0 : null),
-				hpText: fainted ? '0/0' : `${cur}/${max}`,
-				moves,
-			};
-		});
-	}
-
 	const foe = ['a', 'b'].map(letter => {
 		const pos = foePrefix + letter;
 		const s = session.human.seen[pos];
@@ -175,14 +152,68 @@ function buildState(session) {
 		};
 	});
 
-	return {
+	const base = {
 		battleId: session.id,
 		region: session.region, coreName: session.coreName, opponentName: session.opponentName,
 		ended: session.ended, winner: session.winner, tie: session.tie, error: session.error || null,
-		needsChoice: !!req,
-		you, foe,
+		foe,
 		log: session.log.slice(-40),
 	};
+
+	if (!req) return { ...base, phase: 'waiting', needsChoice: false, you: [] };
+
+	if (req.teamPreview) {
+		// Bring-6-pick-4: nothing is "active" yet in any meaningful sense -
+		// just present the full roster for the player to order/select from.
+		const roster = req.side.pokemon.map((p, i) => {
+			const { speciesName, level } = parseDetails(p.details);
+			return { index: i + 1, species: speciesName, level, item: p.item, ability: p.ability || p.baseAbility, moves: p.moves };
+		});
+		return { ...base, phase: 'teamPreview', needsChoice: true, you: [], roster, maxChosenTeamSize: req.maxChosenTeamSize || roster.length };
+	}
+
+	if (req.forceSwitch) {
+		// A mon fainted and there's a real bench to switch into - report the
+		// full brought-team roster (fainted/active flags) plus which active
+		// slots need a replacement, index-aligned with req.forceSwitch.
+		const roster = req.side.pokemon.map((p, i) => {
+			const { speciesName, level } = parseDetails(p.details);
+			const hp = parseHP(p.condition);
+			return {
+				index: i, species: speciesName, level, active: p.active,
+				fainted: !!hp.fainted, hpFraction: hp.hpFraction ?? 0,
+				hpText: hp.fainted ? '0/0' : p.condition.split(' ')[0],
+			};
+		});
+		return { ...base, phase: 'switch', needsChoice: true, you: roster, forceSwitch: req.forceSwitch };
+	}
+
+	// Move phase (req.active): same shape as before, generalized to however
+	// many mons are in the brought team (still just the active ones get moves).
+	let activeIdx = 0;
+	const you = req.side.pokemon.map(p => {
+		const fainted = p.condition.includes('fnt');
+		const [hpPart, statusPart] = p.condition.split(' ');
+		const [cur, max] = hpPart.split('/').map(Number);
+		const { speciesName, level } = parseDetails(p.details);
+		let moves = null;
+		if (p.active && req.active[activeIdx]) {
+			moves = req.active[activeIdx].moves.map((m, i) => ({
+				slot: i + 1, id: m.id, name: m.move, pp: m.pp, maxpp: m.maxpp,
+				disabled: !!m.disabled, target: m.target,
+			}));
+		}
+		if (p.active) activeIdx++;
+		return {
+			species: speciesName, level, fainted, active: p.active,
+			status: fainted ? '' : (statusPart || ''),
+			hpFraction: max ? cur / max : (fainted ? 0 : null),
+			hpText: fainted ? '0/0' : `${cur}/${max}`,
+			moves,
+		};
+	});
+
+	return { ...base, phase: 'move', needsChoice: true, you };
 }
 
 // --- HTTP plumbing -----------------------------------------------------
@@ -254,18 +285,76 @@ const server = createServer(async (req, res) => {
 			if (!req_) return sendJSON(res, 409, { error: 'Not waiting on a choice right now' });
 
 			const body = await readJSONBody(req);
-			const actions = body.actions || [];
-			const parts = req_.active.map((activeSlot, i) => {
-				const pokemon = req_.side.pokemon[i];
-				if (pokemon.condition.includes('fnt')) return 'pass'; // fainted active slot: always pass
-				const chosen = actions[i];
-				if (!chosen || !chosen.moveSlot) return 'pass';
-				return chosen.target != null && chosen.target !== 0 ?
-					`move ${chosen.moveSlot} ${chosen.target}` : `move ${chosen.moveSlot}`;
-			});
+			let choiceString;
 
+			if (req_.teamPreview) {
+				// body.order: 1-based roster indices in the order to bring them,
+				// e.g. [3,1,5,2] - first two become the starting active pair.
+				const order = Array.isArray(body.order) ? body.order : [];
+				if (order.length !== (req_.maxChosenTeamSize || req_.side.pokemon.length)) {
+					return sendJSON(res, 400, { error: `Must pick exactly ${req_.maxChosenTeamSize} Pokemon` });
+				}
+				choiceString = `team ${order.join('')}`;
+			} else if (req_.forceSwitch) {
+				// body.switches: index-aligned with req_.forceSwitch - each entry
+				// is either a 1-based roster slot to switch into, or null/absent
+				// for a position that doesn't need one (or truly has no bench left).
+				//
+				// This is validated fully here, against the sim's own switch rules
+				// (side.ts's chooseSwitch: slot must exist, must not be active/
+				// fainted, must not already be used for another position this
+				// turn), and any invalid combination is rejected with a 400
+				// *without* ever calling submitChoice(). This matters because a
+				// rejected switch/team choice does NOT reliably get a corrective
+				// |request| line from the sim (only some rejections carry an
+				// `update` callback that re-emits one) - so a bad combined choice
+				// string can otherwise strand the session with no way to retry.
+				// See human-player.mjs's receiveError for the belt-and-suspenders
+				// version of this same guard.
+				const switches = body.switches || [];
+				const availableBench = req_.side.pokemon
+					.map((p, idx) => ({ slot: idx + 1, p }))
+					.filter(({ p }) => !p.active && !p.condition.includes('fnt'));
+				const usedSlots = new Set();
+				let invalid = null;
+				const parts = req_.forceSwitch.map((needsSwitch, i) => {
+					if (!needsSwitch) return 'pass';
+					const slot = switches[i];
+					if (slot == null) {
+						const stillAvailable = availableBench.some(b => !usedSlots.has(b.slot));
+						if (stillAvailable) invalid = invalid || 'You must choose a Pokemon to switch in.';
+						return 'pass';
+					}
+					if (usedSlots.has(slot)) {
+						invalid = invalid || 'That Pokemon was already chosen for another switch-in this turn.';
+						return 'pass';
+					}
+					if (!availableBench.some(b => b.slot === slot)) {
+						invalid = invalid || "That Pokemon can't switch in right now.";
+						return 'pass';
+					}
+					usedSlots.add(slot);
+					return `switch ${slot}`;
+				});
+				if (invalid) return sendJSON(res, 400, { error: invalid });
+				choiceString = parts.join(', ');
+			} else {
+				// Move phase.
+				const actions = body.actions || [];
+				const parts = req_.active.map((activeSlot, i) => {
+					const pokemon = req_.side.pokemon[i];
+					if (pokemon.condition.includes('fnt')) return 'pass'; // fainted active slot: always pass
+					const chosen = actions[i];
+					if (!chosen || !chosen.moveSlot) return 'pass';
+					return chosen.target != null && chosen.target !== 0 ?
+						`move ${chosen.moveSlot} ${chosen.target}` : `move ${chosen.moveSlot}`;
+				});
+				choiceString = parts.join(', ');
+			}
+
+			if (process.env.DEBUG_CHOICES) console.error('[choose]', choiceString, JSON.stringify(body));
 			try {
-				session.human.submitChoice(parts.join(', '));
+				session.human.submitChoice(choiceString);
 			} catch (err) {
 				return sendJSON(res, 400, { error: err.message });
 			}
