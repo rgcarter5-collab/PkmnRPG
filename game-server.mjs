@@ -16,6 +16,7 @@ import { TieredAI } from './tiered-ai.mjs';
 import { HumanPlayer } from './human-player.mjs';
 import { toPokemonSet } from './pokemon-set.mjs';
 import { parseDetails, parseHP } from './battle-tracker.mjs';
+import { getMovepool, validateMoveset } from './movepool.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -79,14 +80,24 @@ async function waitForPendingOrEnd(session, timeoutMs) {
 	}
 }
 
-function startBattle(regionId, coreIndex) {
+function startBattle(regionId, coreIndex, customMoves) {
 	const regionData = regionalTeams[regionId];
 	if (!regionData) throw new Error(`Unknown region: ${regionId}`);
 	const core = regionData.cityLeagueCores[coreIndex];
 	if (!core) throw new Error(`Unknown rental core index: ${coreIndex}`);
 	const opponentTeamDef = regionData.regionalTeams[Math.floor(Math.random() * regionData.regionalTeams.length)];
 
-	const p1team = core.roster.map(toPokemonSet);
+	// Optional pre-battle moveset edits (the roster-builder screen): keyed by
+	// 1-based roster slot, same indices team preview and the roster-detail
+	// endpoint use elsewhere. Re-validated here (never trust the client) even
+	// though the roster-builder endpoint already only offers legal moves.
+	const p1roster = core.roster.map((mon, i) => {
+		const override = customMoves?.[i + 1];
+		if (!override) return mon;
+		return { ...mon, moves: validateMoveset(mon.species, override) };
+	});
+
+	const p1team = p1roster.map(toPokemonSet);
 	const p2team = opponentTeamDef.roster.map(toPokemonSet);
 
 	const streams = getPlayerStreams(new BattleStream());
@@ -263,9 +274,28 @@ const server = createServer(async (req, res) => {
 			return sendJSON(res, 200, { regions });
 		}
 
+		const rosterMatch = url.pathname.match(/^\/api\/regions\/([^/]+)\/cores\/(\d+)$/);
+		if (req.method === 'GET' && rosterMatch) {
+			const regionData = regionalTeams[rosterMatch[1]];
+			if (!regionData) return sendJSON(res, 404, { error: 'Unknown region' });
+			const core = regionData.cityLeagueCores[Number(rosterMatch[2])];
+			if (!core) return sendJSON(res, 404, { error: 'Unknown rental core' });
+			const roster = core.roster.map((mon, i) => ({
+				index: i + 1, species: mon.species, level: mon.level, item: mon.item, ability: mon.ability,
+				moves: mon.moves,
+				movepool: getMovepool(mon.species),
+			}));
+			return sendJSON(res, 200, { coreName: core.name, roster });
+		}
+
 		if (req.method === 'POST' && url.pathname === '/api/battle/start') {
 			const body = await readJSONBody(req);
-			const session = startBattle(body.region, body.coreIndex);
+			let session;
+			try {
+				session = startBattle(body.region, body.coreIndex, body.moves);
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
 			await waitForPendingOrEnd(session, REQUEST_TIMEOUT_MS);
 			return sendJSON(res, 200, buildState(session));
 		}

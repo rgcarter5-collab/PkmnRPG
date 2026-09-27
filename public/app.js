@@ -5,6 +5,7 @@
 
 const screens = {
 	picker: document.getElementById('screen-picker'),
+	roster: document.getElementById('screen-roster'),
 	preview: document.getElementById('screen-preview'),
 	battle: document.getElementById('screen-battle'),
 	end: document.getElementById('screen-end'),
@@ -41,12 +42,102 @@ async function loadPicker() {
 			const btn = document.createElement('button');
 			btn.className = 'core-btn';
 			btn.innerHTML = `${core.name}<div class="species-line">${core.species.join(' &amp; ')}</div>`;
-			btn.onclick = () => startBattle(region.id, core.index);
+			btn.onclick = () => openRosterBuilder(region.id, core.index);
 			block.appendChild(btn);
 		}
 		container.appendChild(block);
 	}
 }
+
+// --- Roster builder screen (edit rental movesets before the battle) --------
+
+let rosterState = null; // { region, coreIndex, pokemon: [{index, species, level, moves, movepool}] }
+let editingSlot = null; // { pokemonIndex, moveSlotIdx } while a movepool panel is open
+
+async function openRosterBuilder(regionId, coreIndex) {
+	const { coreName, roster } = await api(`/api/regions/${regionId}/cores/${coreIndex}`);
+	rosterState = {
+		region: regionId, coreIndex,
+		pokemon: roster.map(p => ({ ...p, moves: [...p.moves] })),
+	};
+	editingSlot = null;
+	document.getElementById('roster-title').textContent = coreName;
+	renderRosterBuilder();
+	showScreen('roster');
+}
+
+function renderRosterBuilder() {
+	const grid = document.getElementById('roster-grid');
+	grid.innerHTML = '';
+	rosterState.pokemon.forEach((mon, pIdx) => {
+		const card = document.createElement('div');
+		card.className = 'roster-card';
+		card.innerHTML = `
+			<div class="roster-head">
+				<img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${spriteId(mon.species)}.png" alt="">
+				<div>
+					<div class="roster-name">${mon.species}</div>
+					<div class="roster-sub">Lv.${mon.level}</div>
+				</div>
+			</div>
+			<div class="roster-moves"></div>
+		`;
+		const movesEl = card.querySelector('.roster-moves');
+		mon.moves.forEach((moveName, mIdx) => {
+			const btn = document.createElement('button');
+			const isEditing = editingSlot && editingSlot.pokemonIndex === pIdx && editingSlot.moveSlotIdx === mIdx;
+			btn.className = 'roster-move-btn' + (isEditing ? ' editing' : '');
+			btn.textContent = moveName;
+			btn.onclick = () => {
+				editingSlot = isEditing ? null : { pokemonIndex: pIdx, moveSlotIdx: mIdx };
+				renderRosterBuilder();
+			};
+			movesEl.appendChild(btn);
+		});
+		if (editingSlot && editingSlot.pokemonIndex === pIdx) {
+			card.appendChild(renderMovepoolPanel(mon, pIdx, editingSlot.moveSlotIdx));
+		}
+		grid.appendChild(card);
+	});
+}
+
+function renderMovepoolPanel(mon, pIdx, moveSlotIdx) {
+	const panel = document.createElement('div');
+	panel.className = 'movepool-panel';
+	const search = document.createElement('input');
+	search.className = 'movepool-search';
+	search.placeholder = 'Search moves...';
+	panel.appendChild(search);
+	const list = document.createElement('div');
+	panel.appendChild(list);
+
+	function renderList(filter) {
+		list.innerHTML = '';
+		const q = filter.trim().toLowerCase();
+		for (const move of mon.movepool) {
+			if (q && !move.name.toLowerCase().includes(q)) continue;
+			const opt = document.createElement('button');
+			const isCurrent = mon.moves[moveSlotIdx] === move.name;
+			opt.className = 'movepool-option' + (isCurrent ? ' current' : '');
+			opt.textContent = isCurrent ? `${move.name} (current)` : move.name;
+			opt.onclick = () => {
+				mon.moves[moveSlotIdx] = move.name;
+				editingSlot = null;
+				renderRosterBuilder();
+			};
+			list.appendChild(opt);
+		}
+	}
+	renderList('');
+	search.oninput = () => renderList(search.value);
+	return panel;
+}
+
+document.getElementById('roster-confirm').addEventListener('click', () => {
+	const moves = {};
+	for (const mon of rosterState.pokemon) moves[mon.index] = mon.moves;
+	startBattle(rosterState.region, rosterState.coreIndex, moves);
+});
 
 // --- Battle screen ---------------------------------------------------------
 
@@ -55,11 +146,11 @@ let currentBattleId = null;
 // for this turn: one entry per active "you" slot index that needs an action.
 let pendingActions = null; // { queue: [slotIdx, ...], results: {slotIdx: {moveSlot, target}}, awaitingTargetFor: slotIdx|null, moveSlotAwaitingTarget }
 
-async function startBattle(region, coreIndex) {
+async function startBattle(region, coreIndex, moves) {
 	const state = await api('/api/battle/start', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ region, coreIndex }),
+		body: JSON.stringify({ region, coreIndex, moves }),
 	});
 	currentBattleId = state.battleId;
 	render(state);

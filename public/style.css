@@ -142,6 +142,37 @@ h1 { font-size: 22px; margin: 8px 0 4px; }
 .confirm-btn { text-align: center; background: var(--accent); color: #0c1220; font-weight: 600; }
 .confirm-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+.roster-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.roster-card {
+	background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+	padding: 10px 12px;
+}
+.roster-card .roster-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.roster-card img.sprite { width: 56px; height: 56px; image-rendering: pixelated; }
+.roster-card .roster-name { font-weight: 600; font-size: 14px; }
+.roster-card .roster-sub { color: var(--muted); font-size: 11px; }
+.roster-moves { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.roster-move-btn {
+	background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+	border-radius: 8px; padding: 8px; cursor: pointer; font-size: 13px; text-align: left;
+}
+.roster-move-btn:hover { border-color: var(--accent); }
+.roster-move-btn.editing { border-color: var(--accent); background: #1e2740; }
+.movepool-panel {
+	margin-top: 8px; background: #12151d; border: 1px solid var(--border); border-radius: 8px;
+	padding: 8px; max-height: 220px; overflow-y: auto;
+}
+.movepool-panel .movepool-search {
+	width: 100%; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+	border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; font-size: 13px; box-sizing: border-box;
+}
+.movepool-option {
+	display: block; width: 100%; text-align: left; background: transparent; border: none; color: var(--text);
+	padding: 6px 4px; cursor: pointer; font-size: 13px; border-radius: 4px;
+}
+.movepool-option:hover { background: var(--panel-2); }
+.movepool-option.current { color: var(--accent); font-weight: 600; }
+
 .switch-panel {
 	background: var(--panel); border: 1px solid var(--accent); border-radius: 10px;
 	padding: 10px; margin-bottom: 12px;
