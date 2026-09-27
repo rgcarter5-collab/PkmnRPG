@@ -1,0 +1,1 @@
+web: node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import=./cjs-ts-shim.mjs --experimental-loader=./ts-resolve-loader.mjs game-server.mjs

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pokemon RPG - City League</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+
+	<section id="screen-picker" class="screen">
+		<h1>City League</h1>
+		<p class="hint">Pick your region and rental core to challenge the City League.</p>
+		<div id="region-list" class="region-list"></div>
+	</section>
+
+	<section id="screen-battle" class="screen hidden">
+		<div class="battle-header">
+			<span id="opponent-name"></span>
+		</div>
+
+		<div class="field">
+			<div class="side foe-side">
+				<div class="slot" data-side="foe" data-slot="0"></div>
+				<div class="slot" data-side="foe" data-slot="1"></div>
+			</div>
+			<div class="side you-side">
+				<div class="slot" data-side="you" data-slot="0"></div>
+				<div class="slot" data-side="you" data-slot="1"></div>
+			</div>
+		</div>
+
+		<div id="action-panel" class="action-panel"></div>
+
+		<div id="log" class="log"></div>
+	</section>
+
+	<section id="screen-end" class="screen hidden">
+		<h1 id="end-title"></h1>
+		<button id="btn-again">Play again</button>
+	</section>
+
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

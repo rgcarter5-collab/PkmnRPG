@@ -1,0 +1,286 @@
+// Minimal playable slice of the Pokemon RPG: a plain Node HTTP server (no
+// external deps - this only needs a handful of JSON endpoints, not a real
+// framework) that lets a human fight a real doubles battle, via the actual
+// Showdown sim, against a TieredAI opponent. No accounts, no persistence,
+// no story yet - just "pick a rental core, fight the City League, see who
+// wins" end to end. Everything else (progression, money, SP training,
+// cutscenes) hangs off this loop later.
+import { createServer } from 'node:http';
+import { readFile, readFileSync } from 'node:fs';
+import { randomUUID } from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { BattleStream, getPlayerStreams, Teams } from './sim/index.ts';
+import { TieredAI } from './tiered-ai.mjs';
+import { HumanPlayer } from './human-player.mjs';
+import { toPokemonSet } from './pokemon-set.mjs';
+import { parseDetails } from './battle-tracker.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const PORT = process.env.PORT || 8090;
+
+// Difficulty of the City League opponent, on TieredAI's 1 (Pokeball) - 4
+// (Master) scale. Tunable later per-tier once more of the ladder exists.
+const CITY_LEAGUE_AI_TIER = 2;
+const FORMAT_ID = 'gen9doublescustomgame';
+const REQUEST_TIMEOUT_MS = 5000;
+const REQUEST_POLL_MS = 15;
+
+const regionalTeams = JSON.parse(readFileSync(path.join(__dirname, 'regional-teams.json'), 'utf8'));
+
+/** @type {Map<string, object>} sessionId -> battle session */
+const sessions = new Map();
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Turn one raw protocol line into a short human-readable log entry. Not
+// exhaustive - just the lines a player actually wants narrated; anything
+// else is silently dropped from the readable log (the raw data still drives
+// state via HumanPlayer's tracker regardless of what we choose to narrate).
+function formatLogLine(line) {
+	const parts = line.split('|');
+	const cmd = parts[1];
+	const nameOf = pos => pos.includes(':') ? pos.split(':')[1].trim() : pos;
+	switch (cmd) {
+		case 'move': return `${nameOf(parts[2])} used ${parts[3]}!`;
+		case 'switch': case 'drag': return `${nameOf(parts[2])} sent out ${parseDetails(parts[3]).speciesName}!`;
+		case '-damage': return parts[3].includes('fnt') ? null : `${nameOf(parts[2])} took damage.`;
+		case '-heal': return `${nameOf(parts[2])} recovered some HP.`;
+		case '-crit': return 'A critical hit!';
+		case '-supereffective': return "It's super effective!";
+		case '-resisted': return "It's not very effective...";
+		case '-immune': return `${nameOf(parts[2])} was unaffected!`;
+		case '-fail': return `${nameOf(parts[2])}'s move failed.`;
+		case '-miss': return `${nameOf(parts[2])} missed!`;
+		case '-status': return `${nameOf(parts[2])} was afflicted with ${parts[3]}!`;
+		case '-curestatus': return `${nameOf(parts[2])} recovered from its status.`;
+		case '-boost': return `${nameOf(parts[2])}'s stat rose!`;
+		case '-unboost': return `${nameOf(parts[2])}'s stat fell!`;
+		case 'faint': return `${nameOf(parts[2])} fainted!`;
+		case 'turn': return `--- Turn ${parts[2]} ---`;
+		case 'win': return `${parts[2]} wins the battle!`;
+		case 'tie': return "It's a tie!";
+		default: return null;
+	}
+}
+
+async function waitForPendingOrEnd(session, timeoutMs) {
+	const deadline = Date.now() + timeoutMs;
+	while (!session.human.pendingRequest && !session.ended) {
+		if (Date.now() > deadline) throw new Error('Timed out waiting for the battle to respond');
+		await sleep(REQUEST_POLL_MS);
+	}
+}
+
+function startBattle(regionId, coreIndex) {
+	const regionData = regionalTeams[regionId];
+	if (!regionData) throw new Error(`Unknown region: ${regionId}`);
+	const core = regionData.cityLeagueCores[coreIndex];
+	if (!core) throw new Error(`Unknown rental core index: ${coreIndex}`);
+	const opponentTeamDef = regionData.regionalTeams[Math.floor(Math.random() * regionData.regionalTeams.length)];
+
+	const p1team = core.roster.map(toPokemonSet);
+	const p2team = opponentTeamDef.roster.map(toPokemonSet);
+
+	const streams = getPlayerStreams(new BattleStream());
+	const spec = { formatid: FORMAT_ID };
+	const p1spec = { name: 'You', team: Teams.pack(p1team) };
+	const p2spec = { name: opponentTeamDef.name, team: Teams.pack(p2team) };
+
+	const id = randomUUID();
+	const human = new HumanPlayer(streams.p1);
+	const ai = new TieredAI(streams.p2, CITY_LEAGUE_AI_TIER, {}, false);
+
+	const session = {
+		id, human, ai,
+		ended: false, winner: null, tie: false,
+		region: regionId, coreName: core.name, opponentName: opponentTeamDef.name,
+		log: [],
+	};
+	sessions.set(id, session);
+
+	void human.start().catch(err => { session.ended = true; session.error = err.message; });
+	void ai.start().catch(err => { session.ended = true; session.error = err.message; });
+
+	void (async () => {
+		for await (const chunk of streams.omniscient) {
+			for (const line of chunk.split('\n')) {
+				const readable = formatLogLine(line);
+				if (readable) session.log.push(readable);
+				if (line.startsWith('|win|')) { session.ended = true; session.winner = line.slice('|win|'.length); }
+				if (line.startsWith('|tie|')) { session.ended = true; session.tie = true; }
+			}
+		}
+		// Keep the finished session around briefly (so a client can still poll
+		// the final state after the last choice) then drop it - nothing here
+		// persists across sessions yet, so there's no reason to hold onto
+		// finished battles indefinitely.
+		setTimeout(() => sessions.delete(id), 10 * 60 * 1000).unref();
+	})();
+
+	void streams.omniscient.write(
+		`>start ${JSON.stringify(spec)}\n>player p1 ${JSON.stringify(p1spec)}\n>player p2 ${JSON.stringify(p2spec)}`
+	);
+
+	return session;
+}
+
+// Build the render-friendly snapshot the front end polls for. "You" comes
+// from the authoritative pending request (exact HP, real PP); "foe" comes
+// from HumanPlayer's fog-of-war tracker (HP fraction only, no PP) - the same
+// partial-knowledge view TieredAI itself works from, just surfaced instead
+// of scored.
+function buildState(session) {
+	const req = session.human.pendingRequest;
+	const sideId = session.human._sideId || 'p1';
+	const foePrefix = sideId === 'p1' ? 'p2' : 'p1';
+
+	let you = [];
+	if (req) {
+		let activeIdx = 0;
+		you = req.side.pokemon.map(p => {
+			const fainted = p.condition.includes('fnt');
+			const [hpPart, statusPart] = p.condition.split(' ');
+			const [cur, max] = hpPart.split('/').map(Number);
+			const { speciesName, level } = parseDetails(p.details);
+			let moves = null;
+			if (p.active && req.active[activeIdx]) {
+				moves = req.active[activeIdx].moves.map((m, i) => ({
+					slot: i + 1, id: m.id, name: m.move, pp: m.pp, maxpp: m.maxpp,
+					disabled: !!m.disabled, target: m.target,
+				}));
+			}
+			if (p.active) activeIdx++;
+			return {
+				species: speciesName, level, fainted, active: p.active,
+				status: fainted ? '' : (statusPart || ''),
+				hpFraction: max ? cur / max : (fainted ? 0 : null),
+				hpText: fainted ? '0/0' : `${cur}/${max}`,
+				moves,
+			};
+		});
+	}
+
+	const foe = ['a', 'b'].map(letter => {
+		const pos = foePrefix + letter;
+		const s = session.human.seen[pos];
+		if (!s || !s.species?.exists) return null;
+		return {
+			species: s.species.name, level: s.level, fainted: !!s.fainted,
+			status: s.status || '', hpFraction: s.hpFraction ?? 1,
+		};
+	});
+
+	return {
+		battleId: session.id,
+		region: session.region, coreName: session.coreName, opponentName: session.opponentName,
+		ended: session.ended, winner: session.winner, tie: session.tie, error: session.error || null,
+		needsChoice: !!req,
+		you, foe,
+		log: session.log.slice(-40),
+	};
+}
+
+// --- HTTP plumbing -----------------------------------------------------
+
+function sendJSON(res, status, body) {
+	const data = JSON.stringify(body);
+	res.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+	res.end(data);
+}
+
+function readJSONBody(req) {
+	return new Promise((resolve, reject) => {
+		let data = '';
+		req.on('data', chunk => { data += chunk; });
+		req.on('end', () => {
+			if (!data) return resolve({});
+			try { resolve(JSON.parse(data)); } catch (err) { reject(err); }
+		});
+		req.on('error', reject);
+	});
+}
+
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
+
+function serveStatic(req, res, urlPath) {
+	const rel = urlPath === '/' ? '/index.html' : urlPath;
+	const filePath = path.join(PUBLIC_DIR, path.normalize(rel).replace(/^(\.\.[/\\])+/, ''));
+	if (!filePath.startsWith(PUBLIC_DIR)) { res.writeHead(403); res.end(); return; }
+	readFile(filePath, (err, data) => {
+		if (err) { res.writeHead(404); res.end('Not found'); return; }
+		res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' });
+		res.end(data);
+	});
+}
+
+const server = createServer(async (req, res) => {
+	const url = new URL(req.url, `http://${req.headers.host}`);
+
+	try {
+		if (req.method === 'GET' && url.pathname === '/api/regions') {
+			const regions = Object.entries(regionalTeams).map(([id, data]) => ({
+				id, name: data.name,
+				cores: data.cityLeagueCores.map((c, i) => ({
+					index: i, name: c.name, species: c.roster.map(p => p.species),
+				})),
+			}));
+			return sendJSON(res, 200, { regions });
+		}
+
+		if (req.method === 'POST' && url.pathname === '/api/battle/start') {
+			const body = await readJSONBody(req);
+			const session = startBattle(body.region, body.coreIndex);
+			await waitForPendingOrEnd(session, REQUEST_TIMEOUT_MS);
+			return sendJSON(res, 200, buildState(session));
+		}
+
+		const stateMatch = url.pathname.match(/^\/api\/battle\/([^/]+)$/);
+		if (req.method === 'GET' && stateMatch) {
+			const session = sessions.get(stateMatch[1]);
+			if (!session) return sendJSON(res, 404, { error: 'No such battle' });
+			return sendJSON(res, 200, buildState(session));
+		}
+
+		const chooseMatch = url.pathname.match(/^\/api\/battle\/([^/]+)\/choose$/);
+		if (req.method === 'POST' && chooseMatch) {
+			const session = sessions.get(chooseMatch[1]);
+			if (!session) return sendJSON(res, 404, { error: 'No such battle' });
+			const req_ = session.human.pendingRequest;
+			if (!req_) return sendJSON(res, 409, { error: 'Not waiting on a choice right now' });
+
+			const body = await readJSONBody(req);
+			const actions = body.actions || [];
+			const parts = req_.active.map((activeSlot, i) => {
+				const pokemon = req_.side.pokemon[i];
+				if (pokemon.condition.includes('fnt')) return 'pass'; // fainted active slot: always pass
+				const chosen = actions[i];
+				if (!chosen || !chosen.moveSlot) return 'pass';
+				return chosen.target != null && chosen.target !== 0 ?
+					`move ${chosen.moveSlot} ${chosen.target}` : `move ${chosen.moveSlot}`;
+			});
+
+			try {
+				session.human.submitChoice(parts.join(', '));
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
+			await waitForPendingOrEnd(session, REQUEST_TIMEOUT_MS);
+			return sendJSON(res, 200, buildState(session));
+		}
+
+		if (req.method === 'GET') return serveStatic(req, res, url.pathname);
+
+		sendJSON(res, 404, { error: 'Not found' });
+	} catch (err) {
+		sendJSON(res, 500, { error: err.message });
+	}
+});
+
+server.listen(PORT, () => {
+	console.log(`Pokemon RPG game server running at http://localhost:${PORT}`);
+});

@@ -1,0 +1,208 @@
+'use strict';
+
+const assert = require('assert').strict;
+const { TLfor, TLadd } = require('../../dist/sim/dex-text');
+
+describe('Chat', () => {
+	before(async () => {
+		if (!Chat.translationsLoaded) await Chat.loadTranslations();
+	});
+
+	it('should convert interface language preferences to game text language codes', () => {
+		assert.equal(Chat.getDexLanguage('japanese'), 'ja');
+		assert.equal(Chat.getDexLanguage('simplifiedchinese'), 'zh-cn');
+		assert.equal(Chat.getDexLanguage('portuguese'), 'pt');
+	});
+
+	it('should display both English and native language names', () => {
+		assert.equal(Chat.getLanguageName('japanese'), '日本語 (Japanese)');
+		assert.equal(Chat.getLanguageName('english'), 'English');
+	});
+
+	it('should resolve language names and directory codes', () => {
+		assert.equal(Chat.getLanguageID('Japanese'), 'japanese');
+		assert.equal(Chat.getLanguageID('ja'), 'japanese');
+		assert.equal(Chat.getLanguageID('zh-cn'), 'simplifiedchinese');
+		assert.equal(Chat.getLanguageID('zh_tw'), 'traditionalchinese');
+		assert.equal(Chat.getLanguageID('not-a-language'), null);
+	});
+
+	it('should translate Dex objects with a Translator', () => {
+		const translate = TLfor('ja');
+		assert.equal(translate(Dex.items.get('Leftovers')), 'たべのこし');
+		assert.equal(translate(Dex.moves.get('Tackle')), 'たいあたり');
+		assert.equal(translate(Dex.species.get('Pikachu')), 'ピカチュウ');
+		const text = Dex.loadTextData('ja');
+		for (const [property, table] of Object.entries({
+			type: 'TypeNames',
+			nature: 'NatureNames',
+			gender: 'GenderNames',
+			egggroup: 'EggGroupNames',
+			color: 'ColorNames',
+			status: 'StatusNames',
+			target: 'TargetNames',
+			stat: 'StatNames',
+			statShort: 'StatShortNames',
+			statMedium: 'StatMediumNames',
+		})) {
+			assert.deepEqual(translate[property], text[table]);
+		}
+		assert.equal(translate.tag.physical, text.Tags.physical.name);
+		assert.equal(translate.tag.contact, text.Tags.contact.name);
+	});
+
+	it('should reorder named UI translation placeholders', () => {
+		TLadd('en-afd', [{
+			'First {FIRST} then {SECOND}': 'Second {SECOND} before {FIRST}',
+		}]);
+		try {
+			const first = 'one';
+			const second = 'two';
+			assert.equal(TLfor('en-afd')`First ${first} then ${second}`, 'Second two before one');
+		} finally {
+			TLadd('en-afd', [{ 'First {FIRST} then {SECOND}': null }]);
+		}
+	});
+
+	it('should load flat UI translation catalogs', () => {
+		const uiText = require('../../dist/translations/ja/core-commands').translations;
+		const entry = Object.entries(uiText).find(([source, translation]) => (
+			typeof translation === 'string' && !source.includes('{')
+		));
+		assert(entry);
+		assert.equal(TLfor('ja')(entry[0]), entry[1]);
+	});
+
+	it('should localize data HTML', () => {
+		const move = Dex.moves.get('Close Combat');
+		const text = Dex.text.get(move, 'ja');
+		const description = text.shortDesc || text.desc;
+		const html = Chat.getDataMoveHTML(move, { language: 'japanese' });
+		assert(html.includes(text.name));
+		assert(html.includes(description));
+		const detailsHTML = Chat.getDataMoveHTML(move, {
+			language: 'japanese', hideShortDescription: true,
+		});
+		assert(!detailsHTML.includes(description));
+	});
+
+	it('should not infinite loop formatText', () => {
+		assert.equal(
+			Chat.formatText(`<\\\\||^^**~~\`\`https://a/Olaaaseusbobalhos\`\`~~**^^||\\\\`),
+			`&lt;<sub><span class="spoiler"><sup><b><s><code><a href="https://a/Olaaaseusbobalhos" rel="noopener" target="_blank">https://a/Olaaaseusbobalhos</a></code></s></b></sup></span></sub>`
+		);
+		assert.equal(
+			Chat.formatText(`[[https://google.com/]]text`),
+			`<a href="//www.google.com/search?ie=UTF-8&btnI&q=https%3A%2F%2Fgoogle.com%2F" target="_blank">https://google.com/</a>text`
+		);
+	});
+
+	it('should run formatText correctly', () => {
+		assert.equal(
+			Chat.formatText(`hi **__bold italics__** ^^superscript^^ \\\\subscript\\\\ normal ~~strikethrough~~ bye`),
+			`hi <b><i>bold italics</i></b> <sup>superscript</sup> <sub>subscript</sub> normal <s>strikethrough</s> bye`
+		);
+		assert.equal(
+			Chat.formatText(`__**reverse nesting**__`),
+			`<i><b>reverse nesting</b></i>`
+		);
+		assert.equal(
+			Chat.formatText(`__**bad nesting__**`),
+			`<i>**bad nesting</i>**`
+		);
+		assert.equal(
+			Chat.formatText(`spaced ** out ** no __also no __ ~~ also no~~ ok`),
+			`spaced ** out ** no __also no __ ~~ also no~~ ok`
+		);
+		assert.equal(
+			Chat.formatText(`hi \`\` \` \`\` bye`),
+			`hi <code>\`</code> bye`
+		);
+		assert.equal(
+			Chat.formatText(`hi \`\`inside __not__ formatted\`\` bye`),
+			`hi <code>inside __not__ formatted</code> bye`
+		);
+		assert.equal(
+			Chat.formatText(`<<roomid-1-2-3>> <<roomid_1_2_3>>`),
+			`&laquo;<a href="/roomid-1-2-3" target="_blank">roomid-1-2-3</a>&raquo; &lt;&lt;roomid_1_2_3&gt;&gt;`
+		);
+		assert.equal(
+			Chat.formatText(`hi __spoiler: bye__ hi again (parenthetical spoiler: bye again (or not!!!!)) that was fun`),
+			`hi <i>spoiler: <span class="spoiler">bye</span></i> hi again (parenthetical spoiler: <span class="spoiler">bye again (or not!!!!)</span>) that was fun`
+		);
+		assert.equal(
+			Chat.formatText(`hi __||bye||__ hi again (parenthetical ||bye again (or not!!!!)||) that was fun`),
+			`hi <i><span class="spoiler">bye</span></i> hi again (parenthetical <span class="spoiler">bye again (or not!!!!)</span>) that was fun`
+		);
+		assert.equal(
+			Chat.formatText(`hi google.com/__a__ bye >w<`),
+			`hi <a href="http://google.com/__a__" rel="noopener" target="_blank">google.com/__a__</a> bye &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`(https://en.wikipedia.org/wiki/Pokémon_(video_game_series))`),
+			`(<a href="https://en.wikipedia.org/wiki/Pokémon_(video_game_series)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Pokémon_(video_game_series)</a>)`
+		);
+		assert.equal(
+			Chat.formatText(`hi email@email.com bye >w<`),
+			`hi <a href="mailto:email@email.com" rel="noopener" target="_blank">email@email.com</a> bye &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`hi email@email.example bye >w<`),
+			`hi <a href="mailto:email@email.example" rel="noopener" target="_blank">email@email.example</a> bye &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`>greentext`),
+			`<span class="greentext">&gt;greentext</span>`
+		);
+		assert.equal(
+			Chat.formatText(`>w< not greentext >also not greentext`),
+			`&gt;w&lt; not greentext &gt;also not greentext`
+		);
+		assert.equal(
+			Chat.formatText(`[[Google <http://www.google.com/>]] >w<`),
+			`<a href="http://www.google.com/" rel="noopener" target="_blank">Google<small> &lt;google.com&gt;</small></a> &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`[[Google <google.com>]] >w<`, true),
+			`<a href="http://google.com" target="_blank">Google</a> &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`[[wiki: Pokemon]] >w<`, true),
+			`<a href="//en.wikipedia.org/w/index.php?title=Special:Search&search=Pokemon" target="_blank">wiki: Pokemon</a> &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`[[wiki: D&D D&amp;D]] [[A>B A&gt;B]] &amp;`, true),
+			`<a href="//en.wikipedia.org/w/index.php?title=Special:Search&search=D%26D%20D%26amp%3BD" target="_blank">wiki: D&amp;D D&amp;amp;D</a> <a href="//www.google.com/search?ie=UTF-8&btnI&q=A%3EB%20A%26gt%3BB" target="_blank">A&gt;B A&amp;gt;B</a> &amp;amp;`
+		);
+		assert.equal(
+			Chat.formatText(`[[pokemon: Oshawott]] >w<`, true),
+			`<a href="//dex.pokemonshowdown.com/pokemon/oshawott" target="_blank"><psicon pokemon="Oshawott" /></a> &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`[[item: Beast ball]] >w<`),
+			`<a href="//dex.pokemonshowdown.com/items/beastball" target="_blank">[Beast ball]</a> &gt;w&lt;`
+		);
+		assert.equal(
+			Chat.formatText(`:)`, true),
+			`:)`
+		);
+		assert.equal(
+			Chat.formatText(`a\nb\nc`),
+			`a\nb\nc`
+		);
+		assert.equal(
+			Chat.formatText(`a\nb\nc`, true),
+			`a<br />b<br />c`
+		);
+		assert.equal(
+			Chat.formatText(`a\nb\nc`, false, true),
+			`a<br />b<br />c`
+		);
+	});
+
+	it('should run toDurationString correctly', () => {
+		assert(Chat.toDurationString(1e50));
+
+		assert(!Chat.toDurationString(10000000 * 24 * 60 * 60 * 1000).includes('  '));
+	});
+});
