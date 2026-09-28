@@ -17,6 +17,9 @@ import { HumanPlayer } from './human-player.mjs';
 import { toPokemonSet } from './pokemon-set.mjs';
 import { parseDetails, parseHP } from './battle-tracker.mjs';
 import { getMovepoolWithPresets, validateMoveset } from './movepool.mjs';
+import * as db from './db.mjs';
+import { getCatalog, buyListing, ownedPokemonToSetData, MarketplaceError } from './marketplace.mjs';
+import { validateSP, trainStat, removeStat, TrainingError } from './stat-training.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -154,39 +157,34 @@ async function waitForPendingOrEnd(session, timeoutMs) {
 	}
 }
 
-function startBattle(regionId, coreIndex, customMoves) {
-	const regionData = regionalTeams[regionId];
-	if (!regionData) throw new Error(`Unknown region: ${regionId}`);
-	const core = regionData.cityLeagueCores[coreIndex];
-	if (!core) throw new Error(`Unknown rental core index: ${coreIndex}`);
-	const opponentTeamDef = regionData.regionalTeams[Math.floor(Math.random() * regionData.regionalTeams.length)];
+// Pokedollar prize for winning a battle, credited to the player record once
+// the battle ends. Only applies to sessions started with a real playerId
+// (rental-core battles have none yet - a player isn't required to have a
+// save to try the City League intro loop).
+const WIN_PRIZE_POKEDOLLARS = 500;
 
-	// Optional pre-battle moveset edits (the roster-builder screen): keyed by
-	// 1-based roster slot, same indices team preview and the roster-detail
-	// endpoint use elsewhere. Re-validated here (never trust the client) even
-	// though the roster-builder endpoint already only offers legal moves.
-	const p1roster = core.roster.map((mon, i) => {
-		const override = customMoves?.[i + 1];
-		if (!override) return mon;
-		return { ...mon, moves: validateMoveset(mon.species, override, mon.moves) };
-	});
-
+// Shared by both battle-start paths below: given two already-built rosters
+// (arrays of setData objects - see pokemon-set.mjs's toPokemonSet), wire up
+// the actual Showdown battle stream and bookkeeping session. Everything
+// about *how* a roster was chosen (rental core vs. a player's own team)
+// happens before this point.
+function runBattle({ p1roster, p2roster, p1Name, p2Name, region, coreName, playerId }) {
 	const p1team = p1roster.map(toPokemonSet);
-	const p2team = opponentTeamDef.roster.map(toPokemonSet);
+	const p2team = p2roster.map(toPokemonSet);
 
 	const streams = getPlayerStreams(new BattleStream());
 	const spec = { formatid: FORMAT_ID };
-	const p1spec = { name: 'You', team: Teams.pack(p1team) };
-	const p2spec = { name: opponentTeamDef.name, team: Teams.pack(p2team) };
+	const p1spec = { name: p1Name, team: Teams.pack(p1team) };
+	const p2spec = { name: p2Name, team: Teams.pack(p2team) };
 
 	const id = randomUUID();
 	const human = new HumanPlayer(streams.p1, {}, !!process.env.DEBUG_CHOICES);
 	const ai = new TieredAI(streams.p2, CITY_LEAGUE_AI_TIER, {}, !!process.env.DEBUG_CHOICES);
 
 	const session = {
-		id, human, ai,
-		ended: false, winner: null, tie: false,
-		region: regionId, coreName: core.name, opponentName: opponentTeamDef.name,
+		id, human, ai, playerId,
+		ended: false, winner: null, tie: false, prizeAwarded: false,
+		region, coreName, opponentName: p2Name,
 		// Structured, replayable events (see buildEvent) rather than a flat
 		// string log - the client steps through these on its own pace instead
 		// of the whole turn's outcome landing on screen all at once. Never
@@ -209,6 +207,13 @@ function startBattle(regionId, coreIndex, customMoves) {
 				if (line.startsWith('|tie|')) { session.ended = true; session.tie = true; }
 			}
 		}
+		// Award the win prize exactly once, only for a real (persisted) player,
+		// and only on an actual win (not a tie or an error-abandoned session).
+		if (session.playerId && session.winner === 'You' && !session.prizeAwarded) {
+			session.prizeAwarded = true;
+			const player = db.getPlayer(session.playerId);
+			if (player) db.setPokedollars(session.playerId, player.pokedollars + WIN_PRIZE_POKEDOLLARS);
+		}
 		// Keep the finished session around briefly (so a client can still poll
 		// the final state after the last choice) then drop it - nothing here
 		// persists across sessions yet, so there's no reason to hold onto
@@ -221,6 +226,47 @@ function startBattle(regionId, coreIndex, customMoves) {
 	);
 
 	return session;
+}
+
+function startBattle(regionId, coreIndex, customMoves) {
+	const regionData = regionalTeams[regionId];
+	if (!regionData) throw new Error(`Unknown region: ${regionId}`);
+	const core = regionData.cityLeagueCores[coreIndex];
+	if (!core) throw new Error(`Unknown rental core index: ${coreIndex}`);
+	const opponentTeamDef = regionData.regionalTeams[Math.floor(Math.random() * regionData.regionalTeams.length)];
+
+	// Optional pre-battle moveset edits (the roster-builder screen): keyed by
+	// 1-based roster slot, same indices team preview and the roster-detail
+	// endpoint use elsewhere. Re-validated here (never trust the client) even
+	// though the roster-builder endpoint already only offers legal moves.
+	const p1roster = core.roster.map((mon, i) => {
+		const override = customMoves?.[i + 1];
+		if (!override) return mon;
+		return { ...mon, moves: validateMoveset(mon.species, override, mon.moves) };
+	});
+
+	return runBattle({
+		p1roster, p2roster: opponentTeamDef.roster, p1Name: 'You', p2Name: opponentTeamDef.name,
+		region: regionId, coreName: core.name,
+	});
+}
+
+// Battle using a player's own persisted, owned-Pokemon team (built via the
+// team builder / breeder marketplace) rather than a fixed rental core. The
+// opponent is still drawn from a region's pre-built regionalTeams ladder -
+// only the human side's roster differs from startBattle.
+function startTeamBattle(playerId, regionId) {
+	const regionData = regionalTeams[regionId];
+	if (!regionData) throw new Error(`Unknown region: ${regionId}`);
+	const team = db.getTeam(playerId);
+	if (team.length < 4) throw new Error('Your team needs at least 4 Pokemon - build it first.');
+	const opponentTeamDef = regionData.regionalTeams[Math.floor(Math.random() * regionData.regionalTeams.length)];
+
+	const p1roster = team.map(ownedPokemonToSetData);
+	return runBattle({
+		p1roster, p2roster: opponentTeamDef.roster, p1Name: 'You', p2Name: opponentTeamDef.name,
+		region: regionId, coreName: 'Your Team', playerId,
+	});
 }
 
 // Build the render-friendly snapshot the front end polls for. "You" comes
@@ -378,10 +424,130 @@ function serveStatic(req, res, urlPath) {
 	});
 }
 
+// Player identity: no accounts/login - the client generates a UUID on first
+// visit (localStorage) and sends it as this header on every request that
+// needs a save file. The server auto-creates a player record (with starting
+// Pokedollars) the first time it sees an unfamiliar id - see db.mjs.
+function requirePlayerId(req, res) {
+	const playerId = req.headers['x-player-id'];
+	if (!playerId || typeof playerId !== 'string') {
+		sendJSON(res, 400, { error: 'Missing X-Player-Id header' });
+		return null;
+	}
+	return playerId;
+}
+
 const server = createServer(async (req, res) => {
 	const url = new URL(req.url, `http://${req.headers.host}`);
 
 	try {
+		if (req.method === 'GET' && url.pathname === '/api/player') {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			const player = db.getOrCreatePlayer(playerId);
+			const roster = db.listOwnedPokemon(playerId);
+			return sendJSON(res, 200, { player, roster });
+		}
+
+		if (req.method === 'GET' && url.pathname === '/api/marketplace') {
+			return sendJSON(res, 200, { listings: getCatalog() });
+		}
+
+		if (req.method === 'POST' && url.pathname === '/api/marketplace/buy') {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			db.getOrCreatePlayer(playerId); // auto-create on first purchase attempt
+			const body = await readJSONBody(req);
+			try {
+				const result = buyListing(playerId, body.listingId);
+				return sendJSON(res, 200, result);
+			} catch (err) {
+				if (err instanceof MarketplaceError) return sendJSON(res, 400, { error: err.message });
+				throw err;
+			}
+		}
+
+		if (req.method === 'POST' && url.pathname === '/api/roster/team') {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			const body = await readJSONBody(req);
+			const ids = Array.isArray(body.ids) ? body.ids : [];
+			if (ids.length < 1 || ids.length > 6) return sendJSON(res, 400, { error: 'Pick between 1 and 6 Pokemon' });
+			try {
+				db.setTeam(playerId, ids);
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
+			return sendJSON(res, 200, { team: db.getTeam(playerId) });
+		}
+
+		const speciesMovepoolMatch = url.pathname.match(/^\/api\/movepool\/([^/]+)$/);
+		if (req.method === 'GET' && speciesMovepoolMatch) {
+			const species = decodeURIComponent(speciesMovepoolMatch[1]);
+			const presets = (url.searchParams.get('presets') || '').split(',').filter(Boolean);
+			try {
+				return sendJSON(res, 200, { movepool: getMovepoolWithPresets(species, presets) });
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
+		}
+
+		const rosterMovesMatch = url.pathname.match(/^\/api\/roster\/([^/]+)\/moves$/);
+		if (req.method === 'PATCH' && rosterMovesMatch) {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			const pokemon = db.getOwnedPokemon(rosterMovesMatch[1]);
+			if (!pokemon || pokemon.playerId !== playerId) return sendJSON(res, 404, { error: 'No such Pokemon' });
+			const body = await readJSONBody(req);
+			try {
+				const cleaned = validateMoveset(pokemon.species, body.moves, pokemon.moves);
+				db.updateOwnedPokemonMoves(pokemon.id, cleaned);
+				return sendJSON(res, 200, { pokemon: db.getOwnedPokemon(pokemon.id) });
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
+		}
+
+		const rosterTrainMatch = url.pathname.match(/^\/api\/roster\/([^/]+)\/(train|untrain)$/);
+		if (req.method === 'POST' && rosterTrainMatch) {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			const pokemon = db.getOwnedPokemon(rosterTrainMatch[1]);
+			if (!pokemon || pokemon.playerId !== playerId) return sendJSON(res, 404, { error: 'No such Pokemon' });
+			const player = db.getOrCreatePlayer(playerId);
+			const body = await readJSONBody(req);
+			const amount = Number(body.amount) || 0;
+			try {
+				if (rosterTrainMatch[2] === 'train') {
+					const { sp, tpBalance } = trainStat(pokemon.sp, body.stat, amount, player.trainingPoints);
+					db.updateOwnedPokemonSP(pokemon.id, sp);
+					db.setTrainingPoints(playerId, tpBalance);
+				} else {
+					const { sp } = removeStat(pokemon.sp, body.stat, amount);
+					validateSP(sp);
+					db.updateOwnedPokemonSP(pokemon.id, sp);
+				}
+				return sendJSON(res, 200, { pokemon: db.getOwnedPokemon(pokemon.id), player: db.getPlayer(playerId) });
+			} catch (err) {
+				if (err instanceof TrainingError) return sendJSON(res, 400, { error: err.message });
+				throw err;
+			}
+		}
+
+		if (req.method === 'POST' && url.pathname === '/api/battle/start-team') {
+			const playerId = requirePlayerId(req, res);
+			if (!playerId) return;
+			const body = await readJSONBody(req);
+			let session;
+			try {
+				session = startTeamBattle(playerId, body.region);
+			} catch (err) {
+				return sendJSON(res, 400, { error: err.message });
+			}
+			await waitForPendingOrEnd(session, REQUEST_TIMEOUT_MS);
+			return sendJSON(res, 200, buildState(session));
+		}
+
 		if (req.method === 'GET' && url.pathname === '/api/regions') {
 			const regions = Object.entries(regionalTeams).map(([id, data]) => ({
 				id, name: data.name,

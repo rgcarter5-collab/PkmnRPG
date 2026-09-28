@@ -4,11 +4,14 @@
 // server state into a playable screen.
 
 const screens = {
+	home: document.getElementById('screen-home'),
 	picker: document.getElementById('screen-picker'),
 	roster: document.getElementById('screen-roster'),
 	preview: document.getElementById('screen-preview'),
 	battle: document.getElementById('screen-battle'),
 	end: document.getElementById('screen-end'),
+	market: document.getElementById('screen-market'),
+	team: document.getElementById('screen-team'),
 };
 
 function showScreen(name) {
@@ -19,12 +22,46 @@ function spriteId(speciesName) {
 	return speciesName.toLowerCase().replace(/[.']/g, '').replace(/[\s:]+/g, '');
 }
 
+// No accounts/login: a UUID generated once and kept in localStorage is this
+// browser's whole "save file" identity. The server auto-creates a player
+// record (with starting Pokedollars) the first time it sees an unfamiliar id.
+function getPlayerId() {
+	let id = localStorage.getItem('pkmnrpg_player_id');
+	if (!id) {
+		id = crypto.randomUUID();
+		localStorage.setItem('pkmnrpg_player_id', id);
+	}
+	return id;
+}
+const PLAYER_ID = getPlayerId();
+
 async function api(path, opts) {
-	const res = await fetch(path, opts);
+	const finalOpts = { ...opts, headers: { 'X-Player-Id': PLAYER_ID, ...(opts && opts.headers) } };
+	const res = await fetch(path, finalOpts);
 	const body = await res.json();
 	if (!res.ok) throw new Error(body.error || `Request failed: ${res.status}`);
 	return body;
 }
+
+document.querySelectorAll('.back-btn').forEach(btn => {
+	btn.addEventListener('click', () => {
+		const dest = btn.dataset.back;
+		if (dest === 'home') loadHome();
+	});
+});
+
+// --- Home screen -----------------------------------------------------------
+
+async function loadHome() {
+	showScreen('home');
+	const { player } = await api('/api/player');
+	document.getElementById('wallet-line').textContent =
+		`Pokedollars: ${player.pokedollars} | Training Points: ${player.trainingPoints}`;
+}
+
+document.getElementById('nav-rentals').onclick = () => { showScreen('picker'); loadPicker(); };
+document.getElementById('nav-team').onclick = () => { loadTeamScreen(); };
+document.getElementById('nav-market').onclick = () => { loadMarket(); };
 
 // --- Picker screen -------------------------------------------------------
 
@@ -673,8 +710,242 @@ async function submitActions(state) {
 
 document.getElementById('btn-again').onclick = () => {
 	currentBattleId = null;
-	showScreen('picker');
-	loadPicker();
+	loadHome();
 };
 
-loadPicker();
+// --- Marketplace screen ------------------------------------------------
+
+async function loadMarket() {
+	showScreen('market');
+	const [{ player }, { listings }] = await Promise.all([api('/api/player'), api('/api/marketplace')]);
+	renderMarket(player, listings);
+}
+
+function renderMarket(player, listings) {
+	document.getElementById('market-wallet').textContent = `Pokedollars: ${player.pokedollars}`;
+	const grid = document.getElementById('market-grid');
+	grid.innerHTML = '';
+	for (const listing of listings) {
+		const card = document.createElement('div');
+		card.className = 'market-card';
+		const afford = player.pokedollars >= listing.price;
+		card.innerHTML = `
+			<img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${spriteId(listing.species)}.png" alt="">
+			<div class="name">${listing.species}</div>
+			<div class="type-line">${listing.types.join(' / ')}</div>
+			<div class="price">${listing.price} Pokedollars</div>
+			<button class="core-btn buy-btn" ${afford ? '' : 'disabled'}>${afford ? 'Buy' : "Can't afford"}</button>
+		`;
+		card.querySelector('.buy-btn').onclick = async () => {
+			try {
+				const result = await api('/api/marketplace/buy', {
+					method: 'POST', headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ listingId: listing.listingId }),
+				});
+				renderMarket(result.player, listings);
+			} catch (err) {
+				alert(err.message);
+			}
+		};
+		grid.appendChild(card);
+	}
+}
+
+// --- Team screen (owned roster, team selection, moves, SP training) ------
+
+let teamPicks = new Set(); // owned-Pokemon ids currently chosen for the battle team
+let teamEditingSlot = null; // { pokemonId, moveSlotIdx } while a movepool panel is open
+let teamMovepoolCache = {}; // pokemonId -> movepool array (fetched on demand)
+
+async function loadTeamScreen() {
+	showScreen('team');
+	teamEditingSlot = null;
+	teamMovepoolCache = {};
+	const [{ player, roster }, { regions }] = await Promise.all([api('/api/player'), api('/api/regions')]);
+	teamPicks = new Set(roster.filter(p => p.onTeam).map(p => p.id));
+	renderTeamRegionPicker(regions);
+	renderTeamScreen(player, roster);
+}
+
+function renderTeamRegionPicker(regions) {
+	const el = document.getElementById('team-region-picker');
+	el.innerHTML = '<div class="hint">Battle with your team against:</div>';
+	const row = document.createElement('div');
+	row.className = 'team-region-row';
+	for (const region of regions) {
+		const btn = document.createElement('button');
+		btn.className = 'core-btn region-pick-btn';
+		btn.textContent = region.name;
+		btn.onclick = () => startTeamBattle(region.id);
+		row.appendChild(btn);
+	}
+	el.appendChild(row);
+}
+
+async function startTeamBattle(regionId) {
+	try {
+		const state = await api('/api/battle/start-team', {
+			method: 'POST', headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ region: regionId }),
+		});
+		currentBattleId = state.battleId;
+		renderedEventCount = 0;
+		await applyState(state);
+	} catch (err) {
+		alert(err.message);
+	}
+}
+
+function renderTeamScreen(player, roster) {
+	document.getElementById('team-wallet').textContent =
+		`Pokedollars: ${player.pokedollars} | Training Points: ${player.trainingPoints} | Team: ${teamPicks.size}/6`;
+
+	const grid = document.getElementById('owned-grid');
+	grid.innerHTML = '';
+	if (!roster.length) {
+		grid.innerHTML = '<p class="hint">You don\'t own any Pokemon yet - visit the Breeder Marketplace.</p>';
+		return;
+	}
+
+	for (const mon of roster) {
+		const card = document.createElement('div');
+		card.className = 'roster-card owned-card' + (teamPicks.has(mon.id) ? ' on-team' : '');
+		card.innerHTML = `
+			<div class="roster-head">
+				<img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${spriteId(mon.species)}.png" alt="">
+				<div>
+					<div class="roster-name">${mon.species}</div>
+					<div class="roster-sub">Lv.${mon.level} - ${mon.ability} - ${mon.item}</div>
+				</div>
+				<button class="team-toggle-btn">${teamPicks.has(mon.id) ? 'On team' : 'Add to team'}</button>
+			</div>
+			<div class="roster-moves"></div>
+			<div class="sp-grid"></div>
+		`;
+		card.querySelector('.team-toggle-btn').onclick = async () => {
+			if (teamPicks.has(mon.id)) teamPicks.delete(mon.id);
+			else if (teamPicks.size < 6) teamPicks.add(mon.id);
+			else { alert('You can only bring up to 6 Pokemon.'); return; }
+			try {
+				await api('/api/roster/team', {
+					method: 'POST', headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ ids: [...teamPicks] }),
+				});
+			} catch (err) {
+				alert(err.message);
+			}
+			renderTeamScreen(player, roster);
+		};
+
+		const movesEl = card.querySelector('.roster-moves');
+		mon.moves.forEach((moveName, mIdx) => {
+			const btn = document.createElement('button');
+			const isEditing = teamEditingSlot && teamEditingSlot.pokemonId === mon.id && teamEditingSlot.moveSlotIdx === mIdx;
+			btn.className = 'roster-move-btn' + (isEditing ? ' editing' : '');
+			btn.textContent = moveName;
+			btn.onclick = async () => {
+				if (isEditing) { teamEditingSlot = null; renderTeamScreen(player, roster); return; }
+				teamEditingSlot = { pokemonId: mon.id, moveSlotIdx: mIdx };
+				if (!teamMovepoolCache[mon.id]) {
+					const q = encodeURIComponent(mon.moves.join(','));
+					const { movepool } = await api(`/api/movepool/${encodeURIComponent(mon.species)}?presets=${q}`);
+					teamMovepoolCache[mon.id] = movepool;
+				}
+				renderTeamScreen(player, roster);
+			};
+			movesEl.appendChild(btn);
+		});
+		if (teamEditingSlot && teamEditingSlot.pokemonId === mon.id && teamMovepoolCache[mon.id]) {
+			card.appendChild(renderOwnedMovepoolPanel(mon, teamEditingSlot.moveSlotIdx, player, roster));
+		}
+
+		renderSpGrid(card.querySelector('.sp-grid'), mon, player, roster);
+		grid.appendChild(card);
+	}
+}
+
+function renderOwnedMovepoolPanel(mon, moveSlotIdx, player, roster) {
+	const panel = document.createElement('div');
+	panel.className = 'movepool-panel';
+	const search = document.createElement('input');
+	search.className = 'movepool-search';
+	search.placeholder = 'Search moves...';
+	panel.appendChild(search);
+	const list = document.createElement('div');
+	panel.appendChild(list);
+
+	function renderList(filter) {
+		list.innerHTML = '';
+		const q = filter.trim().toLowerCase();
+		for (const move of teamMovepoolCache[mon.id]) {
+			if (q && !move.name.toLowerCase().includes(q)) continue;
+			const opt = document.createElement('button');
+			const isCurrent = mon.moves[moveSlotIdx] === move.name;
+			opt.className = 'movepool-option' + (isCurrent ? ' current' : '');
+			opt.textContent = isCurrent ? `${move.name} (current)` : move.name;
+			opt.onclick = async () => {
+				const newMoves = [...mon.moves];
+				newMoves[moveSlotIdx] = move.name;
+				try {
+					await api(`/api/roster/${mon.id}/moves`, {
+						method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ moves: newMoves }),
+					});
+					mon.moves = newMoves;
+				} catch (err) {
+					alert(err.message);
+				}
+				teamEditingSlot = null;
+				renderTeamScreen(player, roster);
+			};
+			list.appendChild(opt);
+		}
+	}
+	renderList('');
+	search.oninput = () => renderList(search.value);
+	return panel;
+}
+
+const SP_STATS = [['hp', 'HP'], ['atk', 'Atk'], ['def', 'Def'], ['spa', 'SpA'], ['spd', 'SpD'], ['spe', 'Spe']];
+
+function renderSpGrid(el, mon, player, roster) {
+	el.innerHTML = '';
+	for (const [stat, label] of SP_STATS) {
+		const row = document.createElement('div');
+		row.className = 'sp-row';
+		const value = mon.sp[stat] || 0;
+		row.innerHTML = `
+			<span class="sp-label">${label}</span>
+			<button class="sp-btn sp-minus">-1</button>
+			<span class="sp-value">${value}/32</span>
+			<button class="sp-btn sp-plus">+1</button>
+		`;
+		row.querySelector('.sp-minus').onclick = async () => {
+			if (value <= 0) return;
+			await api(`/api/roster/${mon.id}/untrain`, {
+				method: 'POST', headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ stat, amount: 1 }),
+			});
+			await reloadOwnedMon(mon, player, roster);
+		};
+		row.querySelector('.sp-plus').onclick = async () => {
+			try {
+				await api(`/api/roster/${mon.id}/train`, {
+					method: 'POST', headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ stat, amount: 1 }),
+				});
+				await reloadOwnedMon(mon, player, roster);
+			} catch (err) {
+				alert(err.message);
+			}
+		};
+		el.appendChild(row);
+	}
+}
+
+async function reloadOwnedMon(mon, player, roster) {
+	const { player: updatedPlayer, roster: updatedRoster } = await api('/api/player');
+	renderTeamScreen(updatedPlayer, updatedRoster);
+}
+
+loadHome();

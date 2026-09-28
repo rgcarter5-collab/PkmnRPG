@@ -9,10 +9,38 @@
 <body>
 <div id="app">
 
-	<section id="screen-picker" class="screen">
+	<section id="screen-home" class="screen">
+		<h1>Pokemon RPG</h1>
+		<div id="wallet-line" class="wallet-line"></div>
+		<div class="home-nav">
+			<button id="nav-rentals" class="core-btn">City League (rental cores)</button>
+			<button id="nav-team" class="core-btn">My Team</button>
+			<button id="nav-market" class="core-btn">Breeder Marketplace</button>
+		</div>
+	</section>
+
+	<section id="screen-picker" class="screen hidden">
+		<button class="back-btn" data-back="home">&larr; Home</button>
 		<h1>City League</h1>
 		<p class="hint">Pick your region and rental core to challenge the City League.</p>
 		<div id="region-list" class="region-list"></div>
+	</section>
+
+	<section id="screen-market" class="screen hidden">
+		<button class="back-btn" data-back="home">&larr; Home</button>
+		<h1>Breeder Marketplace</h1>
+		<div id="market-wallet" class="wallet-line"></div>
+		<p class="hint">Buy Pokemon to add to your own roster. Prices scale with raw power.</p>
+		<div id="market-grid" class="market-grid"></div>
+	</section>
+
+	<section id="screen-team" class="screen hidden">
+		<button class="back-btn" data-back="home">&larr; Home</button>
+		<h1>My Team</h1>
+		<div id="team-wallet" class="wallet-line"></div>
+		<p class="hint">Tap Pokemon to choose your battle team (1-6), then edit moves or spend Training Points on Stat Points below.</p>
+		<div id="team-region-picker" class="team-region-picker"></div>
+		<div id="owned-grid" class="roster-grid"></div>
 	</section>
 
 	<section id="screen-roster" class="screen hidden">

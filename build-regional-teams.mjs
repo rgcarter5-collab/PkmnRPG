@@ -8,6 +8,8 @@
 // preset squads for the tier-1 intro tournament.
 import { Dex } from './sim/index.ts';
 import { readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const regionalDex = JSON.parse(readFileSync('./regional-dex.json', 'utf8'));
 
@@ -28,7 +30,7 @@ function abilityEntries(species) {
 	return Object.values(species.abilities || {}).map(name => [name, Dex.toID(name)]);
 }
 
-function classify(species) {
+export function classify(species) {
 	const abilities = abilityEntries(species);
 	const spe = species.baseStats.spe;
 	const bulk = species.baseStats.hp + species.baseStats.def + species.baseStats.spd;
@@ -159,7 +161,7 @@ function buildMoveset(species, role, weatherTag) {
 	return moves.slice(0, 4).map(id => Dex.moves.get(id).name);
 }
 
-function buildSet(species, role, weatherTag, bstRank, ability, movesOverride, itemOverride) {
+export function buildSet(species, role, weatherTag, bstRank, ability, movesOverride, itemOverride) {
 	const { evs, nature } = pickEVsAndNature(species, role);
 	const moves = movesOverride || buildMoveset(species, role, weatherTag);
 	const hasStatusMove = moves.some(name => Dex.moves.get(name)?.category === 'Status');
@@ -462,23 +464,48 @@ function buildCityLeagueCores(regionId) {
 	return cores;
 }
 
-const output = {};
-for (const regionId of Object.keys(regionalDex)) {
-	output[regionId] = {
-		name: regionalDex[regionId].name,
-		regionalTeams: buildRegionTeams(regionId),
-		cityLeagueCores: buildCityLeagueCores(regionId),
-	};
+// Build a single, reasonable starter set for an arbitrary species - used by
+// the breeder marketplace to give a freshly-bought Pokemon a sensible kit
+// without duplicating buildMoveset/pickItem's logic. Unlike buildSet, this
+// never rolls a random teraType (see the entry-point guard below for why
+// randomness here would be a problem) - it picks the species' first type,
+// a deterministic and perfectly reasonable default that a player can still
+// change later via normal Tera mechanics once those exist.
+export function buildStarterSet(speciesName) {
+	const species = Dex.species.get(speciesName);
+	if (!species.exists) throw new Error(`Unknown species: ${speciesName}`);
+	const c = classify(species);
+	const set = buildSet(species, c.role, c.weather || null, 'mid', c.ability);
+	return { ...set, teraType: species.types[0] };
 }
 
-writeFileSync('./regional-teams.json', JSON.stringify(output, null, 2));
-
-console.log('=== Regional Teams Summary ===');
-for (const regionId of Object.keys(output)) {
-	const r = output[regionId];
-	console.log(`\n${r.name}:`);
-	for (const team of r.regionalTeams) {
-		console.log(`  [${team.archetype}] ${team.name}: ${team.roster.map(s => s.species).join(', ')}`);
+// Everything below only runs when this file is executed directly (e.g. `node
+// build-regional-teams.mjs`), never when it's imported for its exports
+// (buildStarterSet, classify, buildSet, ...) by another module. Two reasons
+// this guard matters: (1) buildSet's teraType roll uses Math.random(), so an
+// incidental import would silently regenerate regional-teams.json with
+// different tera types on every server boot; (2) the writeFileSync below
+// would otherwise fire as a side effect of a plain `import`.
+const isMainModule = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+if (isMainModule) {
+	const output = {};
+	for (const regionId of Object.keys(regionalDex)) {
+		output[regionId] = {
+			name: regionalDex[regionId].name,
+			regionalTeams: buildRegionTeams(regionId),
+			cityLeagueCores: buildCityLeagueCores(regionId),
+		};
 	}
-	console.log(`  City League cores: ${r.cityLeagueCores.length} (${r.cityLeagueCores.map(c => c.roster.map(s => s.species).join('+')).join(' | ')})`);
+
+	writeFileSync('./regional-teams.json', JSON.stringify(output, null, 2));
+
+	console.log('=== Regional Teams Summary ===');
+	for (const regionId of Object.keys(output)) {
+		const r = output[regionId];
+		console.log(`\n${r.name}:`);
+		for (const team of r.regionalTeams) {
+			console.log(`  [${team.archetype}] ${team.name}: ${team.roster.map(s => s.species).join(', ')}`);
+		}
+		console.log(`  City League cores: ${r.cityLeagueCores.length} (${r.cityLeagueCores.map(c => c.roster.map(s => s.species).join('+')).join(' | ')})`);
+	}
 }

@@ -217,6 +217,48 @@ h1 { font-size: 22px; margin: 8px 0 4px; }
 }
 .switch-btn:hover { border-color: var(--accent); }
 
+.wallet-line { color: var(--accent); font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.back-btn {
+	background: transparent; border: none; color: var(--muted); font-size: 13px;
+	cursor: pointer; padding: 0; margin-bottom: 10px;
+}
+.back-btn:hover { color: var(--accent); }
+.home-nav { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.market-card {
+	background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+	padding: 10px; text-align: center;
+}
+.market-card img.sprite { width: 64px; height: 64px; image-rendering: pixelated; }
+.market-card .name { font-weight: 600; font-size: 13px; margin-top: 2px; }
+.market-card .type-line { color: var(--muted); font-size: 11px; }
+.market-card .price { color: var(--accent); font-size: 12px; margin: 4px 0 8px; }
+.market-card .buy-btn { margin-bottom: 0; }
+.market-card .buy-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.team-region-picker { margin-bottom: 16px; }
+.team-region-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.region-pick-btn { width: auto; flex: 1 1 120px; margin-bottom: 0; text-align: center; }
+
+.owned-card .roster-head { align-items: flex-start; position: relative; }
+.team-toggle-btn {
+	margin-left: auto; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+	border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; white-space: nowrap;
+}
+.owned-card.on-team { border-color: var(--accent); }
+.owned-card.on-team .team-toggle-btn { background: var(--accent); color: #0c1220; border-color: var(--accent); }
+
+.sp-grid { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 8px; }
+.sp-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.sp-label { width: 32px; color: var(--muted); }
+.sp-value { width: 44px; text-align: center; }
+.sp-btn {
+	background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+	border-radius: 6px; width: 28px; height: 24px; cursor: pointer; font-size: 12px;
+}
+.sp-btn:hover { border-color: var(--accent); }
+
 #screen-end { text-align: center; padding-top: 60px; }
 #btn-again {
 	background: var(--accent); color: #0c1220; border: none; border-radius: 8px;
