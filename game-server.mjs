@@ -41,33 +41,81 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Turn one raw protocol line into a short human-readable log entry. Not
-// exhaustive - just the lines a player actually wants narrated; anything
-// else is silently dropped from the readable log (the raw data still drives
-// state via HumanPlayer's tracker regardless of what we choose to narrate).
-function formatLogLine(line) {
+// Turn one raw protocol line into a structured event the client can replay
+// at its own pace: text to show, PLUS (when relevant) which on-screen slot
+// changed and what its HP fraction is now, so the client can animate a bar
+// sliding down instead of just snapping to a final number. `side`/`slot` use
+// the client's own vocabulary ('you'/'foe', 0/1) - human is always p1 in
+// this project's architecture (see startBattle), so that mapping is static.
+// Not exhaustive - just the lines a player actually wants narrated; anything
+// else is silently dropped (the raw data still drives state via HumanPlayer's
+// tracker regardless of what we choose to narrate).
+function posInfo(posStr) {
+	const pos = posStr.split(':')[0].trim(); // e.g. "p1a" -> side p1, slot a
+	return { side: pos.startsWith('p1') ? 'you' : 'foe', slot: pos.endsWith('a') ? 0 : 1 };
+}
+
+// Exact HP text only for the player's own side - the foe stays fog-of-war
+// (fraction only), matching how the rest of the state already withholds it.
+function hpTextFor(side, hpStr) {
+	if (side !== 'you') return undefined;
+	return hpStr.includes('fnt') ? '0/0' : hpStr.split(' ')[0];
+}
+
+function buildEvent(line) {
 	const parts = line.split('|');
 	const cmd = parts[1];
 	const nameOf = pos => pos.includes(':') ? pos.split(':')[1].trim() : pos;
 	switch (cmd) {
-		case 'move': return `${nameOf(parts[2])} used ${parts[3]}!`;
-		case 'switch': case 'drag': return `${nameOf(parts[2])} sent out ${parseDetails(parts[3]).speciesName}!`;
-		case '-damage': return parts[3].includes('fnt') ? null : `${nameOf(parts[2])} took damage.`;
-		case '-heal': return `${nameOf(parts[2])} recovered some HP.`;
-		case '-crit': return 'A critical hit!';
-		case '-supereffective': return "It's super effective!";
-		case '-resisted': return "It's not very effective...";
-		case '-immune': return `${nameOf(parts[2])} was unaffected!`;
-		case '-fail': return `${nameOf(parts[2])}'s move failed.`;
-		case '-miss': return `${nameOf(parts[2])} missed!`;
-		case '-status': return `${nameOf(parts[2])} was afflicted with ${parts[3]}!`;
-		case '-curestatus': return `${nameOf(parts[2])} recovered from its status.`;
-		case '-boost': return `${nameOf(parts[2])}'s stat rose!`;
-		case '-unboost': return `${nameOf(parts[2])}'s stat fell!`;
-		case 'faint': return `${nameOf(parts[2])} fainted!`;
-		case 'turn': return `--- Turn ${parts[2]} ---`;
-		case 'win': return `${parts[2]} wins the battle!`;
-		case 'tie': return "It's a tie!";
+		case 'move':
+			return { text: `${nameOf(parts[2])} used ${parts[3]}!` };
+		case 'switch': case 'drag': {
+			const { side, slot } = posInfo(parts[2]);
+			const hp = parseHP(parts[4]);
+			const { speciesName, level } = parseDetails(parts[3]);
+			return {
+				text: `${nameOf(parts[2])} sent out ${speciesName}!`,
+				side, slot, species: speciesName, level,
+				hpFraction: hp.hpFraction ?? 1, hpText: hpTextFor(side, parts[4]), switched: true,
+			};
+		}
+		case '-damage': {
+			if (parts[3].includes('fnt')) return null; // the `faint` line covers this
+			const { side, slot } = posInfo(parts[2]);
+			const hp = parseHP(parts[3]);
+			return {
+				text: `${nameOf(parts[2])} took damage.`, side, slot,
+				hpFraction: hp.hpFraction ?? 0, hpText: hpTextFor(side, parts[3]),
+			};
+		}
+		case '-heal': {
+			const { side, slot } = posInfo(parts[2]);
+			const hp = parseHP(parts[3]);
+			return {
+				text: `${nameOf(parts[2])} recovered some HP.`, side, slot,
+				hpFraction: hp.hpFraction ?? 1, hpText: hpTextFor(side, parts[3]),
+			};
+		}
+		case '-crit': return { text: 'A critical hit!' };
+		case '-supereffective': return { text: "It's super effective!" };
+		case '-resisted': return { text: "It's not very effective..." };
+		case '-immune': return { text: `${nameOf(parts[2])} was unaffected!` };
+		case '-fail': return { text: `${nameOf(parts[2])}'s move failed.` };
+		case '-miss': return { text: `${nameOf(parts[2])} missed!` };
+		case '-status': return { text: `${nameOf(parts[2])} was afflicted with ${parts[3]}!` };
+		case '-curestatus': return { text: `${nameOf(parts[2])} recovered from its status.` };
+		case '-boost': return { text: `${nameOf(parts[2])}'s stat rose!` };
+		case '-unboost': return { text: `${nameOf(parts[2])}'s stat fell!` };
+		case 'faint': {
+			const { side, slot } = posInfo(parts[2]);
+			return {
+				text: `${nameOf(parts[2])} fainted!`, side, slot,
+				hpFraction: 0, hpText: side === 'you' ? '0/0' : undefined, fainted: true,
+			};
+		}
+		case 'turn': return { text: `--- Turn ${parts[2]} ---`, isTurnMarker: true };
+		case 'win': return { text: `${parts[2]} wins the battle!` };
+		case 'tie': return { text: "It's a tie!" };
 		default: return null;
 	}
 }
@@ -126,7 +174,12 @@ function startBattle(regionId, coreIndex, customMoves) {
 		id, human, ai,
 		ended: false, winner: null, tie: false,
 		region: regionId, coreName: core.name, opponentName: opponentTeamDef.name,
-		log: [],
+		// Structured, replayable events (see buildEvent) rather than a flat
+		// string log - the client steps through these on its own pace instead
+		// of the whole turn's outcome landing on screen all at once. Never
+		// truncated: a full battle is at most a couple hundred events, and the
+		// client needs the complete history to know what it hasn't shown yet.
+		events: [],
 	};
 	sessions.set(id, session);
 
@@ -136,8 +189,8 @@ function startBattle(regionId, coreIndex, customMoves) {
 	void (async () => {
 		for await (const chunk of streams.omniscient) {
 			for (const line of chunk.split('\n')) {
-				const readable = formatLogLine(line);
-				if (readable) session.log.push(readable);
+				const event = buildEvent(line);
+				if (event) session.events.push(event);
 				if (line.startsWith('|win|')) { session.ended = true; session.winner = line.slice('|win|'.length); }
 				if (line.startsWith('|tie|')) { session.ended = true; session.tie = true; }
 			}
@@ -182,7 +235,7 @@ function buildState(session) {
 		region: session.region, coreName: session.coreName, opponentName: session.opponentName,
 		ended: session.ended, winner: session.winner, tie: session.tie, error: session.error || null,
 		foe,
-		log: session.log.slice(-40),
+		events: session.events,
 	};
 
 	if (!req) return { ...base, phase: 'waiting', needsChoice: false, you: [] };

@@ -153,7 +153,8 @@ async function startBattle(region, coreIndex, moves) {
 		body: JSON.stringify({ region, coreIndex, moves }),
 	});
 	currentBattleId = state.battleId;
-	render(state);
+	renderedEventCount = 0;
+	await applyState(state);
 }
 
 // --- Team preview screen (bring 6, pick 4) --------------------------------
@@ -235,7 +236,7 @@ document.getElementById('preview-confirm').onclick = async () => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ order: previewPicks }),
 		});
-		render(newState);
+		await applyState(newState);
 	} catch (err) {
 		btn.disabled = false;
 		document.getElementById('preview-hint').textContent = `Error: ${err.message}`;
@@ -273,6 +274,97 @@ function renderSlot(el, mon, { targetable, onClick } = {}) {
 
 let lastState = null;
 
+// --- Battle pacing: play the turn's events out one at a time instead of the
+// whole outcome landing on screen at once (the actual ask that started this:
+// "things happen too fast... let us see the health bar slide down"). Every
+// state snapshot carries the FULL event history (see game-server.mjs's
+// buildEvent), so the client just remembers how many it's already shown and
+// replays the new tail with a deliberate pause between lines, updating each
+// affected slot's HP bar (a CSS-transitioned width, so it visibly slides)
+// as it goes. The existing render() below still runs after playback, as a
+// "snap to truth" sync - harmless since by then the numbers already match.
+const LOG_CAP = 60;
+const EVENT_DELAY_MS = 950;
+let renderedEventCount = 0;
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function delayForEvent(ev) {
+	if (ev.fainted) return 1500; // let a KO land before moving on
+	if (ev.isTurnMarker) return 500; // just a divider, don't dwell on it
+	if (ev.switched) return 1100;
+	return EVENT_DELAY_MS;
+}
+
+function appendLogLine(text) {
+	const logEl = document.getElementById('log');
+	const div = document.createElement('div');
+	div.className = 'log-enter';
+	div.textContent = text;
+	logEl.appendChild(div);
+	while (logEl.children.length > LOG_CAP) logEl.removeChild(logEl.firstChild);
+	logEl.scrollTop = logEl.scrollHeight;
+}
+
+function updateSlotHp(ev) {
+	const el = document.querySelector(`.slot[data-side="${ev.side}"][data-slot="${ev.slot}"]`);
+	if (!el) return;
+
+	if (ev.switched) {
+		// A new Pokemon in this slot is an identity change, not just an HP
+		// change - nothing to blend from, so the sprite/name snap immediately
+		// and only the HP bar (starting from empty) transitions in.
+		el.classList.remove('empty', 'fainted');
+		el.innerHTML = `
+			<img class="sprite" src="https://play.pokemonshowdown.com/sprites/${ev.side === 'you' ? 'gen5-back' : 'gen5'}/${spriteId(ev.species)}.png" alt="${ev.species}">
+			<div class="name">${ev.species}</div>
+			<div class="level">Lv. ${ev.level ?? ''}</div>
+			<div class="hp-bar-bg"><div class="hp-bar-fill" style="width:0%"></div></div>
+			<div class="hp-text"></div>
+		`;
+		void el.offsetWidth; // force layout so width:0% -> target actually transitions
+	}
+
+	const fill = el.querySelector('.hp-bar-fill');
+	const text = el.querySelector('.hp-text');
+	const frac = Math.max(0, Math.min(1, ev.hpFraction));
+	if (fill) {
+		fill.style.width = `${frac * 100}%`;
+		fill.classList.toggle('mid', frac > 0.2 && frac <= 0.5);
+		fill.classList.toggle('low', frac <= 0.2);
+	}
+	if (text && ev.hpText !== undefined) text.textContent = ev.hpText;
+	el.classList.toggle('fainted', !!ev.fainted);
+}
+
+async function playEvents(events) {
+	for (const ev of events) {
+		if (ev.text) appendLogLine(ev.text);
+		if (ev.side && ev.hpFraction != null) updateSlotHp(ev);
+		await sleep(delayForEvent(ev));
+	}
+}
+
+// Every place that used to call render(state) directly now calls this
+// instead, so new events get replayed before the screen snaps to the final
+// state. Team Preview has no on-field events yet, so it skips straight
+// through - no reason to pause before the player's even picked a team.
+async function applyState(state) {
+	const allEvents = state.events || [];
+	if (allEvents.length < renderedEventCount) renderedEventCount = 0; // fresh battle
+	const newEvents = allEvents.slice(renderedEventCount);
+	renderedEventCount = allEvents.length;
+
+	if (state.phase !== 'teamPreview' && newEvents.length) {
+		showScreen('battle');
+		document.getElementById('opponent-name').textContent = `vs. ${state.opponentName}`;
+		await playEvents(newEvents);
+	}
+	render(state);
+}
+
 function render(state) {
 	lastState = state;
 
@@ -292,8 +384,12 @@ function render(state) {
 		renderSlot(youSlots[i], { ...mon, back: true });
 	});
 
+	// Sync from the authoritative full event history (matches what playEvents
+	// already appended incrementally - see applyState). Capped the same way
+	// playEvents caps it, so a long battle's log doesn't grow without bound.
 	const logEl = document.getElementById('log');
-	logEl.innerHTML = state.log.map(line => `<div>${escapeHtml(line)}</div>`).join('');
+	const lines = (state.events || []).filter(e => e.text).map(e => e.text).slice(-LOG_CAP);
+	logEl.innerHTML = lines.map(line => `<div>${escapeHtml(line)}</div>`).join('');
 	logEl.scrollTop = logEl.scrollHeight;
 
 	if (state.ended) {
@@ -370,7 +466,7 @@ async function submitSwitches(state) {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ switches }),
 		});
-		render(newState);
+		await applyState(newState);
 	} catch (err) {
 		panel.innerHTML = `<div class="prompt">Error: ${escapeHtml(err.message)}</div>`;
 	}
@@ -569,7 +665,7 @@ async function submitActions(state) {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ actions }),
 		});
-		render(newState);
+		await applyState(newState);
 	} catch (err) {
 		panel.innerHTML = `<div class="prompt">Error: ${escapeHtml(err.message)}</div>`;
 	}
