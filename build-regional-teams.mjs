@@ -144,13 +144,13 @@ function buildMoveset(species, role, weatherTag) {
 	return moves.slice(0, 4).map(id => Dex.moves.get(id).name);
 }
 
-function buildSet(species, role, weatherTag, bstRank, ability) {
+function buildSet(species, role, weatherTag, bstRank, ability, movesOverride) {
 	const { evs, nature } = pickEVsAndNature(species, role);
 	return {
 		species: species.name,
 		ability: ability || species.abilities['0'],
 		item: pickItem(species, role, bstRank),
-		moves: buildMoveset(species, role, weatherTag),
+		moves: movesOverride || buildMoveset(species, role, weatherTag),
 		nature,
 		evs: { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0, ...evs },
 		level: 50,
@@ -242,10 +242,22 @@ const SIGNATURE_SIZE = 2;
 
 // Hand-picked rosters that override a procedurally-generated core at a given
 // index, for cores that should showcase a specific squad rather than
-// whatever the BST-sorted pool happens to produce.
+// whatever the BST-sorted pool happens to produce. A roster entry can be a
+// bare species name (moves auto-built as usual) or { species, moves } to
+// pin an exact, hand-picked moveset instead.
 const FIXED_CORES = {
 	paldea: [
-		{ index: 0, species: ['Pelipper', 'Archaludon', 'Gholdengo', 'Palafin', 'Tinkaton', 'Baxcalibur'] },
+		{
+			index: 0,
+			roster: [
+				{ species: 'Pelipper', moves: ['Tailwind', 'Hurricane', 'Scald', 'Weather Ball'] },
+				{ species: 'Archaludon', moves: ['Electro Shot', 'Draco Meteor', 'Body Press', 'Protect'] },
+				{ species: 'Gholdengo', moves: ['Make It Rain', 'Shadow Ball', 'Nasty Plot', 'Protect'] },
+				{ species: 'Palafin', moves: ['Flip Turn', 'Wave Crash', 'Iron Head', 'Jet Punch'] },
+				{ species: 'Tinkaton' },
+				{ species: 'Baxcalibur' },
+			],
+		},
 	],
 };
 
@@ -294,10 +306,10 @@ function buildCityLeagueCores(regionId) {
 		cores[override.index] = {
 			name: cores[override.index].name,
 			signatureCount: SIGNATURE_SIZE,
-			roster: override.species.map(name => {
-				const sp = Dex.species.get(name);
+			roster: override.roster.map(entry => {
+				const sp = Dex.species.get(entry.species);
 				const c = classify(sp);
-				return buildSet(sp, c.role, null, 'mid', c.ability);
+				return buildSet(sp, c.role, null, 'mid', c.ability, entry.moves);
 			}),
 		};
 	}
