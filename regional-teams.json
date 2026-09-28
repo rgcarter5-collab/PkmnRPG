@@ -48,7 +48,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Rock"
           },
           {
             "species": "Jolteon",
@@ -136,7 +136,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Flying"
           }
         ]
       },
@@ -164,7 +164,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Flying"
           },
           {
             "species": "Gyarados",
@@ -230,7 +230,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Water"
           },
           {
             "species": "Exeggutor-Alola",
@@ -252,7 +252,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Grass"
           },
           {
             "species": "Cloyster",
@@ -302,7 +302,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fire"
           },
           {
             "species": "Exeggutor",
@@ -324,7 +324,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Grass"
           },
           {
             "species": "Venusaur",
@@ -346,7 +346,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Grass"
           },
           {
             "species": "Ninetales",
@@ -390,7 +390,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Grass"
           },
           {
             "species": "Victreebel",
@@ -412,7 +412,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Grass"
           }
         ]
       },
@@ -462,7 +462,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Ground"
           },
           {
             "species": "Nidoking",
@@ -624,7 +624,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Ice"
           },
           {
             "species": "Sandslash",
@@ -668,7 +668,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Steel"
           },
           {
             "species": "Venomoth",
@@ -762,7 +762,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           },
           {
             "species": "Persian",
@@ -966,7 +966,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Normal"
           }
         ]
       },
@@ -1060,7 +1060,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           },
           {
             "species": "Pikachu-Alola",
@@ -1225,7 +1225,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Steel"
           },
           {
             "species": "Heracross",
@@ -1247,7 +1247,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -1479,7 +1479,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Rock"
           },
           {
             "species": "Politoed",
@@ -1523,7 +1523,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Dark"
           }
         ]
       },
@@ -1829,7 +1829,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Flying"
           },
           {
             "species": "Forretress",
@@ -1873,7 +1873,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Flying"
           },
           {
             "species": "Lanturn",
@@ -1895,7 +1895,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Electric"
           },
           {
             "species": "Jumpluff",
@@ -2011,7 +2011,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Poison"
           },
           {
             "species": "Quagsire",
@@ -2033,7 +2033,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Magcargo",
@@ -2055,7 +2055,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Rock"
           },
           {
             "species": "Sunflora",
@@ -2105,7 +2105,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fairy"
           },
           {
             "species": "Furret",
@@ -2171,7 +2171,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Water"
           },
           {
             "species": "Wobbuffet",
@@ -2267,7 +2267,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Flying"
           },
           {
             "species": "Sceptile",
@@ -2311,7 +2311,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Fire"
           },
           {
             "species": "Flygon",
@@ -2427,7 +2427,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Aggron",
@@ -2471,7 +2471,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ice"
           },
           {
             "species": "Wailord",
@@ -2521,7 +2521,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Dark"
           },
           {
             "species": "Torkoal",
@@ -2587,7 +2587,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Ground"
           },
           {
             "species": "Cradily",
@@ -2865,7 +2865,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           },
           {
             "species": "Banette",
@@ -2944,10 +2944,10 @@
             "ability": "Keen Eye",
             "item": "Leftovers",
             "moves": [
+              "Tailwind",
               "Hurricane",
-              "Hydro Pump",
-              "Hyper Beam",
-              "Protect"
+              "Scald",
+              "Roost"
             ],
             "nature": "Timid",
             "evs": {
@@ -2959,7 +2959,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Flying"
           },
           {
             "species": "Kecleon",
@@ -3235,7 +3235,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Bug"
           },
           {
             "species": "Sableye",
@@ -3257,7 +3257,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Dark"
           },
           {
             "species": "Mawile",
@@ -3279,7 +3279,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Steel"
           },
           {
             "species": "Spinda",
@@ -3444,7 +3444,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Ground"
           },
           {
             "species": "Lucario",
@@ -3494,7 +3494,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Flying"
           },
           {
             "species": "Magnezone",
@@ -3560,7 +3560,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Water"
           },
           {
             "species": "Torterra",
@@ -3582,7 +3582,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ground"
           },
           {
             "species": "Glaceon",
@@ -3676,7 +3676,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Steel"
           },
           {
             "species": "Gliscor",
@@ -3698,7 +3698,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Flying"
           },
           {
             "species": "Gastrodon",
@@ -3720,7 +3720,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Gastrodon-East",
@@ -3939,7 +3939,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Rock"
           },
           {
             "species": "Floatzel",
@@ -4077,7 +4077,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Ghost"
           },
           {
             "species": "Ambipom",
@@ -4143,7 +4143,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Ghost"
           }
         ]
       },
@@ -4215,7 +4215,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Vespiquen",
@@ -4397,7 +4397,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Bug"
           },
           {
             "species": "Wormadam-Trash",
@@ -4474,7 +4474,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Fire"
           },
           {
             "species": "Haxorus",
@@ -4540,7 +4540,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Fighting"
           },
           {
             "species": "Samurott",
@@ -4590,7 +4590,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Dark"
           },
           {
             "species": "Klinklang",
@@ -4772,7 +4772,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Water"
           },
           {
             "species": "Chandelure",
@@ -4794,7 +4794,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Fire"
           },
           {
             "species": "Krookodile",
@@ -4816,7 +4816,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Dark"
           },
           {
             "species": "Gigalith",
@@ -4954,7 +4954,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           },
           {
             "species": "Braviary-Hisui",
@@ -5116,7 +5116,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Steel"
           }
         ]
       },
@@ -5282,7 +5282,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           },
           {
             "species": "Scrafty",
@@ -5348,7 +5348,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Bug"
           },
           {
             "species": "Crustle",
@@ -5464,7 +5464,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           },
           {
             "species": "Cofagrigus",
@@ -5530,7 +5530,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Fairy"
           }
         ]
       }
@@ -5585,7 +5585,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fire"
           },
           {
             "species": "Greninja",
@@ -5607,7 +5607,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Dark"
           },
           {
             "species": "Greninja-Bond",
@@ -5629,7 +5629,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Dark"
           },
           {
             "species": "Pyroar",
@@ -5673,7 +5673,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -5723,7 +5723,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Steel"
           },
           {
             "species": "Florges",
@@ -5839,7 +5839,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Rock"
           },
           {
             "species": "Sylveon",
@@ -5949,7 +5949,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Steel"
           }
         ]
       },
@@ -6065,7 +6065,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Gourgeist-Small",
@@ -6087,7 +6087,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           }
         ]
       }
@@ -6139,7 +6139,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Rock"
           },
           {
             "species": "Pyroar",
@@ -6161,7 +6161,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Fire"
           },
           {
             "species": "Aegislash",
@@ -6183,7 +6183,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Ghost"
           },
           {
             "species": "Barbaracle",
@@ -6255,7 +6255,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Flying"
           },
           {
             "species": "Carbink",
@@ -6299,7 +6299,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fire"
           },
           {
             "species": "Pangoro",
@@ -6321,7 +6321,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fighting"
           },
           {
             "species": "Dragalge",
@@ -6343,7 +6343,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Poison"
           },
           {
             "species": "Gourgeist",
@@ -6365,7 +6365,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           }
         ]
       },
@@ -6393,7 +6393,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           },
           {
             "species": "Gourgeist-Small",
@@ -6415,7 +6415,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           },
           {
             "species": "Gourgeist-Super",
@@ -6437,7 +6437,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Malamar",
@@ -6481,7 +6481,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Electric"
           },
           {
             "species": "Slurpuff",
@@ -6531,7 +6531,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Furfrou",
@@ -6674,7 +6674,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Minior",
@@ -6878,7 +6878,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fairy"
           },
           {
             "species": "Golisopod",
@@ -7016,7 +7016,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Normal"
           },
           {
             "species": "Toxapex",
@@ -7038,7 +7038,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Water"
           },
           {
             "species": "Oranguru",
@@ -7060,7 +7060,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Psychic"
           }
         ]
       },
@@ -7154,7 +7154,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Psychic"
           },
           {
             "species": "Oricorio-Pom-Pom",
@@ -7198,7 +7198,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Ghost"
           }
         ]
       }
@@ -7228,7 +7228,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Poison"
           },
           {
             "species": "Oranguru",
@@ -7250,7 +7250,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Normal"
           },
           {
             "species": "Passimian",
@@ -7504,7 +7504,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Ground"
           },
           {
             "species": "Komala",
@@ -7548,7 +7548,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Ice"
           },
           {
             "species": "Oricorio",
@@ -7570,7 +7570,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fire"
           },
           {
             "species": "Oricorio-Pa'u",
@@ -7686,7 +7686,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Water"
           },
           {
             "species": "Ribombee",
@@ -7785,7 +7785,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Ghost"
           },
           {
             "species": "Cinderace",
@@ -7851,7 +7851,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Fire"
           },
           {
             "species": "Wyrdeer",
@@ -7873,7 +7873,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Normal"
           },
           {
             "species": "Mr. Rime",
@@ -7895,7 +7895,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Ice"
           }
         ]
       },
@@ -7923,7 +7923,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Normal"
           },
           {
             "species": "Ursaluna",
@@ -7945,7 +7945,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Ground"
           },
           {
             "species": "Rillaboom",
@@ -7989,7 +7989,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Dark"
           },
           {
             "species": "Coalossal",
@@ -8061,7 +8061,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Water"
           },
           {
             "species": "Basculegion-F",
@@ -8083,7 +8083,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ghost"
           },
           {
             "species": "Sandaconda",
@@ -8243,7 +8243,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Psychic"
           },
           {
             "species": "Toxtricity",
@@ -8265,7 +8265,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Toxtricity-Low-Key",
@@ -8287,7 +8287,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Electric"
           },
           {
             "species": "Kleavor",
@@ -8339,7 +8339,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Rock"
           },
           {
             "species": "Sandaconda",
@@ -8383,7 +8383,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Psychic"
           },
           {
             "species": "Grimmsnarl",
@@ -8543,7 +8543,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Psychic"
           },
           {
             "species": "Dracozolt",
@@ -8615,7 +8615,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Water"
           },
           {
             "species": "Arctovish",
@@ -8637,7 +8637,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ice"
           },
           {
             "species": "Toxtricity",
@@ -8659,7 +8659,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Toxtricity-Low-Key",
@@ -8681,7 +8681,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Electric"
           },
           {
             "species": "Copperajah",
@@ -8896,7 +8896,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Grass"
           },
           {
             "species": "Quaquaval",
@@ -8940,7 +8940,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Fire"
           },
           {
             "species": "Glimmora",
@@ -9122,7 +9122,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Grass"
           },
           {
             "species": "Annihilape",
@@ -9144,7 +9144,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Ghost"
           }
         ]
       },
@@ -9194,7 +9194,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Fire"
           },
           {
             "species": "Dondozo",
@@ -9238,7 +9238,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fire"
           },
           {
             "species": "Cetitan",
@@ -9376,7 +9376,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Normal"
           },
           {
             "species": "Revavroom",
@@ -9431,58 +9431,14 @@
         "signatureCount": 2,
         "roster": [
           {
-            "species": "Bellibolt",
-            "ability": "Electromorphosis",
-            "item": "Assault Vest",
+            "species": "Pelipper",
+            "ability": "Keen Eye",
+            "item": "Leftovers",
             "moves": [
-              "Zap Cannon",
-              "Thunder",
-              "Hyper Beam",
-              "Protect"
-            ],
-            "nature": "Quiet",
-            "evs": {
-              "hp": 252,
-              "atk": 0,
-              "def": 4,
-              "spa": 252,
-              "spd": 0,
-              "spe": 0
-            },
-            "level": 50,
-            "teraType": "Electric"
-          },
-          {
-            "species": "Pawmot",
-            "ability": "Volt Absorb",
-            "item": "Life Orb",
-            "moves": [
-              "Focus Punch",
-              "Close Combat",
-              "Giga Impact",
-              "Protect"
-            ],
-            "nature": "Adamant",
-            "evs": {
-              "hp": 4,
-              "atk": 252,
-              "def": 0,
-              "spa": 0,
-              "spd": 0,
-              "spe": 252
-            },
-            "level": 50,
-            "teraType": "Fighting"
-          },
-          {
-            "species": "Kilowattrel",
-            "ability": "Wind Power",
-            "item": "Life Orb",
-            "moves": [
+              "Tailwind",
               "Hurricane",
-              "Thunder",
-              "Hyper Beam",
-              "Tailwind"
+              "Scald",
+              "Roost"
             ],
             "nature": "Timid",
             "evs": {
@@ -9494,16 +9450,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Water"
           },
           {
-            "species": "Oinkologne",
-            "ability": "Lingering Aroma",
+            "species": "Archaludon",
+            "ability": "Stamina",
             "item": "Leftovers",
             "moves": [
-              "Giga Impact",
-              "Double-Edge",
-              "High Horsepower",
+              "Steel Beam",
+              "Draco Meteor",
+              "Hyper Beam",
               "Protect"
             ],
             "nature": "Sassy",
@@ -9516,16 +9472,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Dragon"
           },
           {
-            "species": "Oinkologne-F",
-            "ability": "Aroma Veil",
+            "species": "Gholdengo",
+            "ability": "Good as Gold",
             "item": "Leftovers",
             "moves": [
-              "Giga Impact",
-              "Double-Edge",
-              "High Horsepower",
+              "Steel Beam",
+              "Make It Rain",
+              "Hyper Beam",
               "Protect"
             ],
             "nature": "Sassy",
@@ -9538,17 +9494,17 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Ghost"
           },
           {
-            "species": "Houndstone",
-            "ability": "Sand Rush",
+            "species": "Palafin",
+            "ability": "Zero to Hero",
             "item": "Life Orb",
             "moves": [
-              "Poltergeist",
-              "Phantom Force",
-              "Giga Impact",
-              "Protect"
+              "Flip Turn",
+              "Wave Crash",
+              "Aqua Tail",
+              "Iron Head"
             ],
             "nature": "Adamant",
             "evs": {
@@ -9560,7 +9516,51 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Water"
+          },
+          {
+            "species": "Tinkaton",
+            "ability": "Mold Breaker",
+            "item": "Leftovers",
+            "moves": [
+              "Gigaton Hammer",
+              "Play Rough",
+              "Stone Edge",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Fairy"
+          },
+          {
+            "species": "Baxcalibur",
+            "ability": "Thermal Exchange",
+            "item": "Leftovers",
+            "moves": [
+              "Glaive Rush",
+              "Outrage",
+              "Giga Impact",
+              "Protect"
+            ],
+            "nature": "Sassy",
+            "evs": {
+              "hp": 252,
+              "atk": 0,
+              "def": 128,
+              "spa": 0,
+              "spd": 128,
+              "spe": 0
+            },
+            "level": 50,
+            "teraType": "Dragon"
           }
         ]
       },
@@ -9588,7 +9588,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Grass"
           },
           {
             "species": "Grafaiai",
@@ -9610,7 +9610,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Poison"
           },
           {
             "species": "Bombirdier",
@@ -9632,7 +9632,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Flying"
           },
           {
             "species": "Espathra",
@@ -9676,7 +9676,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           },
           {
             "species": "Orthworm",
@@ -9726,7 +9726,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Psychic"
           },
           {
             "species": "Dachsbun",
@@ -9836,7 +9836,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Psychic"
           }
         ]
       },
@@ -9974,7 +9974,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           }
         ]
       }

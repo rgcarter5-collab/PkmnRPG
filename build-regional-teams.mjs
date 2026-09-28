@@ -88,6 +88,13 @@ function buildMoveset(species, role, weatherTag) {
 		return ['Flip Turn', ...rest].slice(0, 4).map(id => Dex.moves.get(id).name);
 	}
 
+	// Pelipper's job on this core is setting Tailwind for the rest of the
+	// team, not attacking - guarantee it regardless of its weather-setter role.
+	if (species.id === 'pelipper' && has('tailwind')) {
+		const rest = ['hurricane', 'scald', 'roost', 'protect', 'knockoff'].filter(has);
+		return ['Tailwind', ...rest].slice(0, 4).map(id => Dex.moves.get(id).name);
+	}
+
 	const phys = isPhysical(species);
 	const category = phys ? 'Physical' : 'Special';
 
@@ -230,6 +237,15 @@ function buildRegionTeams(regionId) {
 const CORE_SIZE = 6;
 const SIGNATURE_SIZE = 2;
 
+// Hand-picked rosters that override a procedurally-generated core at a given
+// index, for cores that should showcase a specific squad rather than
+// whatever the BST-sorted pool happens to produce.
+const FIXED_CORES = {
+	paldea: [
+		{ index: 0, species: ['Pelipper', 'Archaludon', 'Gholdengo', 'Palafin', 'Tinkaton', 'Baxcalibur'] },
+	],
+};
+
 function buildCityLeagueCores(regionId) {
 	const region = regionalDex[regionId];
 	const numCores = 4;
@@ -270,6 +286,18 @@ function buildCityLeagueCores(regionId) {
 			roster: group.map(s => buildSet(s, classify(s).role, null, 'mid')),
 		});
 	}
+	for (const override of FIXED_CORES[regionId] || []) {
+		if (!cores[override.index]) continue;
+		cores[override.index] = {
+			name: cores[override.index].name,
+			signatureCount: SIGNATURE_SIZE,
+			roster: override.species.map(name => {
+				const sp = Dex.species.get(name);
+				return buildSet(sp, classify(sp).role, null, 'mid');
+			}),
+		};
+	}
+
 	return cores;
 }
 
