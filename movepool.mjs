@@ -25,10 +25,15 @@ export function getMovepool(speciesName) {
 	let learnable = learnsetData?.learnset || {};
 	// Cosmetic formes (Gourgeist sizes, Oricorio styles, regional formes with
 	// their own dex entry, etc.) often store their learnset only under the
-	// base species id.
-	if (!Object.keys(learnable).length && species.baseSpecies && species.baseSpecies !== species.name) {
-		learnsetData = Dex.species.getLearnsetData(Dex.toID(species.baseSpecies));
-		learnable = learnsetData?.learnset || {};
+	// base species id. Appliance Rotom formes are trickier: their OWN
+	// learnset isn't empty, just tiny (only their signature move, e.g.
+	// Rotom-Wash's own entry is just Hydro Pump) - the shared movepool lives
+	// entirely under base Rotom - so always union with the base species'
+	// learnset rather than only falling back when the forme's own learnset
+	// is completely empty.
+	if (species.baseSpecies && species.baseSpecies !== species.name) {
+		const baseLearnsetData = Dex.species.getLearnsetData(Dex.toID(species.baseSpecies));
+		learnable = { ...(baseLearnsetData?.learnset || {}), ...learnable };
 	}
 
 	const moves = [];

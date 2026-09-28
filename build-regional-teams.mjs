@@ -76,10 +76,16 @@ function buildMoveset(species, role, weatherTag) {
 	let learnsetData = Dex.species.getLearnsetData(species.id);
 	let learnable = learnsetData?.learnset ? Object.keys(learnsetData.learnset) : [];
 	// Cosmetic formes (Gourgeist sizes, Oricorio styles, etc.) often store
-	// their learnset only under the base species id.
-	if (!learnable.length && species.baseSpecies && species.baseSpecies !== species.name) {
-		learnsetData = Dex.species.getLearnsetData(Dex.toID(species.baseSpecies));
-		learnable = learnsetData?.learnset ? Object.keys(learnsetData.learnset) : [];
+	// their learnset only under the base species id. Appliance Rotom formes
+	// are the trickier case: their OWN learnset isn't empty, just tiny (only
+	// their signature move, e.g. Rotom-Wash's own entry is just Hydro Pump) -
+	// the shared movepool lives entirely under base Rotom - so always union
+	// with the base species' learnset rather than only falling back when the
+	// forme's own learnset is completely empty.
+	if (species.baseSpecies && species.baseSpecies !== species.name) {
+		const baseLearnsetData = Dex.species.getLearnsetData(Dex.toID(species.baseSpecies));
+		const baseLearnable = baseLearnsetData?.learnset ? Object.keys(baseLearnsetData.learnset) : [];
+		learnable = [...new Set([...learnable, ...baseLearnable])];
 	}
 	const has = id => learnable.includes(id);
 
@@ -95,6 +101,13 @@ function buildMoveset(species, role, weatherTag) {
 	// team, not attacking - guarantee it regardless of its weather-setter role.
 	if (species.id === 'pelipper' && has('tailwind')) {
 		const rest = ['hurricane', 'scald', 'roost', 'protect', 'knockoff'].filter(has);
+		return ['Tailwind', ...rest].slice(0, 4).map(id => Dex.moves.get(id).name);
+	}
+
+	// Whimsicott should be a Tailwind setter wherever it shows up - Prankster
+	// makes its Tailwind go off before almost anything else in the format.
+	if (species.id === 'whimsicott' && has('tailwind')) {
+		const rest = ['moonblast', 'taunt', 'protect', 'encore'].filter(has);
 		return ['Tailwind', ...rest].slice(0, 4).map(id => Dex.moves.get(id).name);
 	}
 
@@ -144,12 +157,12 @@ function buildMoveset(species, role, weatherTag) {
 	return moves.slice(0, 4).map(id => Dex.moves.get(id).name);
 }
 
-function buildSet(species, role, weatherTag, bstRank, ability, movesOverride) {
+function buildSet(species, role, weatherTag, bstRank, ability, movesOverride, itemOverride) {
 	const { evs, nature } = pickEVsAndNature(species, role);
 	return {
 		species: species.name,
 		ability: ability || species.abilities['0'],
-		item: pickItem(species, role, bstRank),
+		item: itemOverride || pickItem(species, role, bstRank),
 		moves: movesOverride || buildMoveset(species, role, weatherTag),
 		nature,
 		evs: { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0, ...evs },
@@ -240,11 +253,12 @@ function buildRegionTeams(regionId) {
 const CORE_SIZE = 6;
 const SIGNATURE_SIZE = 2;
 
-// Hand-picked rosters that override a procedurally-generated core at a given
-// index, for cores that should showcase a specific squad rather than
-// whatever the BST-sorted pool happens to produce. A roster entry can be a
-// bare species name (moves auto-built as usual) or { species, moves } to
-// pin an exact, hand-picked moveset instead.
+// Hand-picked rosters that override (or, past the procedurally-generated
+// count, append to) a region's City League cores - for a "Champion Core"
+// that showcases the region's pseudo-legendary plus other genuinely strong
+// picks, rather than whatever the BST-sorted pool happens to produce. A
+// roster entry can be a bare species name (ability/item/moves auto-built as
+// usual) or { species, moves, item, ability } to pin any of those exactly.
 const FIXED_CORES = {
 	paldea: [
 		{
@@ -255,7 +269,86 @@ const FIXED_CORES = {
 				{ species: 'Gholdengo', moves: ['Make It Rain', 'Shadow Ball', 'Nasty Plot', 'Protect'] },
 				{ species: 'Palafin', moves: ['Flip Turn', 'Wave Crash', 'Iron Head', 'Jet Punch'] },
 				{ species: 'Tinkaton' },
-				{ species: 'Baxcalibur' },
+				{ species: 'Baxcalibur', moves: ['Dragon Dance', 'Icicle Crash', 'Glaive Rush', 'Protect'] },
+			],
+		},
+	],
+	kanto: [
+		{
+			index: 4, name: 'Kanto Champion Core',
+			roster: [
+				{ species: 'Dragonite', ability: 'Multiscale' }, { species: 'Snorlax', ability: 'Thick Fat' },
+				{ species: 'Gyarados' }, { species: 'Alakazam', ability: 'Magic Guard' },
+				{ species: 'Tauros' }, { species: 'Exeggutor' },
+			],
+		},
+	],
+	johto: [
+		{
+			index: 4, name: 'Johto Champion Core',
+			roster: [
+				{ species: 'Tyranitar' }, { species: 'Blissey' }, { species: 'Scizor', ability: 'Technician' },
+				{ species: 'Kingdra' }, { species: 'Umbreon' }, { species: 'Feraligatr' },
+			],
+		},
+	],
+	hoenn: [
+		{
+			index: 4, name: 'Hoenn Champion Core',
+			roster: [
+				{ species: 'Salamence' }, { species: 'Metagross' }, { species: 'Blaziken', ability: 'Speed Boost' },
+				{ species: 'Swampert' }, { species: 'Gardevoir' }, { species: 'Milotic' },
+			],
+		},
+	],
+	sinnoh: [
+		{
+			index: 4, name: 'Sinnoh Champion Core',
+			roster: [
+				{ species: 'Garchomp', ability: 'Rough Skin' }, { species: 'Lucario', ability: 'Inner Focus' },
+				{ species: 'Togekiss', ability: 'Serene Grace' }, { species: 'Gliscor', ability: 'Poison Heal' },
+				{ species: 'Rotom-Wash' }, { species: 'Weavile' },
+			],
+		},
+	],
+	unova: [
+		{
+			index: 4, name: 'Unova Champion Core',
+			roster: [
+				{ species: 'Hydreigon' }, { species: 'Volcarona' }, { species: 'Chandelure' },
+				{ species: 'Haxorus', ability: 'Mold Breaker' }, { species: 'Excadrill', ability: 'Mold Breaker' },
+				// Prankster is what makes its Tailwind so good - classify()'s
+				// weather-role scan would otherwise hand it Chlorophyll instead,
+				// since that's also a weather-linked ability in its kit.
+				{ species: 'Whimsicott', ability: 'Prankster' },
+			],
+		},
+	],
+	kalos: [
+		{
+			index: 4, name: 'Kalos Champion Core',
+			roster: [
+				{ species: 'Goodra' }, { species: 'Aegislash' }, { species: 'Talonflame', ability: 'Gale Wings' },
+				{ species: 'Greninja', ability: 'Protean' }, { species: 'Tyrantrum' }, { species: 'Sylveon', ability: 'Pixilate' },
+			],
+		},
+	],
+	alola: [
+		{
+			index: 4, name: 'Alola Champion Core',
+			roster: [
+				{ species: 'Kommo-o' }, { species: 'Toxapex', ability: 'Regenerator' }, { species: 'Mimikyu' },
+				{ species: 'Primarina' }, { species: 'Incineroar', ability: 'Intimidate' }, { species: 'Golisopod' },
+			],
+		},
+	],
+	galar: [
+		{
+			index: 4, name: 'Galar Champion Core',
+			roster: [
+				{ species: 'Dragapult' }, { species: 'Corviknight' }, { species: 'Grimmsnarl' },
+				{ species: 'Hatterene', ability: 'Magic Bounce' }, { species: 'Rillaboom', ability: 'Grassy Surge' },
+				{ species: 'Cinderace', ability: 'Libero' },
 			],
 		},
 	],
@@ -302,16 +395,20 @@ function buildCityLeagueCores(regionId) {
 		});
 	}
 	for (const override of FIXED_CORES[regionId] || []) {
-		if (!cores[override.index]) continue;
-		cores[override.index] = {
-			name: cores[override.index].name,
+		const built = {
+			name: override.name || cores[override.index]?.name || `${region.name} Rental Core ${override.index + 1}`,
 			signatureCount: SIGNATURE_SIZE,
 			roster: override.roster.map(entry => {
 				const sp = Dex.species.get(entry.species);
 				const c = classify(sp);
-				return buildSet(sp, c.role, null, 'mid', c.ability, entry.moves);
+				return buildSet(sp, c.role, null, 'mid', entry.ability || c.ability, entry.moves, entry.item);
 			}),
 		};
+		// Replace an existing procedurally-generated core at this index, or
+		// append a brand new one past the procedural count (e.g. a region's
+		// index-4 "Champion Core" alongside its usual 4 rental cores).
+		if (override.index < cores.length) cores[override.index] = built;
+		else cores.push(built);
 	}
 
 	return cores;
