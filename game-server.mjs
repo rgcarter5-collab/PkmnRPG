@@ -352,7 +352,14 @@ function serveStatic(req, res, urlPath) {
 	if (!filePath.startsWith(PUBLIC_DIR)) { res.writeHead(403); res.end(); return; }
 	readFile(filePath, (err, data) => {
 		if (err) { res.writeHead(404); res.end('Not found'); return; }
-		res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' });
+		// Never let the browser cache these without revalidating - they're tiny,
+		// and a stale cached app.js/style.css after a deploy can silently break
+		// the client against a server that has already moved on (e.g. the old
+		// client reading a response field a new server no longer sends).
+		res.writeHead(200, {
+			'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream',
+			'Cache-Control': 'no-cache, must-revalidate',
+		});
 		res.end(data);
 	});
 }
