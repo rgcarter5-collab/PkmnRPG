@@ -106,6 +106,19 @@ function buildEvent(line) {
 		case '-curestatus': return { text: `${nameOf(parts[2])} recovered from its status.` };
 		case '-boost': return { text: `${nameOf(parts[2])}'s stat rose!` };
 		case '-unboost': return { text: `${nameOf(parts[2])}'s stat fell!` };
+		case '-ability': return { text: `${nameOf(parts[2])}'s Ability: ${parts[3]}` };
+		case '-weather': {
+			// Skip the per-turn "still raining" persistence pings - only the
+			// change itself (a weather starting, changing, or clearing) is
+			// worth showing, or every turn would repeat the same line.
+			if (parts[3] === '[upkeep]') return null;
+			const WEATHER_TEXT = {
+				RainDance: 'It started to rain!', SunnyDay: 'The sunlight turned harsh!',
+				Sandstorm: 'A sandstorm kicked up!', Snow: 'It started to snow!', Hail: 'It started to hail!',
+			};
+			if (parts[2] === 'none') return { text: 'The weather cleared up.' };
+			return { text: WEATHER_TEXT[parts[2]] || `The weather changed to ${parts[2]}.` };
+		}
 		case 'faint': {
 			const { side, slot } = posInfo(parts[2]);
 			return {
@@ -189,6 +202,7 @@ function startBattle(regionId, coreIndex, customMoves) {
 	void (async () => {
 		for await (const chunk of streams.omniscient) {
 			for (const line of chunk.split('\n')) {
+				if (process.env.DEBUG_RAW) console.error('[raw]', line);
 				const event = buildEvent(line);
 				if (event) session.events.push(event);
 				if (line.startsWith('|win|')) { session.ended = true; session.winner = line.slice('|win|'.length); }

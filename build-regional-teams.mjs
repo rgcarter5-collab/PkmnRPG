@@ -21,19 +21,22 @@ const WEATHER_ABUSERS = {
 	slushrush: 'Snow', iceshellf: 'Snow',
 };
 
-function abilityIds(species) {
-	return Object.values(species.abilities || {}).map(a => Dex.toID(a));
+function abilityEntries(species) {
+	// [name, id] pairs for every ability slot (0, 1, H, ...) - not just slot 0,
+	// since a species' most relevant ability (e.g. Pelipper's Drizzle) is very
+	// often NOT its first-listed one.
+	return Object.values(species.abilities || {}).map(name => [name, Dex.toID(name)]);
 }
 
 function classify(species) {
-	const abilities = abilityIds(species);
+	const abilities = abilityEntries(species);
 	const spe = species.baseStats.spe;
 	const bulk = species.baseStats.hp + species.baseStats.def + species.baseStats.spd;
-	const setterWeather = abilities.map(a => WEATHER_SETTERS[a]).find(Boolean);
-	const abuserWeather = abilities.map(a => WEATHER_ABUSERS[a]).find(Boolean);
+	const setterEntry = abilities.find(([, id]) => WEATHER_SETTERS[id]);
+	const abuserEntry = abilities.find(([, id]) => WEATHER_ABUSERS[id]);
 
-	if (setterWeather) return { role: 'weather-setter', weather: setterWeather };
-	if (abuserWeather) return { role: 'weather-abuser', weather: abuserWeather };
+	if (setterEntry) return { role: 'weather-setter', weather: WEATHER_SETTERS[setterEntry[1]], ability: setterEntry[0] };
+	if (abuserEntry) return { role: 'weather-abuser', weather: WEATHER_ABUSERS[abuserEntry[1]], ability: abuserEntry[0] };
 	if (spe <= 60 && (species.baseStats.atk >= 90 || species.baseStats.spa >= 90)) return { role: 'trickroom-abuser' };
 	if (spe >= 100) return { role: 'tailwind-abuser' };
 	if (bulk >= 260) return { role: 'wall' };
@@ -141,11 +144,11 @@ function buildMoveset(species, role, weatherTag) {
 	return moves.slice(0, 4).map(id => Dex.moves.get(id).name);
 }
 
-function buildSet(species, role, weatherTag, bstRank) {
+function buildSet(species, role, weatherTag, bstRank, ability) {
 	const { evs, nature } = pickEVsAndNature(species, role);
 	return {
 		species: species.name,
-		ability: species.abilities['0'],
+		ability: ability || species.abilities['0'],
 		item: pickItem(species, role, bstRank),
 		moves: buildMoveset(species, role, weatherTag),
 		nature,
@@ -220,7 +223,7 @@ function buildRegionTeams(regionId) {
 			archetype: archetype.tag,
 			roster: roster.map((c, i) => buildSet(
 				c.species, c.role, c.weather || weatherTag,
-				c.bst >= median ? 'top' : 'mid'
+				c.bst >= median ? 'top' : 'mid', c.ability
 			)),
 		};
 	});
@@ -283,7 +286,7 @@ function buildCityLeagueCores(regionId) {
 		cores.push({
 			name: `${region.name} Rental Core ${cores.length + 1}`,
 			signatureCount: SIGNATURE_SIZE,
-			roster: group.map(s => buildSet(s, classify(s).role, null, 'mid')),
+			roster: group.map(s => { const c = classify(s); return buildSet(s, c.role, null, 'mid', c.ability); }),
 		});
 	}
 	for (const override of FIXED_CORES[regionId] || []) {
@@ -293,7 +296,8 @@ function buildCityLeagueCores(regionId) {
 			signatureCount: SIGNATURE_SIZE,
 			roster: override.species.map(name => {
 				const sp = Dex.species.get(name);
-				return buildSet(sp, classify(sp).role, null, 'mid');
+				const c = classify(sp);
+				return buildSet(sp, c.role, null, 'mid', c.ability);
 			}),
 		};
 	}
