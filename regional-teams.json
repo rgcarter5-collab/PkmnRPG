@@ -114,7 +114,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Water"
           },
           {
             "species": "Aerodactyl",
@@ -136,7 +136,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Flying"
           }
         ]
       },
@@ -164,7 +164,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Flying"
           },
           {
             "species": "Gyarados",
@@ -252,7 +252,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Dragon"
           },
           {
             "species": "Cloyster",
@@ -274,7 +274,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Water"
           }
         ]
       },
@@ -324,7 +324,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Grass"
           },
           {
             "species": "Venusaur",
@@ -346,7 +346,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Grass"
           },
           {
             "species": "Ninetales",
@@ -484,7 +484,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Poison"
           },
           {
             "species": "Alakazam",
@@ -550,7 +550,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fairy"
           }
         ]
       }
@@ -668,7 +668,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Steel"
           },
           {
             "species": "Venomoth",
@@ -762,7 +762,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           },
           {
             "species": "Persian",
@@ -811,7 +811,7 @@
           {
             "species": "Wigglytuff",
             "ability": "Cute Charm",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Self-Destruct",
@@ -828,7 +828,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Fairy"
           }
         ]
       },
@@ -878,7 +878,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Steel"
           },
           {
             "species": "Marowak",
@@ -922,7 +922,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Ghost"
           },
           {
             "species": "Raticate",
@@ -1016,7 +1016,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Flying"
           },
           {
             "species": "Beedrill",
@@ -1117,9 +1117,9 @@
             "ability": "Multiscale",
             "item": "Leftovers",
             "moves": [
-              "Outrage",
-              "Dragon Rush",
-              "Focus Punch",
+              "Extreme Speed",
+              "Dragon Claw",
+              "Earthquake",
               "Protect"
             ],
             "nature": "Sassy",
@@ -1132,16 +1132,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Flying"
           },
           {
             "species": "Snorlax",
             "ability": "Thick Fat",
-            "item": "Life Orb",
+            "item": "Leftovers",
             "moves": [
-              "Self-Destruct",
-              "Giga Impact",
-              "Focus Punch",
+              "Body Slam",
+              "Earthquake",
+              "Crunch",
               "Protect"
             ],
             "nature": "Brave",
@@ -1161,9 +1161,9 @@
             "ability": "Intimidate",
             "item": "Leftovers",
             "moves": [
-              "Aqua Tail",
-              "Bounce",
-              "Giga Impact",
+              "Waterfall",
+              "Earthquake",
+              "Ice Fang",
               "Protect"
             ],
             "nature": "Sassy",
@@ -1176,16 +1176,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Water"
           },
           {
             "species": "Alakazam",
             "ability": "Magic Guard",
             "item": "Life Orb",
             "moves": [
-              "Future Sight",
-              "Dream Eater",
-              "Hyper Beam",
+              "Psychic",
+              "Shadow Ball",
+              "Focus Blast",
               "Protect"
             ],
             "nature": "Timid",
@@ -1205,9 +1205,9 @@
             "ability": "Intimidate",
             "item": "Life Orb",
             "moves": [
-              "Giga Impact",
-              "Skull Bash",
-              "Close Combat",
+              "Double-Edge",
+              "Earthquake",
+              "Iron Head",
               "Protect"
             ],
             "nature": "Adamant",
@@ -1227,9 +1227,9 @@
             "ability": "Chlorophyll",
             "item": "Life Orb",
             "moves": [
-              "Leaf Storm",
-              "Future Sight",
-              "Explosion",
+              "Psychic",
+              "Giga Drain",
+              "Sludge Bomb",
               "Protect"
             ],
             "nature": "Timid",
@@ -1275,7 +1275,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Poison"
           },
           {
             "species": "Typhlosion",
@@ -1319,7 +1319,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Ghost"
           },
           {
             "species": "Espeon",
@@ -1363,7 +1363,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Steel"
           },
           {
             "species": "Heracross",
@@ -1385,7 +1385,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -1622,7 +1622,7 @@
           {
             "species": "Politoed",
             "ability": "Drizzle",
-            "item": "Assault Vest",
+            "item": "Leftovers",
             "moves": [
               "Hydro Pump",
               "Muddy Water",
@@ -1711,7 +1711,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Flying"
           },
           {
             "species": "Skarmory",
@@ -1733,12 +1733,12 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Flying"
           },
           {
             "species": "Lanturn",
             "ability": "Volt Absorb",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Zap Cannon",
               "Hydro Pump",
@@ -1782,7 +1782,7 @@
           {
             "species": "Noctowl",
             "ability": "Insomnia",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Hurricane",
@@ -1799,7 +1799,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           }
         ]
       }
@@ -1834,7 +1834,7 @@
           {
             "species": "Slowking",
             "ability": "Oblivious",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Future Sight",
               "Hydro Pump",
@@ -1856,7 +1856,7 @@
           {
             "species": "Slowking-Galar",
             "ability": "Curious Medicine",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Future Sight",
               "Dream Eater",
@@ -1900,7 +1900,7 @@
           {
             "species": "Mantine",
             "ability": "Swift Swim",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hurricane",
               "Hydro Pump",
@@ -1917,7 +1917,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Flying"
           },
           {
             "species": "Octillery",
@@ -1967,7 +1967,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Flying"
           },
           {
             "species": "Forretress",
@@ -1989,7 +1989,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Steel"
           },
           {
             "species": "Skarmory",
@@ -2016,7 +2016,7 @@
           {
             "species": "Lanturn",
             "ability": "Volt Absorb",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Zap Cannon",
               "Hydro Pump",
@@ -2033,7 +2033,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Water"
           },
           {
             "species": "Jumpluff",
@@ -2055,7 +2055,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Flying"
           },
           {
             "species": "Hitmontop",
@@ -2088,7 +2088,7 @@
           {
             "species": "Noctowl",
             "ability": "Insomnia",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Hurricane",
@@ -2105,7 +2105,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           },
           {
             "species": "Granbull",
@@ -2149,7 +2149,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Poison"
           },
           {
             "species": "Quagsire",
@@ -2171,7 +2171,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Magcargo",
@@ -2193,7 +2193,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Fire"
           },
           {
             "species": "Sunflora",
@@ -2309,7 +2309,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Water"
           },
           {
             "species": "Wobbuffet",
@@ -2363,9 +2363,9 @@
             "ability": "Sand Stream",
             "item": "Leftovers",
             "moves": [
-              "Stone Edge",
-              "Foul Play",
-              "Focus Punch",
+              "Rock Slide",
+              "Crunch",
+              "Earthquake",
               "Protect"
             ],
             "nature": "Adamant",
@@ -2385,9 +2385,9 @@
             "ability": "Natural Cure",
             "item": "Leftovers",
             "moves": [
-              "Hyper Beam",
-              "Giga Impact",
-              "Focus Blast",
+              "Seismic Toss",
+              "Toxic",
+              "Soft-Boiled",
               "Protect"
             ],
             "nature": "Sassy",
@@ -2407,9 +2407,9 @@
             "ability": "Technician",
             "item": "Life Orb",
             "moves": [
-              "Steel Beam",
-              "Iron Head",
-              "Giga Impact",
+              "Bullet Punch",
+              "U-turn",
+              "Superpower",
               "Protect"
             ],
             "nature": "Adamant",
@@ -2422,16 +2422,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           },
           {
             "species": "Kingdra",
             "ability": "Swift Swim",
             "item": "Life Orb",
             "moves": [
-              "Outrage",
-              "Wave Crash",
-              "Giga Impact",
+              "Draco Meteor",
+              "Surf",
+              "Ice Beam",
               "Protect"
             ],
             "nature": "Adamant",
@@ -2452,8 +2452,8 @@
             "item": "Leftovers",
             "moves": [
               "Foul Play",
-              "Crunch",
-              "Giga Impact",
+              "Toxic",
+              "Moonlight",
               "Protect"
             ],
             "nature": "Sassy",
@@ -2473,9 +2473,9 @@
             "ability": "Torrent",
             "item": "Leftovers",
             "moves": [
-              "Aqua Tail",
-              "Hydro Cannon",
-              "Focus Punch",
+              "Waterfall",
+              "Ice Punch",
+              "Earthquake",
               "Protect"
             ],
             "nature": "Sassy",
@@ -2587,7 +2587,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Fighting"
           },
           {
             "species": "Flygon",
@@ -2609,7 +2609,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Ground"
           },
           {
             "species": "Gardevoir",
@@ -2631,7 +2631,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Psychic"
           }
         ]
       },
@@ -2659,7 +2659,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Steel"
           },
           {
             "species": "Milotic",
@@ -2703,7 +2703,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ground"
           },
           {
             "species": "Aggron",
@@ -2797,7 +2797,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Dark"
           },
           {
             "species": "Torkoal",
@@ -2957,7 +2957,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Dragon"
           },
           {
             "species": "Glalie",
@@ -3006,7 +3006,7 @@
           {
             "species": "Grumpig",
             "ability": "Thick Fat",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Future Sight",
               "Dream Eater",
@@ -3045,7 +3045,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ground"
           }
         ]
       }
@@ -3489,7 +3489,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Bug"
           },
           {
             "species": "Dustox",
@@ -3612,10 +3612,10 @@
             "ability": "Intimidate",
             "item": "Life Orb",
             "moves": [
-              "Outrage",
-              "Fly",
-              "Giga Impact",
-              "Tailwind"
+              "Dragon Claw",
+              "Earthquake",
+              "Fire Fang",
+              "Protect"
             ],
             "nature": "Adamant",
             "evs": {
@@ -3634,9 +3634,9 @@
             "ability": "Clear Body",
             "item": "Leftovers",
             "moves": [
-              "Steel Roller",
               "Meteor Mash",
-              "Explosion",
+              "Zen Headbutt",
+              "Earthquake",
               "Protect"
             ],
             "nature": "Sassy",
@@ -3649,16 +3649,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Steel"
           },
           {
             "species": "Blaziken",
             "ability": "Speed Boost",
             "item": "Life Orb",
             "moves": [
-              "Focus Punch",
               "High Jump Kick",
-              "Giga Impact",
+              "Flare Blitz",
+              "Knock Off",
               "Protect"
             ],
             "nature": "Adamant",
@@ -3678,9 +3678,9 @@
             "ability": "Torrent",
             "item": "Life Orb",
             "moves": [
+              "Waterfall",
               "Earthquake",
-              "High Horsepower",
-              "Focus Punch",
+              "Ice Punch",
               "Protect"
             ],
             "nature": "Brave",
@@ -3700,9 +3700,9 @@
             "ability": "Synchronize",
             "item": "Life Orb",
             "moves": [
-              "Future Sight",
-              "Dream Eater",
-              "Hyper Beam",
+              "Moonblast",
+              "Psychic",
+              "Shadow Ball",
               "Protect"
             ],
             "nature": "Timid",
@@ -3715,16 +3715,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Psychic"
           },
           {
             "species": "Milotic",
             "ability": "Marvel Scale",
             "item": "Leftovers",
             "moves": [
-              "Hydro Pump",
-              "Muddy Water",
-              "Hyper Beam",
+              "Scald",
+              "Ice Beam",
+              "Recover",
               "Protect"
             ],
             "nature": "Sassy",
@@ -3836,7 +3836,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Fire"
           },
           {
             "species": "Mamoswine",
@@ -3858,7 +3858,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Ice"
           },
           {
             "species": "Lucario",
@@ -3880,7 +3880,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Steel"
           }
         ]
       },
@@ -3930,7 +3930,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Steel"
           },
           {
             "species": "Rhyperior",
@@ -3974,7 +3974,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Water"
           },
           {
             "species": "Torterra",
@@ -3996,7 +3996,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Grass"
           },
           {
             "species": "Glaceon",
@@ -4090,7 +4090,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Steel"
           },
           {
             "species": "Gliscor",
@@ -4117,7 +4117,7 @@
           {
             "species": "Gastrodon",
             "ability": "Sand Force",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Pump",
               "Earth Power",
@@ -4134,12 +4134,12 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Ground"
           },
           {
             "species": "Gastrodon-East",
             "ability": "Sand Force",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Pump",
               "Earth Power",
@@ -4250,7 +4250,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Electric"
           },
           {
             "species": "Rotom-Mow",
@@ -4272,7 +4272,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Electric"
           },
           {
             "species": "Rotom-Wash",
@@ -4294,7 +4294,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Electric"
           }
         ]
       }
@@ -4307,7 +4307,7 @@
           {
             "species": "Drifblim",
             "ability": "Aftermath",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Shadow Ball",
               "Air Slash",
@@ -4324,7 +4324,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Ghost"
           },
           {
             "species": "Rampardos",
@@ -4368,7 +4368,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Steel"
           },
           {
             "species": "Floatzel",
@@ -4434,7 +4434,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ice"
           }
         ]
       },
@@ -4462,7 +4462,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Fighting"
           },
           {
             "species": "Staraptor",
@@ -4506,7 +4506,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Ghost"
           },
           {
             "species": "Ambipom",
@@ -4572,7 +4572,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Ghost"
           }
         ]
       },
@@ -4605,7 +4605,7 @@
           {
             "species": "Gastrodon",
             "ability": "Sand Force",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Pump",
               "Earth Power",
@@ -4622,12 +4622,12 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Water"
           },
           {
             "species": "Gastrodon-East",
             "ability": "Sand Force",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Pump",
               "Earth Power",
@@ -4666,7 +4666,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Bug"
           },
           {
             "species": "Lumineon",
@@ -4782,7 +4782,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Electric"
           },
           {
             "species": "Wormadam",
@@ -4826,7 +4826,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Ground"
           },
           {
             "species": "Wormadam-Trash",
@@ -4848,7 +4848,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           }
         ]
       },
@@ -4861,9 +4861,9 @@
             "ability": "Rough Skin",
             "item": "Life Orb",
             "moves": [
-              "Outrage",
-              "Dragon Rush",
-              "Giga Impact",
+              "Earthquake",
+              "Dragon Claw",
+              "Fire Fang",
               "Protect"
             ],
             "nature": "Adamant",
@@ -4883,9 +4883,9 @@
             "ability": "Inner Focus",
             "item": "Life Orb",
             "moves": [
-              "Steel Beam",
-              "Focus Blast",
-              "Hyper Beam",
+              "Close Combat",
+              "Extreme Speed",
+              "Ice Punch",
               "Protect"
             ],
             "nature": "Timid",
@@ -4898,16 +4898,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Fighting"
           },
           {
             "species": "Togekiss",
             "ability": "Serene Grace",
             "item": "Leftovers",
             "moves": [
-              "Sky Attack",
+              "Air Slash",
               "Dazzling Gleam",
-              "Hyper Beam",
+              "Thunder Wave",
               "Protect"
             ],
             "nature": "Sassy",
@@ -4925,11 +4925,11 @@
           {
             "species": "Gliscor",
             "ability": "Poison Heal",
-            "item": "Life Orb",
+            "item": "Toxic Orb",
             "moves": [
-              "Sky Attack",
+              "Facade",
               "Earthquake",
-              "Giga Impact",
+              "Substitute",
               "Protect"
             ],
             "nature": "Adamant",
@@ -4942,16 +4942,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Ground"
           },
           {
             "species": "Rotom-Wash",
             "ability": "Levitate",
             "item": "Leftovers",
             "moves": [
+              "Volt Switch",
               "Hydro Pump",
-              "Thunder",
-              "Dream Eater",
+              "Will-O-Wisp",
               "Protect"
             ],
             "nature": "Sassy",
@@ -4964,16 +4964,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Water"
           },
           {
             "species": "Weavile",
             "ability": "Pressure",
             "item": "Life Orb",
             "moves": [
-              "Foul Play",
-              "Ice Spinner",
-              "Focus Punch",
+              "Knock Off",
+              "Ice Shard",
+              "Ice Punch",
               "Protect"
             ],
             "nature": "Adamant",
@@ -4986,7 +4986,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Dark"
           }
         ]
       }
@@ -5024,7 +5024,7 @@
           {
             "species": "Volcarona",
             "ability": "Flame Body",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Overheat",
               "Fire Blast",
@@ -5041,7 +5041,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Fire"
           },
           {
             "species": "Haxorus",
@@ -5107,7 +5107,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Fighting"
           },
           {
             "species": "Samurott",
@@ -5267,7 +5267,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           }
         ]
       },
@@ -5361,7 +5361,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Fire"
           },
           {
             "species": "Krookodile",
@@ -5416,7 +5416,7 @@
           {
             "species": "Cryogonal",
             "ability": "Levitate",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Blizzard",
               "Ice Beam",
@@ -5760,7 +5760,7 @@
           {
             "species": "Reuniclus",
             "ability": "Overcoat",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Future Sight",
               "Dream Eater",
@@ -5849,7 +5849,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Normal"
           },
           {
             "species": "Scrafty",
@@ -5871,12 +5871,12 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fighting"
           },
           {
             "species": "Musharna",
             "ability": "Forewarn",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Future Sight",
               "Dream Eater",
@@ -5937,7 +5937,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Bug"
           },
           {
             "species": "Beheeyem",
@@ -6031,7 +6031,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Bug"
           },
           {
             "species": "Cofagrigus",
@@ -6097,7 +6097,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Grass"
           }
         ]
       },
@@ -6111,8 +6111,8 @@
             "item": "Leftovers",
             "moves": [
               "Draco Meteor",
-              "Dragon Pulse",
-              "Hyper Beam",
+              "Dark Pulse",
+              "Flamethrower",
               "Protect"
             ],
             "nature": "Sassy",
@@ -6130,12 +6130,12 @@
           {
             "species": "Volcarona",
             "ability": "Flame Body",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
-              "Overheat",
-              "Fire Blast",
-              "Hyper Beam",
-              "Tailwind"
+              "Fiery Dance",
+              "Bug Buzz",
+              "Quiver Dance",
+              "Protect"
             ],
             "nature": "Timid",
             "evs": {
@@ -6154,9 +6154,9 @@
             "ability": "Flash Fire",
             "item": "Life Orb",
             "moves": [
-              "Overheat",
-              "Fire Blast",
-              "Hyper Beam",
+              "Shadow Ball",
+              "Heat Wave",
+              "Energy Ball",
               "Protect"
             ],
             "nature": "Timid",
@@ -6176,9 +6176,9 @@
             "ability": "Mold Breaker",
             "item": "Life Orb",
             "moves": [
-              "Outrage",
               "Dragon Claw",
-              "Giga Impact",
+              "Earthquake",
+              "Poison Jab",
               "Protect"
             ],
             "nature": "Adamant",
@@ -6199,8 +6199,8 @@
             "item": "Life Orb",
             "moves": [
               "Earthquake",
-              "High Horsepower",
-              "Giga Impact",
+              "Iron Head",
+              "Rock Slide",
               "Protect"
             ],
             "nature": "Adamant",
@@ -6213,7 +6213,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Ground"
           },
           {
             "species": "Whimsicott",
@@ -6235,7 +6235,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Fairy"
           }
         ]
       }
@@ -6378,7 +6378,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -6411,7 +6411,7 @@
           {
             "species": "Goodra-Hisui",
             "ability": "Sap Sipper",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Steel Beam",
               "Draco Meteor",
@@ -6428,7 +6428,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Dragon"
           },
           {
             "species": "Florges",
@@ -6527,7 +6527,7 @@
           {
             "species": "Aurorus",
             "ability": "Snow Warning",
-            "item": "Assault Vest",
+            "item": "Leftovers",
             "moves": [
               "Meteor Beam",
               "Blizzard",
@@ -6544,12 +6544,12 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ice"
+            "teraType": "Rock"
           },
           {
             "species": "Sylveon",
             "ability": "Cute Charm",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Misty Explosion",
               "Moonblast",
@@ -6588,7 +6588,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Dragon"
           },
           {
             "species": "Avalugg",
@@ -6770,7 +6770,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Gourgeist-Small",
@@ -6792,7 +6792,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           }
         ]
       }
@@ -6960,7 +6960,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Flying"
           },
           {
             "species": "Carbink",
@@ -6982,7 +6982,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Rock"
           },
           {
             "species": "Talonflame",
@@ -7004,7 +7004,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Flying"
           },
           {
             "species": "Pangoro",
@@ -7048,7 +7048,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Dragon"
           },
           {
             "species": "Gourgeist",
@@ -7070,7 +7070,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Grass"
+            "teraType": "Ghost"
           }
         ]
       },
@@ -7098,7 +7098,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Gourgeist-Small",
@@ -7142,7 +7142,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Malamar",
@@ -7164,7 +7164,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Dark"
           },
           {
             "species": "Heliolisk",
@@ -7236,7 +7236,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Furfrou",
@@ -7280,7 +7280,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Steel"
           },
           {
             "species": "Meowstic",
@@ -7329,7 +7329,7 @@
           {
             "species": "Aromatisse",
             "ability": "Healer",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Misty Explosion",
               "Moonblast",
@@ -7360,8 +7360,8 @@
             "item": "Leftovers",
             "moves": [
               "Draco Meteor",
-              "Dragon Pulse",
-              "Hyper Beam",
+              "Fire Blast",
+              "Thunderbolt",
               "Protect"
             ],
             "nature": "Sassy",
@@ -7381,10 +7381,10 @@
             "ability": "Stance Change",
             "item": "Leftovers",
             "moves": [
-              "Steel Beam",
+              "Shadow Ball",
               "Iron Head",
-              "Giga Impact",
-              "Protect"
+              "Close Combat",
+              "King's Shield"
             ],
             "nature": "Sassy",
             "evs": {
@@ -7396,7 +7396,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Ghost"
           },
           {
             "species": "Talonflame",
@@ -7405,8 +7405,8 @@
             "moves": [
               "Brave Bird",
               "Flare Blitz",
-              "Giga Impact",
-              "Tailwind"
+              "U-turn",
+              "Protect"
             ],
             "nature": "Adamant",
             "evs": {
@@ -7425,9 +7425,9 @@
             "ability": "Protean",
             "item": "Life Orb",
             "moves": [
-              "Hydro Cannon",
               "Hydro Pump",
-              "Hyper Beam",
+              "Ice Beam",
+              "Dark Pulse",
               "Protect"
             ],
             "nature": "Timid",
@@ -7440,7 +7440,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Dark"
           },
           {
             "species": "Tyrantrum",
@@ -7449,7 +7449,7 @@
             "moves": [
               "Head Smash",
               "Outrage",
-              "Giga Impact",
+              "Crunch",
               "Protect"
             ],
             "nature": "Sassy",
@@ -7462,16 +7462,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Dragon"
           },
           {
             "species": "Sylveon",
             "ability": "Pixilate",
-            "item": "Assault Vest",
+            "item": "Leftovers",
             "moves": [
-              "Misty Explosion",
-              "Moonblast",
-              "Hyper Beam",
+              "Hyper Voice",
+              "Mystical Fire",
+              "Helping Hand",
               "Protect"
             ],
             "nature": "Quiet",
@@ -7539,7 +7539,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Rock"
           },
           {
             "species": "Passimian",
@@ -7677,7 +7677,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fighting"
+            "teraType": "Grass"
           },
           {
             "species": "Incineroar",
@@ -7704,7 +7704,7 @@
           {
             "species": "Primarina",
             "ability": "Torrent",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Cannon",
               "Hydro Pump",
@@ -7859,7 +7859,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Fighting"
           },
           {
             "species": "Toxapex",
@@ -7886,7 +7886,7 @@
           {
             "species": "Oranguru",
             "ability": "Inner Focus",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Future Sight",
@@ -7931,7 +7931,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Poison"
           },
           {
             "species": "Komala",
@@ -7997,7 +7997,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Psychic"
           },
           {
             "species": "Oricorio-Pom-Pom",
@@ -8071,12 +8071,12 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Poison"
           },
           {
             "species": "Oranguru",
             "ability": "Inner Focus",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Future Sight",
@@ -8413,7 +8413,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Flying"
           },
           {
             "species": "Oricorio-Pa'u",
@@ -8435,7 +8435,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Psychic"
           },
           {
             "species": "Oricorio-Pom-Pom",
@@ -8457,7 +8457,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Electric"
           }
         ]
       },
@@ -8485,7 +8485,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Flying"
           },
           {
             "species": "Mimikyu",
@@ -8529,7 +8529,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Water"
           },
           {
             "species": "Ribombee",
@@ -8608,9 +8608,9 @@
             "ability": "Bulletproof",
             "item": "Leftovers",
             "moves": [
-              "Focus Punch",
               "Close Combat",
-              "Giga Impact",
+              "Clanging Scales",
+              "Poison Jab",
               "Protect"
             ],
             "nature": "Sassy",
@@ -8630,9 +8630,9 @@
             "ability": "Regenerator",
             "item": "Leftovers",
             "moves": [
-              "Gunk Shot",
-              "Liquidation",
-              "Giga Impact",
+              "Scald",
+              "Recover",
+              "Toxic",
               "Protect"
             ],
             "nature": "Sassy",
@@ -8645,16 +8645,16 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Water"
           },
           {
             "species": "Mimikyu",
             "ability": "Disguise",
             "item": "Life Orb",
             "moves": [
-              "Phantom Force",
               "Play Rough",
-              "Giga Impact",
+              "Shadow Claw",
+              "Swords Dance",
               "Protect"
             ],
             "nature": "Adamant",
@@ -8667,16 +8667,16 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Ghost"
           },
           {
             "species": "Primarina",
             "ability": "Torrent",
-            "item": "Assault Vest",
+            "item": "Leftovers",
             "moves": [
-              "Hydro Cannon",
-              "Hydro Pump",
-              "Hyper Beam",
+              "Moonblast",
+              "Scald",
+              "Psychic",
               "Protect"
             ],
             "nature": "Quiet",
@@ -8689,17 +8689,17 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fairy"
           },
           {
             "species": "Incineroar",
             "ability": "Intimidate",
             "item": "Life Orb",
             "moves": [
+              "Fake Out",
+              "Knock Off",
               "Flare Blitz",
-              "Blast Burn",
-              "Focus Punch",
-              "Protect"
+              "Darkest Lariat"
             ],
             "nature": "Brave",
             "evs": {
@@ -8711,7 +8711,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fire"
           },
           {
             "species": "Golisopod",
@@ -8720,7 +8720,7 @@
             "moves": [
               "First Impression",
               "Liquidation",
-              "Giga Impact",
+              "Sucker Punch",
               "Protect"
             ],
             "nature": "Brave",
@@ -8766,7 +8766,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Ghost"
           },
           {
             "species": "Cinderace",
@@ -8832,7 +8832,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Bug"
           },
           {
             "species": "Wyrdeer",
@@ -8854,7 +8854,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Normal"
           },
           {
             "species": "Mr. Rime",
@@ -8876,7 +8876,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Ice"
           }
         ]
       },
@@ -8926,7 +8926,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Ground"
+            "teraType": "Normal"
           },
           {
             "species": "Rillaboom",
@@ -8970,7 +8970,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Normal"
           },
           {
             "species": "Coalossal",
@@ -8992,7 +8992,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Fire"
           },
           {
             "species": "Hatterene",
@@ -9014,7 +9014,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Psychic"
           }
         ]
       },
@@ -9047,7 +9047,7 @@
           {
             "species": "Basculegion-F",
             "ability": "Swift Swim",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hydro Pump",
               "Muddy Water",
@@ -9152,7 +9152,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Fighting"
           }
         ]
       },
@@ -9224,7 +9224,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Bug"
           },
           {
             "species": "Toxtricity",
@@ -9246,7 +9246,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Toxtricity-Low-Key",
@@ -9290,7 +9290,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Rock"
+            "teraType": "Bug"
           }
         ]
       }
@@ -9320,7 +9320,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Rock"
           },
           {
             "species": "Sandaconda",
@@ -9364,7 +9364,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Fairy"
           },
           {
             "species": "Grimmsnarl",
@@ -9386,12 +9386,12 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Dark"
+            "teraType": "Fairy"
           },
           {
             "species": "Cursola",
             "ability": "Weak Armor",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Shadow Ball",
               "Poltergeist",
@@ -9524,7 +9524,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Bug"
           },
           {
             "species": "Dracozolt",
@@ -9568,7 +9568,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Ice"
           }
         ]
       },
@@ -9596,7 +9596,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Dragon"
+            "teraType": "Water"
           },
           {
             "species": "Arctovish",
@@ -9640,7 +9640,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Toxtricity-Low-Key",
@@ -9662,7 +9662,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Electric"
+            "teraType": "Poison"
           },
           {
             "species": "Copperajah",
@@ -9706,7 +9706,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Rock"
           }
         ]
       },
@@ -9844,7 +9844,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Rock"
           }
         ]
       },
@@ -9857,9 +9857,9 @@
             "ability": "Clear Body",
             "item": "Life Orb",
             "moves": [
-              "Outrage",
-              "Dragon Rush",
-              "Giga Impact",
+              "Dragon Darts",
+              "Phantom Force",
+              "U-turn",
               "Protect"
             ],
             "nature": "Adamant",
@@ -9880,8 +9880,8 @@
             "item": "Leftovers",
             "moves": [
               "Brave Bird",
-              "Fly",
-              "Giga Impact",
+              "Body Press",
+              "U-turn",
               "Protect"
             ],
             "nature": "Sassy",
@@ -9894,17 +9894,17 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Flying"
           },
           {
             "species": "Grimmsnarl",
             "ability": "Prankster",
-            "item": "Life Orb",
+            "item": "Light Clay",
             "moves": [
-              "Foul Play",
-              "Play Rough",
-              "Focus Punch",
-              "Protect"
+              "Spirit Break",
+              "Reflect",
+              "Light Screen",
+              "Thunder Wave"
             ],
             "nature": "Brave",
             "evs": {
@@ -9923,10 +9923,10 @@
             "ability": "Magic Bounce",
             "item": "Life Orb",
             "moves": [
-              "Future Sight",
-              "Misty Explosion",
-              "Hyper Beam",
-              "Trick Room"
+              "Psychic",
+              "Mystical Fire",
+              "Trick Room",
+              "Protect"
             ],
             "nature": "Quiet",
             "evs": {
@@ -9945,10 +9945,10 @@
             "ability": "Grassy Surge",
             "item": "Leftovers",
             "moves": [
-              "Solar Blade",
+              "Superpower",
+              "Grassy Glide",
               "Wood Hammer",
-              "Focus Punch",
-              "Protect"
+              "U-turn"
             ],
             "nature": "Sassy",
             "evs": {
@@ -9967,9 +9967,9 @@
             "ability": "Libero",
             "item": "Life Orb",
             "moves": [
-              "Flare Blitz",
               "Pyro Ball",
-              "Giga Impact",
+              "U-turn",
+              "Zen Headbutt",
               "Protect"
             ],
             "nature": "Adamant",
@@ -10037,7 +10037,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Fighting"
           },
           {
             "species": "Ceruledge",
@@ -10059,7 +10059,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Ghost"
           },
           {
             "species": "Glimmora",
@@ -10086,7 +10086,7 @@
           {
             "species": "Toedscruel",
             "ability": "Mycelium Might",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Leaf Storm",
               "Solar Beam",
@@ -10125,7 +10125,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           }
         ]
       },
@@ -10219,7 +10219,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Ghost"
           },
           {
             "species": "Hydrapple",
@@ -10291,7 +10291,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Fire"
+            "teraType": "Grass"
           },
           {
             "species": "Skeledirge",
@@ -10384,7 +10384,7 @@
           {
             "species": "Farigiraf",
             "ability": "Cud Chew",
-            "item": "Assault Vest",
+            "item": "Life Orb",
             "moves": [
               "Hyper Beam",
               "Future Sight",
@@ -10429,7 +10429,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Ghost"
+            "teraType": "Grass"
           },
           {
             "species": "Tinkaton",
@@ -10451,7 +10451,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Fairy"
+            "teraType": "Steel"
           },
           {
             "species": "Mabosstiff",
@@ -10495,7 +10495,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Dragon"
           },
           {
             "species": "Revavroom",
@@ -10539,7 +10539,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Flying"
+            "teraType": "Fighting"
           }
         ]
       }
@@ -10569,7 +10569,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Flying"
           },
           {
             "species": "Archaludon",
@@ -10613,7 +10613,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Steel"
+            "teraType": "Ghost"
           },
           {
             "species": "Palafin",
@@ -10845,7 +10845,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Water"
+            "teraType": "Psychic"
           },
           {
             "species": "Dachsbun",
@@ -10955,7 +10955,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Psychic"
+            "teraType": "Bug"
           }
         ]
       },
@@ -11005,7 +11005,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Bug"
+            "teraType": "Dark"
           },
           {
             "species": "Klawf",
@@ -11049,7 +11049,7 @@
               "spe": 0
             },
             "level": 50,
-            "teraType": "Poison"
+            "teraType": "Ground"
           },
           {
             "species": "Wugtrio",
@@ -11093,7 +11093,7 @@
               "spe": 252
             },
             "level": 50,
-            "teraType": "Normal"
+            "teraType": "Flying"
           }
         ]
       }

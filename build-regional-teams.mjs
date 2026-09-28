@@ -63,10 +63,12 @@ function pickEVsAndNature(species, role) {
 		: { evs: { hp: 4, spa: 252, spe: 252 }, nature: 'Timid' };
 }
 
-function pickItem(species, role, bstRank) {
+function pickItem(species, role, bstRank, hasStatusMove) {
 	if (role === 'wall') return 'Leftovers';
 	if (species.baseStats.hp <= 70 && bstRank === 'top') return 'Focus Sash';
-	if (!isPhysical(species) && species.baseStats.hp + species.baseStats.spd >= 190) return 'Assault Vest';
+	// Assault Vest blocks status moves entirely - never hand it to a set that
+	// actually has one (Protect included), or that move becomes unselectable.
+	if (!isPhysical(species) && species.baseStats.hp + species.baseStats.spd >= 190 && !hasStatusMove) return 'Assault Vest';
 	if (role === 'weather-setter') return 'Leftovers';
 	return isPhysical(species) ? 'Life Orb' : 'Life Orb';
 }
@@ -159,11 +161,13 @@ function buildMoveset(species, role, weatherTag) {
 
 function buildSet(species, role, weatherTag, bstRank, ability, movesOverride, itemOverride) {
 	const { evs, nature } = pickEVsAndNature(species, role);
+	const moves = movesOverride || buildMoveset(species, role, weatherTag);
+	const hasStatusMove = moves.some(name => Dex.moves.get(name)?.category === 'Status');
 	return {
 		species: species.name,
 		ability: ability || species.abilities['0'],
-		item: itemOverride || pickItem(species, role, bstRank),
-		moves: movesOverride || buildMoveset(species, role, weatherTag),
+		item: itemOverride || pickItem(species, role, bstRank, hasStatusMove),
+		moves,
 		nature,
 		evs: { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0, ...evs },
 		level: 50,
@@ -277,9 +281,12 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Kanto Champion Core',
 			roster: [
-				{ species: 'Dragonite', ability: 'Multiscale' }, { species: 'Snorlax', ability: 'Thick Fat' },
-				{ species: 'Gyarados' }, { species: 'Alakazam', ability: 'Magic Guard' },
-				{ species: 'Tauros' }, { species: 'Exeggutor' },
+				{ species: 'Dragonite', ability: 'Multiscale', moves: ['Extreme Speed', 'Dragon Claw', 'Earthquake', 'Protect'] },
+				{ species: 'Snorlax', ability: 'Thick Fat', item: 'Leftovers', moves: ['Body Slam', 'Earthquake', 'Crunch', 'Protect'] },
+				{ species: 'Gyarados', moves: ['Waterfall', 'Earthquake', 'Ice Fang', 'Protect'] },
+				{ species: 'Alakazam', ability: 'Magic Guard', moves: ['Psychic', 'Shadow Ball', 'Focus Blast', 'Protect'] },
+				{ species: 'Tauros', moves: ['Double-Edge', 'Earthquake', 'Iron Head', 'Protect'] },
+				{ species: 'Exeggutor', moves: ['Psychic', 'Giga Drain', 'Sludge Bomb', 'Protect'] },
 			],
 		},
 	],
@@ -287,8 +294,12 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Johto Champion Core',
 			roster: [
-				{ species: 'Tyranitar' }, { species: 'Blissey' }, { species: 'Scizor', ability: 'Technician' },
-				{ species: 'Kingdra' }, { species: 'Umbreon' }, { species: 'Feraligatr' },
+				{ species: 'Tyranitar', moves: ['Rock Slide', 'Crunch', 'Earthquake', 'Protect'] },
+				{ species: 'Blissey', moves: ['Seismic Toss', 'Toxic', 'Soft-Boiled', 'Protect'] },
+				{ species: 'Scizor', ability: 'Technician', moves: ['Bullet Punch', 'U-turn', 'Superpower', 'Protect'] },
+				{ species: 'Kingdra', moves: ['Draco Meteor', 'Surf', 'Ice Beam', 'Protect'] },
+				{ species: 'Umbreon', moves: ['Foul Play', 'Toxic', 'Moonlight', 'Protect'] },
+				{ species: 'Feraligatr', moves: ['Waterfall', 'Ice Punch', 'Earthquake', 'Protect'] },
 			],
 		},
 	],
@@ -296,8 +307,12 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Hoenn Champion Core',
 			roster: [
-				{ species: 'Salamence' }, { species: 'Metagross' }, { species: 'Blaziken', ability: 'Speed Boost' },
-				{ species: 'Swampert' }, { species: 'Gardevoir' }, { species: 'Milotic' },
+				{ species: 'Salamence', moves: ['Dragon Claw', 'Earthquake', 'Fire Fang', 'Protect'] },
+				{ species: 'Metagross', moves: ['Meteor Mash', 'Zen Headbutt', 'Earthquake', 'Protect'] },
+				{ species: 'Blaziken', ability: 'Speed Boost', moves: ['High Jump Kick', 'Flare Blitz', 'Knock Off', 'Protect'] },
+				{ species: 'Swampert', moves: ['Waterfall', 'Earthquake', 'Ice Punch', 'Protect'] },
+				{ species: 'Gardevoir', moves: ['Moonblast', 'Psychic', 'Shadow Ball', 'Protect'] },
+				{ species: 'Milotic', moves: ['Scald', 'Ice Beam', 'Recover', 'Protect'] },
 			],
 		},
 	],
@@ -305,9 +320,15 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Sinnoh Champion Core',
 			roster: [
-				{ species: 'Garchomp', ability: 'Rough Skin' }, { species: 'Lucario', ability: 'Inner Focus' },
-				{ species: 'Togekiss', ability: 'Serene Grace' }, { species: 'Gliscor', ability: 'Poison Heal' },
-				{ species: 'Rotom-Wash' }, { species: 'Weavile' },
+				{ species: 'Garchomp', ability: 'Rough Skin', moves: ['Earthquake', 'Dragon Claw', 'Fire Fang', 'Protect'] },
+				{ species: 'Lucario', ability: 'Inner Focus', moves: ['Close Combat', 'Extreme Speed', 'Ice Punch', 'Protect'] },
+				{ species: 'Togekiss', ability: 'Serene Grace', moves: ['Air Slash', 'Dazzling Gleam', 'Thunder Wave', 'Protect'] },
+				// Poison Heal is dead weight without Toxic Orb to trigger it -
+				// Facade then doubles as a second STAB that benefits from the
+				// self-inflicted poison instead of being hurt by it.
+				{ species: 'Gliscor', ability: 'Poison Heal', item: 'Toxic Orb', moves: ['Facade', 'Earthquake', 'Substitute', 'Protect'] },
+				{ species: 'Rotom-Wash', moves: ['Volt Switch', 'Hydro Pump', 'Will-O-Wisp', 'Protect'] },
+				{ species: 'Weavile', moves: ['Knock Off', 'Ice Shard', 'Ice Punch', 'Protect'] },
 			],
 		},
 	],
@@ -315,12 +336,18 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Unova Champion Core',
 			roster: [
-				{ species: 'Hydreigon' }, { species: 'Volcarona' }, { species: 'Chandelure' },
-				{ species: 'Haxorus', ability: 'Mold Breaker' }, { species: 'Excadrill', ability: 'Mold Breaker' },
+				{ species: 'Hydreigon', moves: ['Draco Meteor', 'Dark Pulse', 'Flamethrower', 'Protect'] },
+				// Not Assault Vest (the auto-picked default for its bulk/SpA
+				// profile) - that would make Quiver Dance and Protect illegal
+				// to even select, since it blocks all status moves.
+				{ species: 'Volcarona', item: 'Life Orb', moves: ['Fiery Dance', 'Bug Buzz', 'Quiver Dance', 'Protect'] },
+				{ species: 'Chandelure', moves: ['Shadow Ball', 'Heat Wave', 'Energy Ball', 'Protect'] },
+				{ species: 'Haxorus', ability: 'Mold Breaker', moves: ['Dragon Claw', 'Earthquake', 'Poison Jab', 'Protect'] },
+				{ species: 'Excadrill', ability: 'Mold Breaker', moves: ['Earthquake', 'Iron Head', 'Rock Slide', 'Protect'] },
 				// Prankster is what makes its Tailwind so good - classify()'s
 				// weather-role scan would otherwise hand it Chlorophyll instead,
 				// since that's also a weather-linked ability in its kit.
-				{ species: 'Whimsicott', ability: 'Prankster' },
+				{ species: 'Whimsicott', ability: 'Prankster', moves: ['Tailwind', 'Moonblast', 'Taunt', 'Protect'] },
 			],
 		},
 	],
@@ -328,8 +355,16 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Kalos Champion Core',
 			roster: [
-				{ species: 'Goodra' }, { species: 'Aegislash' }, { species: 'Talonflame', ability: 'Gale Wings' },
-				{ species: 'Greninja', ability: 'Protean' }, { species: 'Tyrantrum' }, { species: 'Sylveon', ability: 'Pixilate' },
+				{ species: 'Goodra', moves: ['Draco Meteor', 'Fire Blast', 'Thunderbolt', 'Protect'] },
+				// King's Shield doubles as this set's Protect equivalent while
+				// also punishing anything that hits Aegislash on contact.
+				{ species: 'Aegislash', moves: ['Shadow Ball', 'Iron Head', 'Close Combat', "King's Shield"] },
+				{ species: 'Talonflame', ability: 'Gale Wings', moves: ['Brave Bird', 'Flare Blitz', 'U-turn', 'Protect'] },
+				{ species: 'Greninja', ability: 'Protean', moves: ['Hydro Pump', 'Ice Beam', 'Dark Pulse', 'Protect'] },
+				{ species: 'Tyrantrum', moves: ['Head Smash', 'Outrage', 'Crunch', 'Protect'] },
+				// Same Assault Vest conflict as Volcarona below - Helping Hand
+				// and Protect are both status moves, both illegal under AV.
+				{ species: 'Sylveon', ability: 'Pixilate', item: 'Leftovers', moves: ['Hyper Voice', 'Mystical Fire', 'Helping Hand', 'Protect'] },
 			],
 		},
 	],
@@ -337,8 +372,15 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Alola Champion Core',
 			roster: [
-				{ species: 'Kommo-o' }, { species: 'Toxapex', ability: 'Regenerator' }, { species: 'Mimikyu' },
-				{ species: 'Primarina' }, { species: 'Incineroar', ability: 'Intimidate' }, { species: 'Golisopod' },
+				{ species: 'Kommo-o', moves: ['Close Combat', 'Clanging Scales', 'Poison Jab', 'Protect'] },
+				{ species: 'Toxapex', ability: 'Regenerator', moves: ['Scald', 'Recover', 'Toxic', 'Protect'] },
+				{ species: 'Mimikyu', moves: ['Play Rough', 'Shadow Claw', 'Swords Dance', 'Protect'] },
+				// Same Assault Vest/Protect conflict again.
+				{ species: 'Primarina', item: 'Leftovers', moves: ['Moonblast', 'Scald', 'Psychic', 'Protect'] },
+				// The real, iconic VGC Incineroar support set - no Protect needed
+				// when Fake Out already buys the safe turn.
+				{ species: 'Incineroar', ability: 'Intimidate', moves: ['Fake Out', 'Knock Off', 'Flare Blitz', 'Darkest Lariat'] },
+				{ species: 'Golisopod', moves: ['First Impression', 'Liquidation', 'Sucker Punch', 'Protect'] },
 			],
 		},
 	],
@@ -346,9 +388,15 @@ const FIXED_CORES = {
 		{
 			index: 4, name: 'Galar Champion Core',
 			roster: [
-				{ species: 'Dragapult' }, { species: 'Corviknight' }, { species: 'Grimmsnarl' },
-				{ species: 'Hatterene', ability: 'Magic Bounce' }, { species: 'Rillaboom', ability: 'Grassy Surge' },
-				{ species: 'Cinderace', ability: 'Libero' },
+				{ species: 'Dragapult', moves: ['Dragon Darts', 'Phantom Force', 'U-turn', 'Protect'] },
+				{ species: 'Corviknight', moves: ['Brave Bird', 'Body Press', 'U-turn', 'Protect'] },
+				// Light Clay over the auto-picked Life Orb - a pure screens
+				// setter doesn't want recoil, and Light Clay doubles Reflect/
+				// Light Screen's duration, the standard pairing for this set.
+				{ species: 'Grimmsnarl', ability: 'Prankster', item: 'Light Clay', moves: ['Spirit Break', 'Reflect', 'Light Screen', 'Thunder Wave'] },
+				{ species: 'Hatterene', ability: 'Magic Bounce', moves: ['Psychic', 'Mystical Fire', 'Trick Room', 'Protect'] },
+				{ species: 'Rillaboom', ability: 'Grassy Surge', moves: ['Superpower', 'Grassy Glide', 'Wood Hammer', 'U-turn'] },
+				{ species: 'Cinderace', ability: 'Libero', moves: ['Pyro Ball', 'U-turn', 'Zen Headbutt', 'Protect'] },
 			],
 		},
 	],
